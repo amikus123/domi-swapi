@@ -31,6 +31,7 @@ const Article = ({ article, categories }) => {
       <div className="uk-section">
         <div className="uk-container uk-container-small">
           <ReactMarkdown
+          
             source={article.attributes.content}
             escapeHtml={false}
           />
