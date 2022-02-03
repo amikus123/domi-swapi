@@ -1,5 +1,6 @@
 import React from "react"
 import Atrribution, { PossibleData } from "../components/blog/Atrribution"
+import Blog from "../components/blog/Blog"
 import { fetchAPI } from "../lib/api"
 
 const data: PossibleData[] = [
@@ -14,26 +15,28 @@ const data: PossibleData[] = [
   {},
 ]
 
+{/* {data.map((i, k) => {
+  return <Atrribution data={i} key={k} />
+})} */}
 
-const blog = ({ movies }) => {
-  return (
-    <div>
-      {JSON.stringify(movies)}
-      {data.map((i, k) => {
-        return <Atrribution data={i} key={k} />
-      })}
-    </div>
+const blog = ({ blogData }) => {
+  return (<>
+    <Blog data={blogData}/>
+    {/* {JSON.stringify(blogData)} */}
+    </>
   )
 }
 
 export default blog
 
 export async function getServerSideProps() {
-  // const res = await fetch(`${API_URL}/ingredient`)
+  const articlesRes = await fetchAPI("/blogs", {
+    populate: "*",
+  })
 
-  const articlesRes = await fetchAPI("/blogs/")
-
-  console.log(articlesRes)
   return {
     props: {
-      movies: arti
+        blogData: articlesRes.data[0].attributes    ,
+    },
+  }
+}
