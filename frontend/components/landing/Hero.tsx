@@ -20,7 +20,7 @@ import {
                 _after={{
                   content: "''",
                   width: 'full',
-                  height: useBreakpointValue({ base: '20%', md: '30%' }),
+                  height: { base: '20%', md: '30%' },
                   position: 'absolute',
                   bottom: 1,
                   left: 0,

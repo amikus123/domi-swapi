@@ -11,8 +11,6 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import {
@@ -21,21 +19,29 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import { useRouter } from 'next/dist/client/router';
 
-export default function WithSubnavigation() {
+
+interface HeaderProps{
+  navData:any[]
+}
+
+export default function WithSubnavigation({navData}:HeaderProps) {
   const { isOpen, onToggle } = useDisclosure();
 
+const router = useRouter()
+// color link if we are on their pagbe
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
-        minH={'60px'}
+        bg='white'
+        color= 'gray.600'
+        minH={'60px'} 
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor= 'gray.200'
         align={'center'}>
         <Flex
           flex={{ base: 1, md: 'auto' }}
@@ -51,13 +57,16 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+          <Link href="/">
+            
           <Text
             // textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             textAlign={{ base: 'center', md: 'left' }}
             fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
+            color= 'gray.800'>
             Logo
           </Text>
+               </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -100,9 +109,9 @@ export default function WithSubnavigation() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const linkHoverColor = useColorModeValue('gray.800', 'white');
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
+  const linkColor = 'gray.600'
+  const linkHoverColor = 'gray.800'
+  const popoverContentBgColor = 'white'
 
   return (
     <Stack direction={'row'} spacing={4}>
@@ -154,7 +163,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       display={'block'}
       p={2}
       rounded={'md'}
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}>
+      _hover={{bg:'pink.50'}}>
       <Stack direction={'row'} align={'center'}>
         <Box>
           <Text
@@ -183,7 +192,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 const MobileNav = () => {
   return (
     <Stack
-      bg={useColorModeValue('white', 'gray.800')}
+      bg= 'white'
       p={4}
       display={{ md: 'none' }}>
       {NAV_ITEMS.map((navItem) => (
@@ -209,7 +218,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         }}>
         <Text
           fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}>
+          color= 'gray.600'>
           {label}
         </Text>
         {children && (
@@ -229,7 +238,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           pl={4}
           borderLeft={1}
           borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          borderColor= 'gray.200'
           align={'start'}>
           {children &&
             children.map((child) => (

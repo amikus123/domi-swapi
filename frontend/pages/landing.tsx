@@ -1,5 +1,4 @@
 import React from "react"
-
 import Hero from "../components/landing/Hero"
 import ThreeItems from "../components/landing/ThreeItems"
 import ImageWithText from "../components/landing/ImageWithText"

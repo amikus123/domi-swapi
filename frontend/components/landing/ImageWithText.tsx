@@ -8,7 +8,6 @@ import {
     Stack,
     StackDivider,
     Icon,
-    useColorModeValue,
   } from '@chakra-ui/react';
   import {
     IoAnalyticsSharp,
@@ -50,7 +49,7 @@ import {
               color={'blue.400'}
               fontWeight={600}
               fontSize={'sm'}
-              bg={useColorModeValue('blue.50', 'blue.900')}
+              bg={'blue.50'}
               p={2}
               alignSelf={'flex-start'}
               rounded={'md'}>
@@ -65,26 +64,26 @@ import {
               spacing={4}
               divider={
                 <StackDivider
-                  borderColor={useColorModeValue('gray.100', 'gray.700')}
+                  borderColor={'gray.100'}
                 />
               }>
               <Feature
                 icon={
                   <Icon as={IoAnalyticsSharp} color={'yellow.500'} w={5} h={5} />
                 }
-                iconBg={useColorModeValue('yellow.100', 'yellow.900')}
+                iconBg={'yellow.100'}
                 text={'Business Planning'}
               />
               <Feature
                 icon={<Icon as={IoLogoBitcoin} color={'green.500'} w={5} h={5} />}
-                iconBg={useColorModeValue('green.100', 'green.900')}
+                iconBg={'green.100'}
                 text={'Financial Planning'}
               />
               <Feature
                 icon={
                   <Icon as={IoSearchSharp} color={'purple.500'} w={5} h={5} />
                 }
-                iconBg={useColorModeValue('purple.100', 'purple.900')}
+                iconBg={'purple.100'}
                 text={'Market Analysis'}
               />
             </Stack>

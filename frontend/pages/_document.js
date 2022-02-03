@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
+import { getStrapiMedia } from "../lib/media"
 
 class MyDocument extends Document {
   render() {
@@ -26,6 +27,10 @@ class MyDocument extends Document {
             async
             src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.js"
           />
+             {/* <link
+          rel="shortcut icon"
+          href={getStrapiMedia(global.attributes.favicon)}
+        /> */}
         </Head>
         <body>
           <Main />

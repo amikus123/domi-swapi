@@ -3,39 +3,32 @@ import Head from "next/head"
 import "../assets/css/style.css"
 import { createContext } from "react"
 import { fetchAPI } from "../lib/api"
-import { getStrapiMedia } from "../lib/media"
-import { ChakraProvider } from '@chakra-ui/react'
-import {theme } from "../style/theme"
+import { ChakraProvider } from "@chakra-ui/react"
+import { theme } from "../style/theme"
 import Header from "../components/Single/Header"
 import Footer from "../components/Single/Footer"
-import { Chakra } from "../src/Chakra";
-
-
+import { Chakra } from "../style/chakraProvider"
+import { useRouter } from "next/router"
+import {DefaultSEO} from "next-seo"
+import SEO from "../config/next-seo-config"
 // Store Strapi Global object in context
 export const GlobalContext = createContext({})
 
 const MyApp = ({ Component, pageProps }) => {
-  const { global } = pageProps
-
+  const { global,navData } = pageProps
+  const router = useRouter()
+  // normal header  and foter is not rendered on auth pages
+  const isOnAuthPage = router.pathname.startsWith("/auth/")
   return (
     <>
-
-      <Head>
-        <link
-          rel="shortcut icon"
-          href={getStrapiMedia(global.attributes.favicon)}
-        />
-      </Head>
+    {/* <DefaultSEO  {...SEO}/> */}
       <Chakra cookies={pageProps.cookies}>
-      <GlobalContext.Provider value={global.attributes}>
+        <GlobalContext.Provider value={global.attributes}>
+          {isOnAuthPage || <Header  navData={navData}/>}
+          <Component {...pageProps} />
+          {isOnAuthPage || <Footer />}
+        </GlobalContext.Provider>
       </Chakra>
-
-        <Header/>
-        <Component {...pageProps} />
-        <Footer/>
-      </GlobalContext.Provider>
-      </ChakraProvider>
-
     </>
   )
 }
@@ -56,5 +49,9 @@ MyApp.getInitialProps = async (ctx) => {
       },
     },
   })
+  const nav = await fetchAPI("/navigations")
   // Pass the data to our page via props
-  return { ...appProps, pageP
+  return { ...appProps, pageProps: { global: globalRes.data,navData:nav.data, } }
+}
+
+export default MyApp
