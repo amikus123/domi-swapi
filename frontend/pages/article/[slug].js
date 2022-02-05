@@ -30,11 +30,11 @@ const Article = ({ article, categories }) => {
       </div>
       <div className="uk-section">
         <div className="uk-container uk-container-small">
-          <ReactMarkdown
+          {/* <ReactMarkdown
           
             source={article.attributes.content}
             escapeHtml={false}
-          />
+          /> */}
           <hr className="uk-divider-small" />
           <div className="uk-grid-small uk-flex-left" data-uk-grid="true">
             <div>

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_blog_attributions",
+  "info": {
+    "displayName": "attribution",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "authorName": {
+      "type": "string"
+    },
+    "authorLink": {
+      "type": "string"
+    },
+    "pageName": {
+      "type": "string"
+    },
+    "pageLink": {
+      "type": "string"
+    }
+  }
+}

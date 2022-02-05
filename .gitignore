@@ -59,7 +59,7 @@ $RECYCLE.BIN/
 *.swm
 *.out
 *.pid
-
+*.next
 
 ############################
 # Logs and databases
@@ -70,8 +70,7 @@ $RECYCLE.BIN/
 *.sql
 *.sqlite
 *.sqlite3
-
-
+.next
 ############################
 # Misc.
 ############################

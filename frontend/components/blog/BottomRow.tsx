@@ -1,7 +1,7 @@
 import React from 'react';
 
-const BlogText = () => {
+const BottomRow = () => {
   return <div></div>;
 };
 
-export default BlogText;
+export default BottomRow;

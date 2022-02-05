@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dish_categories",
+  "info": {
+    "singularName": "dish-category",
+    "pluralName": "dish-categories",
+    "displayName": "dishTimeCategory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "categoryName": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

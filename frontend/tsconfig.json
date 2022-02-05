@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "next.config.js"  ],
+, "next.config.js", "lib/join.ts"  ],
   "exclude": [
     "node_modules"
   ]

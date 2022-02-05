@@ -1,9 +1,9 @@
 import React from "react"
-import Atrribution, { PossibleData } from "../components/blog/Atrribution"
+import Atrribution, { AttributionProps } from "../components/blog/Atrribution"
 import Blog from "../components/blog/Blog"
 import { fetchAPI } from "../lib/api"
 
-const data: PossibleData[] = [
+const data: AttributionProps[] = [
   { pageName: "unsplash", authorLink: "a" },
   {
     authorName: "asdasd",
@@ -15,14 +15,21 @@ const data: PossibleData[] = [
   {},
 ]
 
-{/* {data.map((i, k) => {
+{
+  /* {data.map((i, k) => {
   return <Atrribution data={i} key={k} />
-})} */}
+})} */
+}
 
 const blog = ({ blogData }) => {
-  return (<>
-    <Blog data={blogData}/>
-    {/* {JSON.stringify(blogData)} */}
+  return (
+    <>
+      {/* <p>{JSON.stringify(blogData)}</p>
+      <br />
+
+      <p>{JSON.stringify(Object.keys(blogData.data.attributes))}</p>
+      <br /> */}
+      <Blog data={blogData.data.attributes}/>
     </>
   )
 }
@@ -30,13 +37,29 @@ const blog = ({ blogData }) => {
 export default blog
 
 export async function getServerSideProps() {
-  const articlesRes = await fetchAPI("/blogs", {
+  // fetching overall data
+  const blogData = await fetchAPI("/blogs/1", {
     populate: "*",
+    encodeValuesOnly: true,
   })
+  // fetching dynamic zone images
+  const imageData = await fetchAPI("/blogs/1", {
+    populate: {
+      content: {
+        populate: {
+          image: "*",
+        },
+      },
+    },
+    encodeValuesOnly: true,
+  })
+
+  // replacing blogData content with imageData contnet, makes image elements accessbile
+  blogData.data.attributes.content = imageData.data.attributes.content
 
   return {
     props: {
-        blogData: articlesRes.data[0].attributes    ,
+      blogData,
     },
   }
 }

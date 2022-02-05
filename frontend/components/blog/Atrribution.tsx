@@ -1,8 +1,5 @@
 import React from "react"
-
-// combinations
-// none
-//
+import { Text } from "@chakra-ui/react"
 
 interface AuthorProps {
   authorName?: string
@@ -13,7 +10,7 @@ interface PageProps {
   pageName?: string
   pageLink?: string
 }
-export interface PossibleData extends AuthorProps, PageProps {}
+export interface AttributionProps extends AuthorProps, PageProps {}
 
 const AuthorPart = ({ authorName, authorLink }: AuthorProps) => {
   const Helper = () => {
@@ -59,23 +56,22 @@ const PagePart = ({ pageLink, pageName }: PageProps) => {
 }
 
 interface AtrributionProps {
-  data: PossibleData
+  data: AttributionProps
 }
 const Atrribution = ({ data }: AtrributionProps) => {
   return (
     <>
       {Object.keys(data).length !== 0 && (
-        <div>
+        <Text  color="gray.600">
           Zdjęcie{" "}
           <AuthorPart
             authorLink={data.authorLink}
             authorName={data.authorName}
           />
           <PagePart pageName={data.pageName} pageLink={data.pageLink} />
-        </div>
+        </Text>
       )}
 
-      {JSON.stringify(data)}
     </>
   )
 }

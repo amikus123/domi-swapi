@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dish_indigrient_categories",
+  "info": {
+    "singularName": "dish-indigrient-category",
+    "pluralName": "dish-indigrient-categories",
+    "displayName": "dishIndigentCategory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "category": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_dish_indigrients",
+  "info": {
+    "displayName": "indigrient",
+    "icon": "carrot"
+  },
+  "options": {},
+  "attributes": {
+    "ingredient": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ingredient.ingredient"
+    },
+    "amount": {
+      "type": "string"
+    }
+  }
+}
