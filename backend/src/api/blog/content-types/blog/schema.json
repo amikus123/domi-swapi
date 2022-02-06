@@ -38,13 +38,18 @@
       "targetField": "title",
       "required": true
     },
+    "mainImage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "blog.description-image"
+    },
     "blogCategories": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::blog-category.blog-category",
       "inversedBy": "blogs"
     },
-    "mainImage": {
+    "cardData": {
       "type": "component",
       "repeatable": false,
       "component": "blog.description-image"
