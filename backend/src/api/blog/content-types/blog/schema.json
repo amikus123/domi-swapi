@@ -24,7 +24,7 @@
         "blog.image",
         "blog.description-image",
         "blog.separator",
-        "blog.quote"
+        "blog.related-blog"
       ]
     },
     "description": {
@@ -44,21 +44,10 @@
       "target": "api::blog-category.blog-category",
       "inversedBy": "blogs"
     },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ]
-    },
-    "attribution": {
-      "displayName": "attribution",
+    "mainImage": {
       "type": "component",
       "repeatable": false,
-      "component": "blog.attribution"
+      "component": "blog.description-image"
     }
   }
 }

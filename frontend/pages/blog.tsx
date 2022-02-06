@@ -23,28 +23,26 @@ const data: AttributionProps[] = [
 
 const blog = ({ blogData }) => {
   return (
-    <>
-      {/* <p>{JSON.stringify(blogData)}</p>
-      <br />
-
-      <p>{JSON.stringify(Object.keys(blogData.data.attributes))}</p>
-      <br /> */}
-      <Blog data={blogData.data.attributes}/>
-    </>
+      <Blog data={blogData.data.attributes} />
   )
 }
 
+
+// xlarge: 1920,
+// large: 1000,
+// medium: 750,
+// small: 500,
+// xsmall: 64
 export default blog
 
 export async function getServerSideProps() {
-  // fetching overall data
-  const blogData = await fetchAPI("/blogs/1", {
-    populate: "*",
-    encodeValuesOnly: true,
-  })
-  // fetching dynamic zone images
+
   const imageData = await fetchAPI("/blogs/1", {
     populate: {
+      populate: "*",
+      mainImage: {
+        populate: "*",
+      },
       content: {
         populate: {
           image: "*",
@@ -54,12 +52,10 @@ export async function getServerSideProps() {
     encodeValuesOnly: true,
   })
 
-  // replacing blogData content with imageData contnet, makes image elements accessbile
-  blogData.data.attributes.content = imageData.data.attributes.content
 
   return {
     props: {
-      blogData,
+      blogData: imageData,
     },
   }
 }

@@ -2,17 +2,14 @@ import { Stack, Heading, Text, Box } from "@chakra-ui/react"
 import React from "react"
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"
-import { AttributionProps } from "./Atrribution"
-import MyNextImage, { FullWidthImage } from "../image"
 import BlogContent from "./content/BlogContent"
-import BlogMainImage from "./BlogMainImage"
+import BlogDescriptionImage from "./content/BlogDescriptionImage"
 interface BlogPost {
   title: string
   description: string
   date: string
   content: any[]
-  image: any
-  attribution: AttributionProps
+  mainImage: any
 }
 
 interface BlogProps {
@@ -20,28 +17,30 @@ interface BlogProps {
 }
 
 const Blog = ({ data }: BlogProps) => {
-  const { attribution, content, date, description, image, title } = data
-
-  const { formats } = image.data.attributes
+  const { content, date, description, mainImage, title } = data
 
   // content paragraphs should have margin of 2 em
   return (
-    <Box maxW="60vw">
+    //
+    <Box m={3} maxW="700px">
       <Stack
-        spacing={8}
         justify="flex-start"
         align="center"
         w="100%"
         textAlign="left"
-        p="6"
+        spacing={0}
       >
-        <Heading>{title}</Heading>
-        <Text w="100%" fontSize="2xl" color="gray.600">
+        <Heading w="100%">{title}</Heading>
+        <Text as="span" w="100%" fontSize="2xl" color="gray.600" pt={4}>
           <ReactMarkdown rehypePlugins={[rehypeRaw]}>
             {description}
           </ReactMarkdown>
         </Text>
-        <BlogMainImage  image={image} attributionData={attribution}/>
+        <BlogDescriptionImage
+          // margin={0}
+          image={mainImage.image}
+          text={mainImage.description}
+        />
         <BlogContent data={content} />
       </Stack>
     </Box>
