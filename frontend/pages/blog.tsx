@@ -7,7 +7,7 @@ import BlogCard from "../components/blog/BlogCard/BlogCard"
 const blog = ({ blogData }) => {
   return (
     <>
-      {/* <BlogCard  data={blogData.data.attributes}/> */}
+      <BlogCard  data={blogData.data.attributes}/>
       
       <Flex maxW="700px" mx="auto" my={4}>
         <Blog data={blogData.data.attributes} />

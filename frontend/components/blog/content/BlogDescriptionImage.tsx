@@ -42,7 +42,7 @@ const BlogDescriptionImage = ({
 }: BlogDescriptionImageProps) => {
   return (
     <Stack w="100%" justify="center" align="center" py="1.5rem">
-      <FullWidthImage imageAttributes={image.data.attributes} margin={margin} />
+      <FullWidthImage image={image} margin={margin} />
       <ImageDesctiption text={text} />
     </Stack>
   )

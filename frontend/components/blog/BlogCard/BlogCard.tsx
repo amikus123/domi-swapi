@@ -77,15 +77,13 @@ export default function BlogCard({ data }: BlogCardProps) {
             </Heading>
             <BlogTags blogCategories={blogCategories} pt={0} />
 
-            <Text color={"gray.500"} maxH="100px" noOfLines={[2,2]}  >
+            <Text color={"gray.500"} maxH="100px" noOfLines={[3,3]}  >
               {cardData.description} {cardData.description}
             </Text>
+            <Text color={"gray.600"}>Feb 08, 2021 · 6min read</Text>
+
             <Box pt={2}>
-              <NextLink href={href} passHref>
-                <Link color="blue.500" >
-                  Czytaj dalej...
-                </Link>
-              </NextLink>
+
             </Box>
           </Stack>
 
