@@ -71,6 +71,7 @@ $RECYCLE.BIN/
 *.sqlite
 *.sqlite3
 .next
+out/*
 ############################
 # Misc.
 ############################
@@ -111,4 +112,3 @@ exports
 *.cache
 build
 .strapi-updater.json
-.next/
