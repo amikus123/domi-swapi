@@ -8,7 +8,7 @@ const Articles = ({ articles }) => {
 
   return (
     <div>
-      <div className="uk-child-width-1-2@s" data-uk-grid="true">
+      {/* <div className="uk-child-width-1-2@s" data-uk-grid="true">
         <div>
           {leftArticles.map((article, i) => {
             return (
@@ -31,7 +31,7 @@ const Articles = ({ articles }) => {
             })}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

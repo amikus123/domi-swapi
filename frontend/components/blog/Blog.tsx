@@ -42,9 +42,7 @@ const Blog = ({ data }: BlogProps) => {
         textAlign="left"
         spacing={0}
       >
-        <Box py={10} w="100%">
-          <TextCard data={data} />
-        </Box>
+
         <Heading w="100%">{title}</Heading>
         <Text as="span" w="100%" fontSize="2xl" color="gray.600" pt={4}>
           <ReactMarkdown rehypePlugins={[rehypeRaw]}>

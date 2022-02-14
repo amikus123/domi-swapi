@@ -1,8 +1,28 @@
 import React from "react"
-import Articles from "../components/articles"
-import Layout from "../components/layout"
 import Seo from "../components/seo"
 import { fetchAPI } from "../lib/api"
+import Hero from "../components/landing/Hero"
+import ThreeItems from "../components/landing/ThreeItems"
+import ImageWithText from "../components/landing/ImageWithText"
+import Testimonials from "../components/landing/Testimonials"
+import Wall from "../components/landing/Wall"
+import { Center, VStack } from "@chakra-ui/react"
+const landing = () => {
+  const space = 140
+  return (
+    <Center>
+      <VStack spacing={space} mb={space}>
+        <Hero />
+        <ThreeItems />
+        <ImageWithText />
+        <Testimonials />
+        <Wall />
+      </VStack>
+    </Center>
+  )
+}
+
+export default landing
 
 const Home = ({ articles, categories, homepage }) => {
   return (
@@ -12,8 +32,7 @@ const Home = ({ articles, categories, homepage }) => {
       {/* <div className="uk-section">
         <div className="uk-container uk-container -large">
           <h1>{homepage.attributes.hero.title}</h1> */}
-          <Articles articles={articles} />
-        {/* </div>
+      {/* </div>
       </div> */}
     </>
     // </Layout>
@@ -42,6 +61,3 @@ export async function getStaticProps() {
     revalidate: 1,
   }
 }
-
-
-export default Home

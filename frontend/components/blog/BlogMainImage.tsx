@@ -9,7 +9,7 @@ interface BlogMainImageProps {
 const BlogMainImage = ({ image, attributionData }: BlogMainImageProps) => {
   return (
     <Stack w="100%" justify="center" align="center">
-      <FullWidthImage imageAttributes={image.data.attributes} />
+      <FullWidthImage image={image} />
       <Attribution data={attributionData} />
     </Stack>
   )
