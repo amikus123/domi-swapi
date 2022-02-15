@@ -14,10 +14,7 @@ import BlogContent from "./content/BlogContent"
 import BlogDescriptionImage from "./content/BlogDescriptionImage"
 import BlogTags from "./BlogTags"
 import SocialRow from "./socials/SocialRow"
-import BlogCard from "./BlogCard/BlogCard"
-import BlogCardWide from "./BlogCard/BlogCardWide"
 import CardStack from "./BlogCard/CardStack"
-import TextCard from "./BlogCard/TextCard"
 export interface BlogPost {
   title: string
   description: string

@@ -5,10 +5,12 @@ import {
   Input,
   Button,
   Link,
-  FormErrorMessage,useToast ,
+  FormErrorMessage,
+  useToast,
+  Text,
 } from "@chakra-ui/react"
 import { Formik, Form, Field } from "formik"
-import React from "react"
+import React, { useState } from "react"
 import Layout from "./Layout"
 import { FormTemplateData } from "./authTypes"
 import NextLink from "next/link"
@@ -29,23 +31,41 @@ const FormTemplate = ({ formData }: FormTemplateProps) => {
     header,
     subheader,
     onSubmit,
+    toastData,
   } = formData
+  const { errorTitle, successDesc, successTitle } = toastData
+  const [globalError, setGlobalError] = useState("")
   return (
     <Layout header={header} subHeader={subheader}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        initialErrors={{ error: "XD" }}
         onSubmit={async (values, actions) => {
+          setGlobalError("")
           const res = await onSubmit(values.email, values.password)
-          
-          if (res) {
+          // either returts string or object
+         console.log(res,"WHA WE GOT")
+          if (typeof res === "string") {
+            //TODO add some function to translate this in to polish
+            let errorDesc = res
             toast({
-              title: "Account created.",
-              description: "We've created your account for you.",
+              title: errorTitle,
+              description: errorDesc,
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+            })
+            setGlobalError(errorDesc)
+          } else {
+            toast({
+              title: successTitle,
+              description: successDesc,
               status: "success",
               duration: 9000,
               isClosable: true,
             })
+            // redirect if necessary
           }
         }}
       >
@@ -65,6 +85,12 @@ const FormTemplate = ({ formData }: FormTemplateProps) => {
                           id={item}
                           placeholder={inputsData[item].placeholder}
                           type={inputsData[item].type}
+                          onInput={() => {
+                            // removes glogbal error
+                            if (globalError !== "") {
+                              setGlobalError("")
+                            }
+                          }}
                         />
                         <FormErrorMessage>{errors[item]}</FormErrorMessage>
                       </FormControl>
@@ -72,6 +98,10 @@ const FormTemplate = ({ formData }: FormTemplateProps) => {
                   </Field>
                 )
               })}
+              <Text color="red.400" fontSize={20} fontWeight={700}>
+                {globalError}
+              </Text>
+
               <Button colorScheme="teal" isLoading={isSubmitting} type="submit">
                 {buttonText}
               </Button>
@@ -79,9 +109,13 @@ const FormTemplate = ({ formData }: FormTemplateProps) => {
                 {linksData.map((item, i) => {
                   return (
                     <NextLink href={item.href} passHref key={i}>
-                    <Link color={router.pathname===item.href?"red.400": "blue.400"} >
-                      {item.text}
-                    </Link>
+                      <Link
+                        color={
+                          router.pathname === item.href ? "red.400" : "blue.400"
+                        }
+                      >
+                        {item.text}
+                      </Link>
                     </NextLink>
                   )
                 })}

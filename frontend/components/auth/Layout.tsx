@@ -15,7 +15,7 @@ interface LayoutProps {
 const Layout = ({ children, header, subHeader }: LayoutProps) => {
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"} bg={"gray.50"}>
-      <Stack spacing={8}  minW={["300px","400px"]} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack spacing={8}  minW={["300px","400px"]} w="70vw" mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>{header}</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>

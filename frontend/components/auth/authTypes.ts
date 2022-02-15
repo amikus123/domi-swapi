@@ -21,8 +21,16 @@ export interface FormTemplateData{
   buttonText: string
   linksData: LinkData[]
   header: string
-  subheader: string
+  subheader: string;
+  toastData :ToastFormData;
   onSubmit :  (email: string, password: string) => Promise<any>
 }
 
 
+
+export interface ToastFormData{
+  successTitle:string;
+  successDesc:string
+  errorTitle:string;
+
+}

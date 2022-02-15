@@ -7,7 +7,7 @@ import { ChakraProvider } from "@chakra-ui/react"
 import Header from "../components/Single/Header"
 import Footer from "../components/Single/Footer"
 import { Chakra } from "../style/chakraProvider"
-import { useRouter } from "next/router"
+import Router,{ useRouter } from "next/router"
 import {DefaultSEO} from "next-seo"
 import SEO from "../config/next-seo-config"
 // Store Strapi Global object in context
@@ -32,11 +32,26 @@ const MyApp = ({ Component, pageProps }) => {
   )
 }
 
+const redirectUser = (ctx,location)=>{
+  if(ctx.req){
+    ctx.res.writeHeade(302,{location:location})
+    ctx.res.end()
+  }else{
+    Router.push(location)
+  }
+}
 // getInitialProps disables automatic static optimization for pages that don't
 // have getStaticProps. So article, category and home pages still get SSG.
 // Hopefully we can replace this with getStaticProps once this issue is fixed:
 // https://github.com/vercel/next.js/discussions/10949
 MyApp.getInitialProps = async (ctx) => {
+
+  const jwt = false
+  if(!jwt){
+    if(false /*auth path */){
+      redirectUser(ctx,"/")
+    }
+  }
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(ctx)
   // Fetch global site settings from Strapi
