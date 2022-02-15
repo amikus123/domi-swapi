@@ -12,22 +12,22 @@ import { DefaultSEO } from "next-seo"
 import SEO from "../config/next-seo-config"
 import { parseCookies } from "nookies"
 // Store Strapi Global object in context
+import Layout from "../components/Single/Layout"
+
 export const GlobalContext = createContext({})
 
-const MyApp = ({ Component, pageProps }) => {
+const MyApp = (props) => {
+  const { Component, pageProps, user } = props
   const { global, navData } = pageProps
-  const router = useRouter()
-
-  const isOnAuthPage = router.pathname.startsWith("/auth/")
 
   return (
     <>
       {/* <DefaultSEO  {...SEO}/> */}
       <Chakra cookies={pageProps.cookies}>
         <GlobalContext.Provider value={global.attributes}>
-          {isOnAuthPage || <Header navData={navData} />}
-          <Component {...pageProps} />
-          {isOnAuthPage || <Footer />}
+          <Layout user={user}>
+            <Component {...pageProps} />
+          </Layout>
         </GlobalContext.Provider>
       </Chakra>
     </>
@@ -50,7 +50,7 @@ const redirectUser = (ctx, location) => {
 MyApp.getInitialProps = async (context) => {
   const { Component, ctx } = context
   const jwt = parseCookies(ctx).jwt
-  console.log(Object.keys(ctx), ctx.pathname, "XXX")
+  let user = null
   if (!jwt) {
     // us there is no token, dont allow use to go to the /user pages
     if (ctx.pathname.startsWith("/user")) {
@@ -61,20 +61,23 @@ MyApp.getInitialProps = async (context) => {
     if (ctx.pathname.startsWith("/auth")) {
       redirectUser(ctx, "/")
     }
+    user = await fetchAPI("/users/me", { jwt })
   }
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(context)
   // Fetch global site settings from Strapi
   const globalRes = await fetchAPI("/global", {
-    populate: {
-      favicon: "*",
-      defaultSeo: {
-        populate: "*",
+    urlParamsObject: {
+      populate: {
+        favicon: "*",
+        defaultSeo: {
+          populate: "*",
+        },
       },
     },
   })
   // Pass the data to our page via props
-  return { ...appProps, pageProps: { global: globalRes.data } }
+  return { ...appProps, pageProps: { global: globalRes.data }, user }
 }
 
 export default MyApp

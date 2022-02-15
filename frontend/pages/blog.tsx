@@ -8,7 +8,7 @@ const blog = ({ blogData }) => {
   return (
     <>
       {/* <BlogCard  data={blogData.data.attributes}/> */}
-      <Flex  width="100%" mx="20" my={4}>
+      <Flex width="100%" mx="20" my={4}>
         <Blog data={blogData.data.attributes} />
       </Flex>
     </>
@@ -19,24 +19,26 @@ export default blog
 
 export async function getServerSideProps() {
   const imageData = await fetchAPI("/blogs/1", {
-    populate: {
-      populate: "*",
-      mainImage: {
+    urlParamsObject: {
+      populate: {
         populate: "*",
-      },
-      cardData: {
-        populate: "*",
-      },
-      blogCategories: {
-        populate: "",
-      },
-      content: {
-        populate: {
-          image: "*",
+        mainImage: {
+          populate: "*",
+        },
+        cardData: {
+          populate: "*",
+        },
+        blogCategories: {
+          populate: "",
+        },
+        content: {
+          populate: {
+            image: "*",
+          },
         },
       },
+      encodeValuesOnly: true,
     },
-    encodeValuesOnly: true,
   })
 
   return {

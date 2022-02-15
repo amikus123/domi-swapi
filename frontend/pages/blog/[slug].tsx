@@ -15,7 +15,9 @@ export default blog
 
 // sets whcih pages should be statucly rendered
 export async function getStaticPaths() {
-  const articlesRes = await fetchAPI("/blogs", { fields: ["slug"] })
+  const articlesRes = await fetchAPI("/blogs", {
+    urlParamsObject: { fields: ["slug"] },
+  })
 
   return {
     paths: articlesRes.data.map((article) => ({
@@ -30,28 +32,30 @@ export async function getStaticPaths() {
 // gets data for selected page
 export async function getStaticProps({ params }) {
   const blogData = await fetchAPI(`/blogs/`, {
-    filters: {
-      slug: params.slug,
-    },
+    urlParamsObject: {
+      filters: {
+        slug: params.slug,
+      },
 
-    populate: {
-      populate: "*",
-      mainImage: {
+      populate: {
         populate: "*",
-      },
-      cardData: {
-        populate: "*",
-      },
-      blogCategories: {
-        populate: "",
-      },
-      content: {
-        populate: {
-          image: "*",
+        mainImage: {
+          populate: "*",
+        },
+        cardData: {
+          populate: "*",
+        },
+        blogCategories: {
+          populate: "",
+        },
+        content: {
+          populate: {
+            image: "*",
+          },
         },
       },
+      encodeValuesOnly: true,
     },
-    encodeValuesOnly: true,
   })
 
   return {

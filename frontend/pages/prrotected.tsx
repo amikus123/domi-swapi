@@ -8,13 +8,7 @@ const prrotected = ({ res }) => {
 export async function getServerSideProps(ctx) {
   const jwt = parseCookies(ctx).jwt
   console.log(jwt)
-  const res = await fetchAPI(
-    "/prots/",
-    {},
-    {
-      Authorization: `Bearer ${jwt}`,
-    }
-  )
+  const res = await fetchAPI("/prots/", { jwt })
   console.log(res, "res")
   return {
     props: { res },

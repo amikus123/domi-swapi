@@ -9,36 +9,21 @@ export function getStrapiURL(path: string = ""): string {
   return `${process.env.API_URL || "http://localhost:1337"}${path}`
 }
 
-/**
- * Helper to make GET requests to Strapi API endpoints
- * @param {string} path Path of the API route
- * @param {Object} urlParamsObject URL params object, will be stringified
- * @param {Object} options Options passed to fetch
- * @returns Parsed API call response
- */
-
-interface FetchApiProps{
-  path:string;
-  options?:FetchApiOptions
-}
-interface FetchApiOptions{
-  headers?:Record<string,any>
-  urlParamsObject?:Record<string,any>
-  options?:Record<string,any>
-  jwt?:string
+interface FetchApiOptions {
+  headers?: Record<string, any>
+  urlParamsObject?: Record<string, any>
+  options?: Record<string, any>
+  jwt?: string
 }
 
-export async function fetchAPI(
-  path: string,
-  urlParamsObject = {},
-  headers = {},
-  options = {}
-) {
+export const fetchAPI = async (path: string, parmas: FetchApiOptions = {}) => {
   // Merge default and user options
-
+  const { headers, jwt, options, urlParamsObject } = parmas
+  const auth = jwt ? { Authorization: `Bearer ${jwt}` } : {}
   const mergedOptions = {
     headers: {
       "Content-Type": "application/json",
+      ...auth,
       ...headers,
     },
     ...options,
@@ -61,3 +46,11 @@ export async function fetchAPI(
   const data = await response.json()
   return data
 }
+
+/**
+ * Helper to make GET requests to Strapi API endpoints
+ * @param {string} path Path of the API route
+ * @param {Object} urlParamsObject URL params object, will be stringified
+ * @param {Object} options Options passed to fetch
+ * @returns Parsed API call response
+ */
