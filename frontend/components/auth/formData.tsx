@@ -16,6 +16,9 @@ const yupSchema = {
       "Hasło musi mieć conajmniej 8 symboli, w tym liczbę, małą i dużą litere."
     )
     .max(50, "Zbyt długie hasło!"),
+  loginPassword: Yup.string()
+    .required("Hasło jest wymagane")
+    .max(50, "Zbyt długie hasło!"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Hasła różnią się")
     .required("Potwierdź hasło"),
@@ -23,7 +26,7 @@ const yupSchema = {
 
 const loginSchema = Yup.object({
   email: yupSchema.email,
-  password: yupSchema.password,
+  password: yupSchema.loginPassword,
 })
 
 const signinSchema = Yup.object({

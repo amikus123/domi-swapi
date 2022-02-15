@@ -5,10 +5,8 @@ import qs from "qs"
  * @param {string} path Path of the URL
  * @returns {string} Full Strapi URL
  */
-export function getStrapiURL(path:string = "") :string{
-  return `${
-    process.env.API_URL || "http://localhost:1337"
-  }${path}`
+export function getStrapiURL(path: string = ""): string {
+  return `${process.env.API_URL || "http://localhost:1337"}${path}`
 }
 
 /**
@@ -18,21 +16,40 @@ export function getStrapiURL(path:string = "") :string{
  * @param {Object} options Options passed to fetch
  * @returns Parsed API call response
  */
-export async function fetchAPI(path:string, urlParamsObject = {}, options = {}) {
+
+interface FetchApiProps{
+  path:string;
+  options?:FetchApiOptions
+}
+interface FetchApiOptions{
+  headers?:Record<string,any>
+  urlParamsObject?:Record<string,any>
+  options?:Record<string,any>
+  jwt?:string
+}
+
+export async function fetchAPI(
+  path: string,
+  urlParamsObject = {},
+  headers = {},
+  options = {}
+) {
   // Merge default and user options
+
   const mergedOptions = {
     headers: {
       "Content-Type": "application/json",
+      ...headers,
     },
     ...options,
   }
-
-  // Build request URL 
+  console.log(mergedOptions, "P")
+  // Build request URL
   const queryString = qs.stringify(urlParamsObject)
   const requestUrl = `${getStrapiURL(
     `/api${path}${queryString ? `?${queryString}` : ""}`
   )}`
-    console.log(requestUrl,"red")
+  console.log(requestUrl, "red")
   // Trigger API call
   const response = await fetch(requestUrl, mergedOptions)
 

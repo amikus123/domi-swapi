@@ -1,5 +1,5 @@
 import axios from  "axios"
-
+import {setCookie} from "nookies"
 // Request API.
 // Add your own code here to customize or restrict how the public can register new users.
 
@@ -39,6 +39,11 @@ export const loginWithEmail = async (email: string, password: string) => {
       console.log(`Well done!`)
       console.log(`User profile`, response.data.user)
       console.log(`User token`, response.data.jwt)
+      // setting cookie 
+      setCookie(null,"jwt",response.data.jwt,{
+        maxAge:30*24*60*60,
+        path:"/"
+      })
       return response.data
     })
     .catch((error) => {
