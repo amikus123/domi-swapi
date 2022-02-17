@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
-import { getStrapiMedia } from "../lib/media"
 class MyDocument extends Document {
   render() {
     return (
