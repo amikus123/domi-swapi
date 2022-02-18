@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import FirstTimeModal from "../../components/User/form/FirstTimeModal"
 import InputColumn from "../../components/User/form/InputColumn"
 import ResultColumn from "../../components/User/form/ResultColumn"
-import { CalcData } from "./dietCalculation"
+import { CalcData } from "../../components/User/form/inputs/dietCalculation"
 
 const form = () => {
   // get information from api if user has eddited his data or not

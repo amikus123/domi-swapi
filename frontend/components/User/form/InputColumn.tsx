@@ -1,6 +1,6 @@
 import { Stack } from "@chakra-ui/react"
 import React from "react"
-import { CalcData } from "../../../pages/user/dietCalculation"
+import { CalcData } from "./inputs/dietCalculation"
 import DataInput from "./inputs/DataInput"
 import GenderButtons from "./inputs/GenderButtons"
 import InputItem from "./inputs/InputItem"

@@ -1,8 +1,14 @@
-import React from 'react'
+import { Stack } from "@chakra-ui/react"
+import React,{useState} from "react"
+import MyCalendar from "../../components/User/diet/MyCalendar"
+
 
 const diet = () => {
+
   return (
-    <div>diet</div>
+    <Stack>
+      <MyCalendar/>
+    </Stack>
   )
 }
 

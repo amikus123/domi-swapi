@@ -4,7 +4,7 @@ import {
   CalcData,
   CalcRes,
   totalCalc,
-} from "../../../pages/user/dietCalculation"
+} from "./inputs/dietCalculation"
 import InputItem from "./inputs/InputItem"
 import Poop from "./inputs/Poop"
 
