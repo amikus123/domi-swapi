@@ -9,10 +9,7 @@ interface DishLeftProps {
 
 const DishLeft = ({ imageData, name }: DishLeftProps) => {
   return (
-    <Flex w="300px" direction="column">
-      <Text fontSize={24} fontWeight={600}>
-        {name}
-      </Text>
+    <Flex w="300px" direction="column" justify="center" pt={12}>
       <Avatar my={8} src={imageData} w="200px" h="200px" />
     </Flex>
   )

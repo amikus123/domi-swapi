@@ -90,9 +90,11 @@ const diet = () => {
     end: addDays(new Date(), 4),
   }
 
+  const [singleDate, setSingleDate] = useState<Date>(new Date())
+
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
-      <MyCalendar dates={dates} setDates={setDates} minMaxDate={minMaxDate} />
+      <MyCalendar singleDate={singleDate}  setSingleDate={setSingleDate}dates={dates} setDates={setDates} minMaxDate={minMaxDate} />
       <DishColumn  data={dishes} />
       <Button>
         Pobierz

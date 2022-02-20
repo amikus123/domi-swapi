@@ -1,39 +1,52 @@
-import React, { forwardRef, useState } from "react"
-import ReactDatePicker, {
-  registerLocale,
-} from "react-datepicker"
+import React, { useState } from "react"
+import ReactDatePicker, { registerLocale } from "react-datepicker"
 import pl from "date-fns/locale/pl"
-import { addDays, subDays } from "date-fns"
 import "react-datepicker/dist/react-datepicker.css"
-import { Button, Stack } from "@chakra-ui/react"
+import { Button, Flex } from "@chakra-ui/react"
 import { StartAndEndDate } from "../../../pages/user/diet"
 
 registerLocale("pl", pl)
 
 export interface DatePickerProps {
-
-  minMaxDate:StartAndEndDate,
-    dates:StartAndEndDate,
-setDates:React.Dispatch<React.SetStateAction<StartAndEndDate>>
-
+  minMaxDate: StartAndEndDate
+  dates: StartAndEndDate
+  setDates: React.Dispatch<React.SetStateAction<StartAndEndDate>>
+  singleDate: Date
+  setSingleDate: React.Dispatch<React.SetStateAction<Date>>
 }
 
-export default function DatePicker({dates,setDates,minMaxDate}:DatePickerProps) {
-  
+export default function DatePicker({
+  dates,
+  setDates,
+  minMaxDate,
+  setSingleDate,
+  singleDate,
+}: DatePickerProps) {
   const onChange = (dates) => {
     const [start, end] = dates
-    setDates({start,end})
+    setDates({ start, end })
   }
-  const setStartDate = (date)=>{
-    setDates({...dates,start:date})
-  }
+
   const [showRange, setShowRange] = useState(false)
 
-  const {start:startDate,end:endDate} = dates
-  const {start:minDate,end:maxDate} = minMaxDate
-
+  const { start: startDate, end: endDate } = dates
+  const { start: minDate, end: maxDate } = minMaxDate
+  // * for some reason this works, one "if" statmentg causes graphical bugs
   return (
-    <Stack className={"light-theme"} w="300px">
+    <Flex className={"light-theme"} w="300px" pt={12} pb={2} direction="column">
+      {showRange ? null : (
+        <ReactDatePicker
+          locale="pl"
+          id="date"
+          selected={singleDate}
+          onChange={setSingleDate}
+          dateFormat="dd/MM/yyyy"
+          minDate={minDate}
+          maxDate={maxDate}
+          showPopperArrow={true}
+          selectsRange={false}
+        />
+      )}
       {showRange ? (
         <ReactDatePicker
           locale="pl"
@@ -49,24 +62,10 @@ export default function DatePicker({dates,setDates,minMaxDate}:DatePickerProps) 
           selectsRange={true}
           allowSameDay
         />
-      ) : (
-        <ReactDatePicker
-          locale="pl"
-          id="date"
-          selected={startDate}
-          onChange={setStartDate}
-          dateFormat="dd/MM/yyyy"
-          minDate={minDate}
-          maxDate={maxDate}
-          showPopperArrow={true}
-          selectsRange={false}
-        />
-      )}
+      ) : null}
       <Button
+        mt={4}
         onClick={() => {
-          if (showRange) {
-            setDates({...dates,end:null})
-          }
           setShowRange(!showRange)
         }}
         colorScheme="teal"
@@ -74,6 +73,6 @@ export default function DatePicker({dates,setDates,minMaxDate}:DatePickerProps) 
       >
         {showRange ? "Zakres dat" : "Pojedyńczy dzień"}
       </Button>
-    </Stack>
+    </Flex>
   )
 }

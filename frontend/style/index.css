@@ -46,6 +46,7 @@ main {
 
 
 /* for calendar  */
+
 .light-theme{
   --light-gray: var(--chakra-colors-gray-200) !important;
   --gray: var(--chakra-colors-gray-300) !important;
@@ -75,7 +76,6 @@ main {
   --negative-text:var(--chakra-colors-black) !important;
 }
 
-/* if you dont want to use chakra's theme use this class in the wrapping div. These are the exact original values */
 .light-theme-original{
   --light-gray: #cccccc !important;
   --gray: #b3b3b3 !important;

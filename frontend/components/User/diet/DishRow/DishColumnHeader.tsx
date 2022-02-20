@@ -12,8 +12,9 @@ const DishColumnHeader = ({ data }: DishColumnHeaderProps) => {
       w="100%"
       direction="row"
       justify="space-between"
-      fontWeight={400}
-      fontSize={16}
+      fontWeight={500}
+      fontSize={20}
+      py={4}
     >
       <Text>{dayName}</Text>
       <Text>{dateString}</Text>
