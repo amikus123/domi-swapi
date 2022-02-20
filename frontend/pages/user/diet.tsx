@@ -3,7 +3,8 @@ import { addDays, subDays } from "date-fns"
 import React, { useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
 import MyCalendar from "../../components/User/diet/MyCalendar"
-
+// perchance move to difftent file so it does not always load
+import "react-datepicker/dist/react-datepicker.css"
 export interface StartAndEndDate {
   start: Date
   end: Date | null

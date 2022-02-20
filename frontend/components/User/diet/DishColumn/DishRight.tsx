@@ -4,14 +4,14 @@ import { Ingredient } from "../../../../pages/user/diet"
 import Dishingredients from "./Dishingredients"
 import DishNutrition from "./DishNutrition"
 import DishRecipe from "./DishRecipe"
-interface DishRightProps{
+interface DishRightProps {
   indigredietnts: Ingredient[]
   nutritions: Ingredient[]
   recipe: string
-
 }
-const DishRight = ({indigredietnts,nutritions,recipe}:DishRightProps) => {
+const DishRight = ({ indigredietnts, nutritions, recipe }: DishRightProps) => {
   return (
+    
     <Tabs isFitted variant="enclosed" w="100%" pl={8}>
       <TabList mb="1em">
         <Tab>Przepis</Tab>
@@ -20,13 +20,13 @@ const DishRight = ({indigredietnts,nutritions,recipe}:DishRightProps) => {
       </TabList>
       <TabPanels>
         <TabPanel>
-<DishRecipe recipe={recipe}/>
+          <DishRecipe recipe={recipe} />
         </TabPanel>
         <TabPanel>
-          <Dishingredients data={indigredietnts}/>
+          <Dishingredients data={indigredietnts} />
         </TabPanel>
         <TabPanel>
-          <DishNutrition   data={nutritions}/>
+          <DishNutrition data={nutritions} />
         </TabPanel>
       </TabPanels>
     </Tabs>

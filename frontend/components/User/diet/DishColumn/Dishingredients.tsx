@@ -7,17 +7,19 @@ import {
   Tbody,
   Td,
   Tfoot,
+  Button,
+  Flex,
 } from "@chakra-ui/react"
 import React from "react"
 import { Ingredient } from "../../../../pages/user/diet"
 
-
-interface DishRecpipeProps{
+interface DishRecpipeProps {
   data: Ingredient[]
 }
 
-const Dishingredients = ({data}:DishRecpipeProps) => {
+const Dishingredients = ({ data }: DishRecpipeProps) => {
   return (
+    <Flex direction="column" align="center">
       <Table variant="simple">
         <Thead>
           <Tr>
@@ -36,6 +38,10 @@ const Dishingredients = ({data}:DishRecpipeProps) => {
           })}
         </Tbody>
       </Table>
+      <Button mt={10} w={60}>
+        Zobacz zammienniki
+      </Button>
+    </Flex>
   )
 }
 

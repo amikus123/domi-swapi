@@ -5,8 +5,8 @@ import { fetchAPI } from "../lib/api"
 import { Chakra } from "../style/chakraProvider"
 import Router, { useRouter } from "next/router"
 import { parseCookies } from "nookies"
-// Store Strapi Global object in context
 import Layout from "../components/Single/Layout"
+
 
 export const GlobalContext = createContext({})
 

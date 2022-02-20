@@ -1,15 +1,6 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Divider,
-  Stack,
-} from "@chakra-ui/react"
+import { Accordion, Divider, Stack } from "@chakra-ui/react"
 import React from "react"
-import { DayData, DayDate, DishData } from "../../../../pages/user/diet"
+import { DayData } from "../../../../pages/user/diet"
 import DishColumnHeader from "../DishRow/DishColumnHeader"
 import DishRow from "../DishRow/DishRow"
 

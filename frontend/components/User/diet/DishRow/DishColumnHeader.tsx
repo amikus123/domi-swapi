@@ -7,6 +7,7 @@ interface DishColumnHeaderProps {
 }
 const DishColumnHeader = ({ data }: DishColumnHeaderProps) => {
   const { dateString, dayName, kcalCount } = data
+  
   return (
     <Flex
       w="100%"

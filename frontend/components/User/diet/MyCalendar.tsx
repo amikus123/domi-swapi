@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import ReactDatePicker, { registerLocale } from "react-datepicker"
 import pl from "date-fns/locale/pl"
-import "react-datepicker/dist/react-datepicker.css"
 import { Button, Flex } from "@chakra-ui/react"
 import { StartAndEndDate } from "../../../pages/user/diet"
 
