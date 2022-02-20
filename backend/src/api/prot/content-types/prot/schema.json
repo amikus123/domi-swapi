@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prots",
+  "info": {
+    "singularName": "prot",
+    "pluralName": "prots",
+    "displayName": "prot"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "XD": {
+      "type": "string"
+    }
+  }
+}
