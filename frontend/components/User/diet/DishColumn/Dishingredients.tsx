@@ -1,23 +1,26 @@
 import {
   Table,
-  TableCaption,
   Thead,
   Tr,
   Th,
   Tbody,
   Td,
-  Tfoot,
   Button,
   Flex,
+  useDisclosure,
 } from "@chakra-ui/react"
 import React from "react"
 import { Ingredient } from "../../../../pages/user/diet"
+import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
   data: Ingredient[]
 }
 
 const Dishingredients = ({ data }: DishRecpipeProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const initialRef = React.useRef()
+  //* if there ar no viable options for replacements, we wont show the modal
   return (
     <Flex direction="column" align="center">
       <Table variant="simple">
@@ -38,9 +41,17 @@ const Dishingredients = ({ data }: DishRecpipeProps) => {
           })}
         </Tbody>
       </Table>
-      <Button mt={10} w={60}>
-        Zobacz zammienniki
+
+      <Button mt={10} w={60} onClick={onOpen}>
+        Zmień składniki
       </Button>
+
+      <IndigredientModal
+        replacements={[]}
+        isOpen={isOpen}
+        onClose={onClose}
+        initialRef={initialRef}
+      />
     </Flex>
   )
 }
