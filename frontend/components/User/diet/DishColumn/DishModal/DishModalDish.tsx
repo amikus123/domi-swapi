@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Avatar } from "@chakra-ui/react"
+import { Flex, Box, Text, Avatar, CSSObject } from "@chakra-ui/react"
 import React from "react"
 
 const src = "/86400.jpg"
@@ -15,12 +15,24 @@ const DishModalDish = React.forwardRef(
       console.log("selected")
       onClose()
     }
+
+    const selectedStle: CSSObject = { borderColor: "red", outlineWidth: 0 }
+    const hoverStyle: CSSObject = {
+      ...selectedStle,
+      backgroundColor: "gray.200",
+    }
     return (
       <Flex
         mb={4}
         align="center"
         tabIndex={index}
-        _focus={{ outline: "1px solid red" }}
+        border="1px"
+        borderRadius="lg"
+        p={4}
+        transitionDuration="0.5s"
+        borderColor="teal.400"
+        _focus={selectedStle}
+        _hover={hoverStyle}
         ref={ref}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
@@ -28,6 +40,7 @@ const DishModalDish = React.forwardRef(
           }
         }}
         onClick={selectReplacement}
+        cursor="pointer"
       >
         <Flex>
           <Avatar src={src} w={100} h={100} />
