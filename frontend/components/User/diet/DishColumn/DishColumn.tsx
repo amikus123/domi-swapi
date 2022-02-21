@@ -1,22 +1,22 @@
 import { Accordion, Divider, Stack } from "@chakra-ui/react"
 import React from "react"
-import { DayData } from "../../../../pages/user/diet"
+import { DayData, SingleDietDayData, TrueDishData } from "../../../../pages/user/diet"
 import DishColumnHeader from "../DishRow/DishColumnHeader"
 import DishRow from "../DishRow/DishRow"
 
 interface DishColumnProps {
-  data: DayData[]
+  diet: SingleDietDayData[]
 }
 
 // * if we show more than one day, we hide all of them expect the fisrt
-const DishColumn = ({ data }: DishColumnProps) => {
+const DishColumn = ({ diet }: DishColumnProps) => {
   return (
     <>
-      {data.map((item, key) => {
+      {diet.map((item, key) => {
         return (
           <Stack w="100%" key={key}>
-            <DishColumnHeader data={item.dayData} />
-
+            <DishColumnHeader data={item} />
+          
             {item.dishes.map((dish, index) => {
               return (
                 <Accordion
@@ -28,7 +28,7 @@ const DishColumn = ({ data }: DishColumnProps) => {
                 </Accordion>
               )
             })}
-            {key + 1 !== data.length ? <Divider py={2} /> : null}
+            {key + 1 !== diet.length ? <Divider py={2} /> : null}
           </Stack>
         )
       })}

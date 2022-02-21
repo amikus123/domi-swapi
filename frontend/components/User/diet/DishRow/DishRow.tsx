@@ -8,15 +8,23 @@ import {
   Box,
 } from "@chakra-ui/react"
 import React from "react"
-import { DishData } from "../../../../pages/user/diet"
+import { TrueDishData } from "../../../../pages/user/diet"
 import DishLeft from "../DishColumn/DishLeft"
 import DishRight from "../DishColumn/DishRight"
 
 interface DishRowProps {
-  dish: DishData
+  dish: TrueDishData
 }
 const DishRow = ({ dish }: DishRowProps) => {
-  const { category, imageData, indigredietnts, name, nutritions, recipe } = dish
+  const {
+    category,
+    imageData,
+    indgredients,
+    name,
+    nutrients,
+    recipe,
+    replacements,
+  } = dish
   return (
     <AccordionItem>
       <AccordionButton>
@@ -32,8 +40,8 @@ const DishRow = ({ dish }: DishRowProps) => {
         <Flex px={4} align="flex-start">
           <DishLeft imageData={imageData} name={name} />
           <DishRight
-            indigredietnts={indigredietnts}
-            nutritions={nutritions}
+            indgredients={indgredients}
+            nutrients={nutrients}
             recipe={recipe}
           />
         </Flex>

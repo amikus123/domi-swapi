@@ -19,6 +19,11 @@ interface IndigredientModalProps {
   initialRef: any
 }
 
+interface Replacements {
+  main: string
+  options: string[]
+}
+
 const IndigredientModal = ({
   isOpen,
   onClose,
@@ -26,6 +31,15 @@ const IndigredientModal = ({
   initialRef,
 }: IndigredientModalProps) => {
   replacements = [1, 2, 3, 4, 5, 6]
+
+  const xd: Replacements = {
+    main: "Czerwona papryka - 1 sztuka",
+    options: [
+      "Żółta papryka - 1 sztuka",
+      "Zielona papryka - 1 sztuka",
+      "Udko z kurczaka - 25dag",
+    ],
+  }
   return (
     <Modal
       isOpen={isOpen}

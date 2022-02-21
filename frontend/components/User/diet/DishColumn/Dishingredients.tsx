@@ -9,12 +9,13 @@ import {
   Flex,
   useDisclosure,
 } from "@chakra-ui/react"
+import { capitalize } from "lodash"
 import React from "react"
-import { Ingredient } from "../../../../pages/user/diet"
+import { TrueIngredients } from "../../../../pages/user/diet"
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
-  data: Ingredient[]
+  data: TrueIngredients
 }
 
 const Dishingredients = ({ data }: DishRecpipeProps) => {
@@ -31,11 +32,12 @@ const Dishingredients = ({ data }: DishRecpipeProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((item, index) => {
+        {Object.keys(data).map((key, index) => {
             return (
               <Tr key={index}>
-                <Td>{item.name}</Td>
-                <Td>{item.amount}</Td>
+                
+                <Td>{capitalize(key)}</Td>
+                <Td>{data[key]}</Td>
               </Tr>
             )
           })}

@@ -1,15 +1,15 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react"
 import React from "react"
-import { Ingredient } from "../../../../pages/user/diet"
+import { Ingredient, TrueIngredients } from "../../../../pages/user/diet"
 import Dishingredients from "./Dishingredients"
 import DishNutrition from "./DishNutrition"
 import DishRecipe from "./DishRecipe"
 interface DishRightProps {
-  indigredietnts: Ingredient[]
-  nutritions: Ingredient[]
+  indgredients:TrueIngredients
+  nutrients: TrueIngredients
   recipe: string
 }
-const DishRight = ({ indigredietnts, nutritions, recipe }: DishRightProps) => {
+const DishRight = ({ indgredients,nutrients, recipe }: DishRightProps) => {
   return (
     
     <Tabs isFitted variant="enclosed" w="100%" pl={8}>
@@ -23,10 +23,10 @@ const DishRight = ({ indigredietnts, nutritions, recipe }: DishRightProps) => {
           <DishRecipe recipe={recipe} />
         </TabPanel>
         <TabPanel>
-          <Dishingredients data={indigredietnts} />
+          <Dishingredients data={indgredients} />
         </TabPanel>
         <TabPanel>
-          <DishNutrition data={nutritions} />
+          <DishNutrition data={nutrients} />
         </TabPanel>
       </TabPanels>
     </Tabs>

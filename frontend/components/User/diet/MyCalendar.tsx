@@ -12,6 +12,8 @@ export interface DatePickerProps {
   setDates: React.Dispatch<React.SetStateAction<StartAndEndDate>>
   singleDate: Date
   setSingleDate: React.Dispatch<React.SetStateAction<Date>>
+  showRange: boolean
+  setShowRange: React.Dispatch<React.SetStateAction<Boolean>>
 }
 
 export default function DatePicker({
@@ -20,13 +22,13 @@ export default function DatePicker({
   minMaxDate,
   setSingleDate,
   singleDate,
+  setShowRange,
+  showRange,
 }: DatePickerProps) {
   const onChange = (dates) => {
     const [start, end] = dates
     setDates({ start, end })
   }
-
-  const [showRange, setShowRange] = useState(false)
 
   const { start: startDate, end: endDate } = dates
   const { start: minDate, end: maxDate } = minMaxDate
