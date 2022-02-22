@@ -10,7 +10,10 @@ import {
   Stack,
 } from "@chakra-ui/react"
 import React, { useState } from "react"
-import { ReplecableIndegredient } from "../../../../../pages/user/diet"
+import {
+  ObjectFrontendIndexes,
+  ReplecableIndegredient,
+} from "../../../../../pages/user/diet"
 import IndigredientChoice from "./IndigredientChoice"
 
 interface IndigredientModalProps {
@@ -18,11 +21,8 @@ interface IndigredientModalProps {
   onClose: () => void
   data: ReplecableIndegredient[]
   initialRef: any
-}
-
-interface Replacements {
-  main: string
-  options: string[]
+  indexes: ObjectFrontendIndexes
+  replaceIngredient: (IDs: ObjectFrontendIndexes) => void
 }
 
 const IndigredientModal = ({
@@ -30,10 +30,10 @@ const IndigredientModal = ({
   onClose,
   data,
   initialRef,
+  indexes,
+  replaceIngredient,
 }: IndigredientModalProps) => {
-
-
-  const [dataLength ,setLength] = useState(Object.keys(data).length)
+  const [dataLength, setLength] = useState(Object.keys(data).length)
   return (
     <Modal
       isOpen={isOpen}
@@ -48,19 +48,26 @@ const IndigredientModal = ({
         <ModalBody>
           <Stack spacing={4}>
             {data.map((item, index) => {
-              return <IndigredientChoice name={item.name} replacable={item.replacements} key={index} />
+              return (
+                <IndigredientChoice
+                  replaceIngredient={replaceIngredient}
+                  indexes={{ ...indexes, indgredientId: index }}
+                data = {item}
+                  key={index}
+                />
+              )
             })}
           </Stack>
         </ModalBody>
 
-        <ModalFooter>
+        <ModalFooter >
           <Button tabIndex={dataLength + 1} variant="ghost">
             Domyślny posiłek
           </Button>
-          <Button
+          <Button 
             tabIndex={dataLength + 2}
             colorScheme="blue"
-            mr={3}
+            ml={3}
             onClick={onClose}
           >
             Zamknij

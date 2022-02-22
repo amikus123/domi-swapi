@@ -1,20 +1,26 @@
 import { Button, Flex, Stack, Text, useToast } from "@chakra-ui/react"
-import { capitalize, delay, throttle } from "lodash"
+import { capitalize } from "lodash"
 import React, { useState } from "react"
-import { Ingredient, ReplecableIndegredient } from "../../../../../pages/user/diet"
+import {
+  ObjectFrontendIndexes,
+  ReplecableIndegredient,
+} from "../../../../../pages/user/diet"
 
 interface IndigredientChoiceProps {
-  name: string
-  replacable: Ingredient[]
+  data: ReplecableIndegredient
+  indexes: ObjectFrontendIndexes
+  replaceIngredient: (IDs: ObjectFrontendIndexes) => void
 }
-const IndigredientChoice = ({ replacable, name }: IndigredientChoiceProps) => {
+const IndigredientChoice = ({
+  data,
 
-
-
+  indexes,
+  replaceIngredient,
+}: IndigredientChoiceProps) => {
   const toast = useToast()
   const [loading, setLoading] = useState(false)
-
-  const handleClick = async () => {
+  const { amount, name, replacements } = data
+  const handleClick = async (replaceableIndex: number) => {
     setLoading(true)
 
     const myPromise = new Promise((resolve, reject) => {
@@ -36,6 +42,7 @@ const IndigredientChoice = ({ replacable, name }: IndigredientChoiceProps) => {
         duration: 3000,
         isClosable: true,
       })
+      replaceIngredient({ ...indexes, replacebleId: replaceableIndex })
       setLoading(false)
     } else {
       toast({
@@ -49,18 +56,15 @@ const IndigredientChoice = ({ replacable, name }: IndigredientChoiceProps) => {
     }
   }
 
-
-
   return (
     <>
-      {replacable &&
-      replacable.length > 0 ? (
+      {replacements && replacements.length > 0 ? (
         <Flex direction="column">
           <Text w="100%" mb={4} fontWeight={500} fontSize={20}>
-            {capitalize(name)}
+            {capitalize(name)} - {capitalize(amount)}
           </Text>
           <Stack alignSelf="flex-end">
-            {replacable.map((item, index) => {
+            {replacements.map((item, index) => {
               return (
                 <Button
                   colorScheme="teal"
@@ -68,7 +72,7 @@ const IndigredientChoice = ({ replacable, name }: IndigredientChoiceProps) => {
                   key={index}
                   isLoading={loading}
                   onClick={() => {
-                    handleClick()
+                    handleClick(index)
                   }}
                 >
                   {capitalize(item.name)} - {capitalize(item.amount)}

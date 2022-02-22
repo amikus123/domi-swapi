@@ -1,15 +1,17 @@
 import { Accordion, Divider, Stack } from "@chakra-ui/react"
 import React from "react"
-import {  SingleDietDayData, } from "../../../../pages/user/diet"
+import {  ObjectFrontendIndexes, SingleDietDayData, } from "../../../../pages/user/diet"
 import DishColumnHeader from "../DishRow/DishColumnHeader"
 import DishRow from "../DishRow/DishRow"
 
 interface DishColumnProps {
   diet: SingleDietDayData[]
+  replaceIngredient:(IDs: ObjectFrontendIndexes) => void,
+  
 }
 
 // * if we show more than one day, we hide all of them expect the fisrt
-const DishColumn = ({ diet }: DishColumnProps) => {
+const DishColumn = ({ diet,replaceIngredient }: DishColumnProps) => {
   return (
     <>
       {diet.map((item, key) => {
@@ -24,7 +26,7 @@ const DishColumn = ({ diet }: DishColumnProps) => {
                   allowMultiple
                   key={index}
                 >
-                  <DishRow dish={dish} />
+                  <DishRow dish={dish}  replaceIngredient={replaceIngredient} indexes={{dayId:key,dishId:index}} />
                 </Accordion>
               )
             })}

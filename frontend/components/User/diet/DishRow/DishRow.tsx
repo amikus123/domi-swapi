@@ -8,14 +8,18 @@ import {
   Box,
 } from "@chakra-ui/react"
 import React from "react"
-import { TrueDishData } from "../../../../pages/user/diet"
+import { ObjectFrontendIndexes, TrueDishData } from "../../../../pages/user/diet"
 import DishLeft from "../DishColumn/DishLeft"
 import DishRight from "../DishColumn/DishRight"
 
 interface DishRowProps {
   dish: TrueDishData
+  indexes:ObjectFrontendIndexes
+  replaceIngredient:(IDs: ObjectFrontendIndexes) => void,
+
+  
 }
-const DishRow = ({ dish }: DishRowProps) => {
+const DishRow = ({ dish,indexes,replaceIngredient }: DishRowProps) => {
   const {
     category,
     imageData,
@@ -40,6 +44,8 @@ const DishRow = ({ dish }: DishRowProps) => {
         <Flex px={4} align="flex-start">
           <DishLeft imageData={imageData} name={name} />
           <DishRight
+          replaceIngredient={replaceIngredient}
+          indexes={indexes}
             indgredients={indgredients}
             nutrients={nutrients}
             recipe={recipe}

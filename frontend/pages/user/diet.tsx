@@ -49,12 +49,29 @@ export interface TrueDishData {
 }
 const indgredientsExample: ReplecableIndegredient[] = [
   {
-    name: "poncz",
+    name: "Papryka czerwona",
     amount: "2 sztuki",
-    replacements: [{ name: "mar", amount: "XD" }],
+    replacements: [
+      { name: "Papryka żółta", amount: "2 sztuki" },
+      { name: "Papryka zielona ", amount: "2 sztuki" },
+    ],
   },
-  { name: "papryka", amount: "2 sztuki" },
-  { name: "cebula", amount: "50 g" },
+  {
+    name: "Kurczak",
+    amount: "2 udka sztuki",
+    replacements: [
+      { name: "Gęś", amount: "200g" },
+      { name: "Wieprzowina", amount: "2kg" },
+    ],
+  },
+  {
+    name: "cebula",
+    amount: "50 g",
+    replacements: [
+      { name: "Czerwona cebula", amount: "2 sztuki" },
+      { name: "czosnek", amount: "3 ząbki" },
+    ],
+  },
 ]
 
 const nutrientsExample: Ingredient[] = [{ name: "kalorie", amount: "12asdasd" }]
@@ -84,6 +101,13 @@ const singleDietDay: SingleDietDayData = {
   id: 1,
 }
 
+export interface ObjectFrontendIndexes {
+  dayId?: number
+  dishId?: number
+  indgredientId?: number
+  replacebleId?: number
+}
+
 const diets: SingleDietDayData[] = [singleDietDay]
 const diet = () => {
   const [dates, setDates] = useState<StartAndEndDate>({
@@ -105,9 +129,8 @@ const diet = () => {
       const x = diets.filter((item) => {
         // filtering based on range, this handles edge cases (or at least it should)
         return (
-          (isAfter(item.date, dates.start) ||
-            isSameDay(item.date, dates.start)) &&
-          (isBefore(item.date, dates.end) || isSameDay(item.date, dates.end))
+          isSameDay(item.date, dates.start) ||
+          (isAfter(item.date, dates.start) && isBefore(item.date, dates.end))
         )
       })
       console.log(x)
@@ -123,28 +146,23 @@ const diet = () => {
   // const [dietData, setDietData] = useState<>([])
   // * date controls data passed to the next components
 
-  const replaceIngredient = () => {
-    // index to change
-    const dayId = 1
-    const dishId = 1
-    const indgredientId = 1
+  const replaceIngredient = (indexes: ObjectFrontendIndexes) => {
+    // *these are font end only, requesty to db has to use objects ids
+    const { dayId, dishId, indgredientId, replacebleId } = indexes
+    const stateCopy = cloneDeep(dietData)
+    const replecable =
+      stateCopy[dayId].dishes[dishId].indgredients[indgredientId]
+    const ogAmount = replecable.amount
+    const ogName = replecable.name
+    const newName = replecable.replacements[replacebleId].name
+    const newAmount = replecable.replacements[replacebleId].amount
+    replecable.name = newName
+    replecable.amount = newAmount
+    replecable.replacements[replacebleId].amount = ogAmount
+    replecable.replacements[replacebleId].name = ogName
 
-    const clicked: Ingredient = { amount: "", name: "" }
-    const copy = dietData.map((item) => {
-      if (item.id !== dayId) return cloneDeep(item)
-      else {
-        const copimus = cloneDeep(item)
-        const dish = copimus.dishes.filter((item) => item.id === dishId)[0]
-        // replace
-        const ing = dish.indgredients
-        const chosen = ing["a"]
-
-        const xd = chosen
-
-        return copimus
-      }
-    })
-    setDietData(copy)
+    // * request to db  or sth
+    setDietData(stateCopy)
   }
 
   return (
@@ -158,7 +176,10 @@ const diet = () => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      <DishColumn diet={filterDiet(dietData)} />
+      <DishColumn
+        diet={filterDiet(dietData)}
+        replaceIngredient={replaceIngredient}
+      />
       <Button>Pobierz</Button>
     </Stack>
   )

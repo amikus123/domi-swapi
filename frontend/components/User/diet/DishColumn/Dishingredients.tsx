@@ -11,11 +11,13 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import { ReplecableIndegredient } from "../../../../pages/user/diet"
+import { ObjectFrontendIndexes, ReplecableIndegredient } from "../../../../pages/user/diet"
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
   data: ReplecableIndegredient[]
+  indexes:ObjectFrontendIndexes
+  replaceIngredient:(IDs: ObjectFrontendIndexes) => void,
 }
 
 const checkIfCanReplace = (data: ReplecableIndegredient[]) => {
@@ -27,7 +29,7 @@ const checkIfCanReplace = (data: ReplecableIndegredient[]) => {
   return false
 }
 
-const Dishingredients = ({ data }: DishRecpipeProps) => {
+const Dishingredients = ({ data,indexes,replaceIngredient }: DishRecpipeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   //* if there ar no viable options for replacements, we wont show the modal
@@ -63,6 +65,8 @@ const Dishingredients = ({ data }: DishRecpipeProps) => {
         isOpen={isOpen}
         onClose={onClose}
         initialRef={initialRef}
+        replaceIngredient={replaceIngredient}
+        indexes={indexes} 
       />
     </Flex>
   )
