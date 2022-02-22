@@ -12,44 +12,24 @@ import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
 import MyCalendar from "../../components/User/diet/MyCalendar"
 // perchance move to difftent file so it does not always load
 import "react-datepicker/dist/react-datepicker.css"
+import { cloneDeep } from "lodash"
 export interface StartAndEndDate {
   start: Date
-  end: Date | null
+  end: Date
 }
 export interface Ingredient {
   name: string
   amount: string
 }
 
-export interface DishData {
-  imageData: any
-  name: string
-  category: string
-  recipe: string
-  indigredietnts: Ingredient[]
-  nutritions: Ingredient[]
-}
-
-export interface DayDate {
-  dayName: string
-  dateString: string
-  kcalCount: number
-}
 const recipe =
   "Na dużą patelnię wsypać kaszę, dodać łyżkę oleju i chwilę podsmażyć. W międzyczasie dodać suszone oregano. Przesunąć składniki na bok patelni, w wolne miejsce wlać 1 łyżeczkę oleju, włożyć pokrojonego w kosteczkę indyka. Polać sosem sojowym i obsmażać przez około 7 minut mieszając od czasu do czasu. Wymieszać wszystkie składniki na patelni i wlać gorącą wodę, doprawić pieprzem i zagotować. Przykryć pokrywą i gotować pod przykryciem przez 20 minut. Fasolkę przyciąć na końcach i pokroić na kawałki (mrożoną fasolkę należy najpierw rozmrozić, np. na sitku, durszlaku). Gotować przez około 10 minut pod przykryciem, w międzyczasie raz składniki przemieszać. Otworzyć, wymieszać i gotować jeszcze przez około 5 minut do miękkości kaszy. 2 minuty przed końcem gotowania dodać umyty szpinak w liściach i gotować do jego zwiędnięcia."
 
-export interface DayData {
-  dishes: DishData[]
-  dayData: DayDate
-}
-
-export type TrueIngredients = Record<string, string>
-
 export interface ReplecableIndegredient {
+  name: string
   amount: string
-  replacements?: TrueIngredients
+  replacements?: Ingredient[]
 }
-export type DishIndegredients = Record<string, ReplecableIndegredient>
 
 export interface BaseDishData {
   name: string
@@ -63,18 +43,21 @@ export interface TrueDishData {
   // markdown
   recipe: any
   replacements: BaseDishData[]
-  indgredients: DishIndegredients
-  nutrients: TrueIngredients
+  indgredients: ReplecableIndegredient[]
+  nutrients: Ingredient[]
+  id: number
 }
-const indgredientsExample: DishIndegredients = {
-  marchewka: { amount: "2 sztuki", replacements: { marchew: "1kg" } },
-  ziemniaki: { amount: "2 sztuki" },
-  kurczak: { amount: "50 g" },
-}
-const nutrientsExample: TrueIngredients = {
-  kalorie: "2500 kcal",
-  białko: "20g",
-}
+const indgredientsExample: ReplecableIndegredient[] = [
+  {
+    name: "poncz",
+    amount: "2 sztuki",
+    replacements: [{ name: "mar", amount: "XD" }],
+  },
+  { name: "papryka", amount: "2 sztuki" },
+  { name: "cebula", amount: "50 g" },
+]
+
+const nutrientsExample: Ingredient[] = [{ name: "kalorie", amount: "12asdasd" }]
 
 const replacementsExample: BaseDishData[] = []
 
@@ -86,23 +69,26 @@ const dishExample: TrueDishData = {
   nutrients: nutrientsExample,
   recipe: recipe,
   replacements: replacementsExample,
+  id: 1,
 }
 
 export interface SingleDietDayData {
   date: Date
   dishes: TrueDishData[]
+  id: number
 }
 
 const singleDietDay: SingleDietDayData = {
   date: startOfToday(),
   dishes: [dishExample],
+  id: 1,
 }
 
 const diets: SingleDietDayData[] = [singleDietDay]
 const diet = () => {
   const [dates, setDates] = useState<StartAndEndDate>({
     start: startOfToday(),
-    end: null,
+    end: startOfToday(),
   })
   const minMaxDate: StartAndEndDate = {
     start: subDays(startOfToday(), 4),
@@ -136,6 +122,30 @@ const diet = () => {
   }
   // const [dietData, setDietData] = useState<>([])
   // * date controls data passed to the next components
+
+  const replaceIngredient = () => {
+    // index to change
+    const dayId = 1
+    const dishId = 1
+    const indgredientId = 1
+
+    const clicked: Ingredient = { amount: "", name: "" }
+    const copy = dietData.map((item) => {
+      if (item.id !== dayId) return cloneDeep(item)
+      else {
+        const copimus = cloneDeep(item)
+        const dish = copimus.dishes.filter((item) => item.id === dishId)[0]
+        // replace
+        const ing = dish.indgredients
+        const chosen = ing["a"]
+
+        const xd = chosen
+
+        return copimus
+      }
+    })
+    setDietData(copy)
+  }
 
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>

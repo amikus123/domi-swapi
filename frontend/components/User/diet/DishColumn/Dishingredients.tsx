@@ -11,16 +11,16 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import { DishIndegredients } from "../../../../pages/user/diet"
+import { ReplecableIndegredient } from "../../../../pages/user/diet"
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
-  data: DishIndegredients
+  data: ReplecableIndegredient[]
 }
 
-const checkIfCanReplace = (data: DishIndegredients) => {
-  for (const i of Object.keys(data)) {
-    if (data[i].replacements && Object.keys(data[i].replacements).length > 0) {
+const checkIfCanReplace = (data: ReplecableIndegredient[]) => {
+  for (const i of data) {
+    if (i.replacements && i.replacements.length > 0) {
       return true
     }
   }
@@ -41,11 +41,11 @@ const Dishingredients = ({ data }: DishRecpipeProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {Object.keys(data).map((key, index) => {
+          {data.map((item, index) => {
             return (
               <Tr key={index}>
-                <Td>{capitalize(key)}</Td>
-                <Td>{data[key].amount}</Td>
+                <Td>{capitalize(item.name)}</Td>
+                <Td>{item.amount}</Td>
               </Tr>
             )
           })}

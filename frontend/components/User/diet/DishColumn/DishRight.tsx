@@ -1,12 +1,12 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react"
 import React from "react"
-import { DishIndegredients, TrueIngredients } from "../../../../pages/user/diet"
+import {  Ingredient,ReplecableIndegredient} from "../../../../pages/user/diet"
 import Dishingredients from "./Dishingredients"
 import DishNutrition from "./DishNutrition"
 import DishRecipe from "./DishRecipe"
 interface DishRightProps {
-  indgredients:DishIndegredients
-  nutrients: TrueIngredients
+  indgredients:ReplecableIndegredient[]
+  nutrients:  Ingredient[]
   recipe: string
 }
 const DishRight = ({ indgredients,nutrients, recipe }: DishRightProps) => {

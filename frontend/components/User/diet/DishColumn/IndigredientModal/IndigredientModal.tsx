@@ -10,13 +10,13 @@ import {
   Stack,
 } from "@chakra-ui/react"
 import React, { useState } from "react"
-import { DishIndegredients } from "../../../../../pages/user/diet"
+import { ReplecableIndegredient } from "../../../../../pages/user/diet"
 import IndigredientChoice from "./IndigredientChoice"
 
 interface IndigredientModalProps {
   isOpen: boolean
   onClose: () => void
-  data: DishIndegredients
+  data: ReplecableIndegredient[]
   initialRef: any
 }
 
@@ -47,8 +47,8 @@ const IndigredientModal = ({
         <ModalCloseButton />
         <ModalBody>
           <Stack spacing={4}>
-            {Object.keys(data).map((name, index) => {
-              return <IndigredientChoice name={name} replacable={data[name]} key={index} />
+            {data.map((item, index) => {
+              return <IndigredientChoice name={item.name} replacable={item.replacements} key={index} />
             })}
           </Stack>
         </ModalBody>

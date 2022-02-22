@@ -1,6 +1,6 @@
 import { Accordion, Divider, Stack } from "@chakra-ui/react"
 import React from "react"
-import { DayData, SingleDietDayData, TrueDishData } from "../../../../pages/user/diet"
+import {  SingleDietDayData, } from "../../../../pages/user/diet"
 import DishColumnHeader from "../DishRow/DishColumnHeader"
 import DishRow from "../DishRow/DishRow"
 

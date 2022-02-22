@@ -1,13 +1,16 @@
 import { Button, Flex, Stack, Text, useToast } from "@chakra-ui/react"
 import { capitalize, delay, throttle } from "lodash"
 import React, { useState } from "react"
-import { ReplecableIndegredient } from "../../../../../pages/user/diet"
+import { Ingredient, ReplecableIndegredient } from "../../../../../pages/user/diet"
 
 interface IndigredientChoiceProps {
   name: string
-  replacable: ReplecableIndegredient
+  replacable: Ingredient[]
 }
 const IndigredientChoice = ({ replacable, name }: IndigredientChoiceProps) => {
+
+
+
   const toast = useToast()
   const [loading, setLoading] = useState(false)
 
@@ -45,16 +48,19 @@ const IndigredientChoice = ({ replacable, name }: IndigredientChoiceProps) => {
       setLoading(false)
     }
   }
+
+
+
   return (
     <>
-      {replacable.replacements &&
-      Object.keys(replacable.replacements).length > 0 ? (
+      {replacable &&
+      replacable.length > 0 ? (
         <Flex direction="column">
           <Text w="100%" mb={4} fontWeight={500} fontSize={20}>
             {capitalize(name)}
           </Text>
           <Stack alignSelf="flex-end">
-            {Object.keys(replacable.replacements).map((item, index) => {
+            {replacable.map((item, index) => {
               return (
                 <Button
                   colorScheme="teal"
@@ -65,7 +71,7 @@ const IndigredientChoice = ({ replacable, name }: IndigredientChoiceProps) => {
                     handleClick()
                   }}
                 >
-                  {capitalize(item)} - {capitalize(replacable.replacements[item])}
+                  {capitalize(item.name)} - {capitalize(item.amount)}
                 </Button>
               )
             })}
