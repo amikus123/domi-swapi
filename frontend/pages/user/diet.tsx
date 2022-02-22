@@ -45,6 +45,12 @@ export interface DayData {
 
 export type TrueIngredients = Record<string, string>
 
+export interface ReplecableIndegredient {
+  amount: string
+  replacements?: TrueIngredients
+}
+export type DishIndegredients = Record<string, ReplecableIndegredient>
+
 export interface BaseDishData {
   name: string
   image: any
@@ -57,13 +63,13 @@ export interface TrueDishData {
   // markdown
   recipe: any
   replacements: BaseDishData[]
-  indgredients: TrueIngredients
+  indgredients: DishIndegredients
   nutrients: TrueIngredients
 }
-const indgredientsExample: TrueIngredients = {
-  marchewka: "2 sztuki",
-  ziemniaki: "2 sztuki",
-  kurczak: "50 g",
+const indgredientsExample: DishIndegredients = {
+  marchewka: { amount: "2 sztuki", replacements: { marchew: "1kg" } },
+  ziemniaki: { amount: "2 sztuki" },
+  kurczak: { amount: "50 g" },
 }
 const nutrientsExample: TrueIngredients = {
   kalorie: "2500 kcal",
@@ -91,7 +97,6 @@ const singleDietDay: SingleDietDayData = {
   date: startOfToday(),
   dishes: [dishExample],
 }
-
 
 const diets: SingleDietDayData[] = [singleDietDay]
 const diet = () => {

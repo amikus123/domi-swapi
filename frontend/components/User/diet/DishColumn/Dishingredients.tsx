@@ -11,11 +11,20 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import { TrueIngredients } from "../../../../pages/user/diet"
+import { DishIndegredients } from "../../../../pages/user/diet"
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
-  data: TrueIngredients
+  data: DishIndegredients
+}
+
+const checkIfCanReplace = (data: DishIndegredients) => {
+  for (const i of Object.keys(data)) {
+    if (data[i].replacements && Object.keys(data[i].replacements).length > 0) {
+      return true
+    }
+  }
+  return false
 }
 
 const Dishingredients = ({ data }: DishRecpipeProps) => {
@@ -32,24 +41,25 @@ const Dishingredients = ({ data }: DishRecpipeProps) => {
           </Tr>
         </Thead>
         <Tbody>
-        {Object.keys(data).map((key, index) => {
+          {Object.keys(data).map((key, index) => {
             return (
               <Tr key={index}>
-                
                 <Td>{capitalize(key)}</Td>
-                <Td>{data[key]}</Td>
+                <Td>{data[key].amount}</Td>
               </Tr>
             )
           })}
         </Tbody>
       </Table>
 
-      <Button mt={10} w={60} onClick={onOpen}>
-        Zmień składniki
-      </Button>
+      {checkIfCanReplace(data) ? (
+        <Button mt={10} w={60} onClick={onOpen}>
+          Zmień składniki
+        </Button>
+      ) : null}
 
       <IndigredientModal
-        replacements={[]}
+        data={data}
         isOpen={isOpen}
         onClose={onClose}
         initialRef={initialRef}

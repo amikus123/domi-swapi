@@ -9,13 +9,14 @@ import {
   Button,
   Stack,
 } from "@chakra-ui/react"
-import React from "react"
+import React, { useState } from "react"
+import { DishIndegredients } from "../../../../../pages/user/diet"
 import IndigredientChoice from "./IndigredientChoice"
 
 interface IndigredientModalProps {
   isOpen: boolean
   onClose: () => void
-  replacements: any[]
+  data: DishIndegredients
   initialRef: any
 }
 
@@ -27,19 +28,12 @@ interface Replacements {
 const IndigredientModal = ({
   isOpen,
   onClose,
-  replacements,
+  data,
   initialRef,
 }: IndigredientModalProps) => {
-  replacements = [1, 2, 3, 4, 5, 6]
 
-  const xd: Replacements = {
-    main: "Czerwona papryka - 1 sztuka",
-    options: [
-      "Żółta papryka - 1 sztuka",
-      "Zielona papryka - 1 sztuka",
-      "Udko z kurczaka - 25dag",
-    ],
-  }
+
+  const [dataLength ,setLength] = useState(Object.keys(data).length)
   return (
     <Modal
       isOpen={isOpen}
@@ -53,18 +47,18 @@ const IndigredientModal = ({
         <ModalCloseButton />
         <ModalBody>
           <Stack spacing={4}>
-            {replacements.map((item, index) => {
-              return <IndigredientChoice key={index} />
+            {Object.keys(data).map((name, index) => {
+              return <IndigredientChoice name={name} replacable={data[name]} key={index} />
             })}
           </Stack>
         </ModalBody>
 
         <ModalFooter>
-          <Button tabIndex={replacements.length + 1} variant="ghost">
+          <Button tabIndex={dataLength + 1} variant="ghost">
             Domyślny posiłek
           </Button>
           <Button
-            tabIndex={replacements.length + 2}
+            tabIndex={dataLength + 2}
             colorScheme="blue"
             mr={3}
             onClick={onClose}
