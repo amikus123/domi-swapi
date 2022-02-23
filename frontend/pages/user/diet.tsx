@@ -16,6 +16,8 @@ import { cloneDeep } from "lodash"
 import { dietExample } from "../../components/User/diet/dummyData"
 import { fetchAPI } from "../../lib/api"
 import { parseCookies } from "nookies"
+import qs from "qs"
+
 export interface StartAndEndDate {
   start: Date
   end: Date
@@ -179,9 +181,8 @@ export async function getServerSideProps(ctx) {
         },
         userDiet: {
           populate: "*",
-          dishPreferences:"*",
-          dishPreference:"*"
-
+          dishPreferences: "*",
+          dishPreference: "*",
         },
       },
 
@@ -191,36 +192,49 @@ export async function getServerSideProps(ctx) {
   })
   const unpacked = diet.data[0].attributes
   console.log(unpacked)
-  const dietId = unpacked.userDiet.data.id 
-  const userDiet = await fetchAPI(`/user-diets/${dietId}`, {
-    urlParamsObject: {
-      populate: {
-        diet:{
-          populate:"*"
-        },
-        dishPreference: {
-          populate: {
-            base:"*",
-            replacement:"*"
-          },
-        },
-        ingredientPreferences:"*",
+  const dietId = unpacked.userDiet.data.id
+  const query = qs.stringify(
+    {
+      populate: [
+        "userData",
+        "userDiet",
+        "userDiet.diet",
+        "userDiet.timeRange",
+        "userDiet.dishPreferences",
+        "userDiet.dishPreferences.original",
+        "userDiet.dishPreferences.preferred",
+        "userDiet.ingredientPreferences",
+        "userDiet.ingredientPreferences.dish",
+        "userDiet.ingredientPreferences.preferredIngredients",
 
-        // ingredientPreferences: {
-        //    populate: "*"
-        // },
-        dishPreferences:{
-          // array of objects with id so it wordks
-          populate:"*",
-        },
-        // done
-        timeRange: {
-          populate: "*",
+
+
+      ],
+      filters: {
+        id: {
+          $eq: dietId,
         },
       },
     },
-    jwt,
-  })
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+
+
+  let userDiet = await fetch(
+    `http://localhost:1337/api/user-combined-datas?${query}`,
+    {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    }
+  )
+  userDiet = await userDiet.json()
+
+  console.log("!!!!\n", Object.keys(userDiet), "XD")
+
   return {
     props: { userData, diet: unpacked, userDiet },
   }
