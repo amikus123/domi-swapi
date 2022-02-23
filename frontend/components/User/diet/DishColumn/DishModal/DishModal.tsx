@@ -9,12 +9,13 @@ import {
   Button,
 } from "@chakra-ui/react"
 import React from "react"
+import { BaseDishData } from "../../../../../pages/user/diet"
 import DishModalDish from "./DishModalDish"
 
 interface DishModalProps {
   isOpen: boolean
   onClose: () => void
-  replacements: any[]
+  replacements: BaseDishData[]
   initialRef: any
 }
 
@@ -24,7 +25,6 @@ const DishModal = ({
   replacements,
   initialRef,
 }: DishModalProps) => {
-  replacements = [1, 2, 3, 4, 5, 6]
   return (
     <Modal
       isOpen={isOpen}
@@ -44,6 +44,7 @@ const DishModal = ({
                 onClose={onClose}
                 key={index}
                 index={index}
+                data={item}
                 ref={index === 0 ? initialRef : null}
               />
             )
@@ -54,6 +55,7 @@ const DishModal = ({
           <Button tabIndex={replacements.length + 1} variant="ghost">
             Domyślny posiłek
           </Button>
+          
           <Button
             tabIndex={replacements.length + 2}
             colorScheme="blue"

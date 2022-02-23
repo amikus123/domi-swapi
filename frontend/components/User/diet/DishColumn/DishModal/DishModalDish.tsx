@@ -1,16 +1,18 @@
 import { Flex, Box, Text, Avatar, CSSObject } from "@chakra-ui/react"
 import React from "react"
+import { BaseDishData } from "../../../../../pages/user/diet"
 
 const src = "/86400.jpg"
 
 interface DishModalDishProps {
   index: number
   onClose: () => void
+  data: BaseDishData
 }
 const DishModalDish = React.forwardRef(
-  ({ index, onClose }: DishModalDishProps, ref: any) => {
+  ({ index, onClose, data }: DishModalDishProps, ref: any) => {
     // add nice border and add event on focus
-
+    const { description, image, name } = data
     const selectReplacement = () => {
       console.log("selected")
       onClose()
@@ -47,13 +49,9 @@ const DishModalDish = React.forwardRef(
         </Flex>
         <Flex direction="column" px={4}>
           <Text fontWeight={500} fontSize={20} pb={2}>
-            Jajecznica z jajkiem
+            {name}
           </Text>
-          <Text>
-            When the modal opens, focus is sent into the modal and set to the
-            first tabbable element. If there are no tabbled elements, focus is
-            set on ModalContent.
-          </Text>
+          <Text>{description}</Text>
         </Flex>
       </Flex>
     )

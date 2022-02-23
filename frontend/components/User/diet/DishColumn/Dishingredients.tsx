@@ -11,13 +11,16 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import { ObjectFrontendIndexes, ReplecableIndegredient } from "../../../../pages/user/diet"
+import {
+  ObjectFrontendIndexes,
+  ReplecableIndegredient,
+} from "../../../../pages/user/diet"
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
   data: ReplecableIndegredient[]
-  indexes:ObjectFrontendIndexes
-  replaceIngredient:(IDs: ObjectFrontendIndexes) => void,
+  indexes: ObjectFrontendIndexes
+  replaceIngredient: (IDs: ObjectFrontendIndexes) => void
 }
 
 const checkIfCanReplace = (data: ReplecableIndegredient[]) => {
@@ -29,7 +32,11 @@ const checkIfCanReplace = (data: ReplecableIndegredient[]) => {
   return false
 }
 
-const Dishingredients = ({ data,indexes,replaceIngredient }: DishRecpipeProps) => {
+const Dishingredients = ({
+  data,
+  indexes,
+  replaceIngredient,
+}: DishRecpipeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   //* if there ar no viable options for replacements, we wont show the modal
@@ -54,20 +61,22 @@ const Dishingredients = ({ data,indexes,replaceIngredient }: DishRecpipeProps) =
         </Tbody>
       </Table>
 
-      {checkIfCanReplace(data) ? (
-        <Button mt={10} w={60} onClick={onOpen}>
-          Zmień składniki
-        </Button>
-      ) : null}
+      {checkIfCanReplace(data) || (
+        <>
+          <Button mt={10} w={60} onClick={onOpen}>
+            Zmień składniki
+          </Button>
 
-      <IndigredientModal
-        data={data}
-        isOpen={isOpen}
-        onClose={onClose}
-        initialRef={initialRef}
-        replaceIngredient={replaceIngredient}
-        indexes={indexes} 
-      />
+          <IndigredientModal
+            data={data}
+            isOpen={isOpen}
+            onClose={onClose}
+            initialRef={initialRef}
+            replaceIngredient={replaceIngredient}
+            indexes={indexes}
+          />
+        </>
+      )}
     </Flex>
   )
 }

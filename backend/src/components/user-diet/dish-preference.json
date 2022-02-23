@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_user_diet_dish_preferences",
+  "info": {
+    "displayName": "dishPreference",
+    "icon": "book-reader"
+  },
+  "options": {},
+  "attributes": {
+    "base": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish.dish"
+    },
+    "replacement": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish.dish"
+    }
+  }
+}

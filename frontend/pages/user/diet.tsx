@@ -7,12 +7,15 @@ import {
   startOfToday,
   subDays,
 } from "date-fns"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
 import MyCalendar from "../../components/User/diet/MyCalendar"
 // perchance move to difftent file so it does not always load
 import "react-datepicker/dist/react-datepicker.css"
 import { cloneDeep } from "lodash"
+import { dietExample } from "../../components/User/diet/dummyData"
+import { fetchAPI } from "../../lib/api"
+import { parseCookies } from "nookies"
 export interface StartAndEndDate {
   start: Date
   end: Date
@@ -21,9 +24,6 @@ export interface Ingredient {
   name: string
   amount: string
 }
-
-const recipe =
-  "Na dużą patelnię wsypać kaszę, dodać łyżkę oleju i chwilę podsmażyć. W międzyczasie dodać suszone oregano. Przesunąć składniki na bok patelni, w wolne miejsce wlać 1 łyżeczkę oleju, włożyć pokrojonego w kosteczkę indyka. Polać sosem sojowym i obsmażać przez około 7 minut mieszając od czasu do czasu. Wymieszać wszystkie składniki na patelni i wlać gorącą wodę, doprawić pieprzem i zagotować. Przykryć pokrywą i gotować pod przykryciem przez 20 minut. Fasolkę przyciąć na końcach i pokroić na kawałki (mrożoną fasolkę należy najpierw rozmrozić, np. na sitku, durszlaku). Gotować przez około 10 minut pod przykryciem, w międzyczasie raz składniki przemieszać. Otworzyć, wymieszać i gotować jeszcze przez około 5 minut do miękkości kaszy. 2 minuty przed końcem gotowania dodać umyty szpinak w liściach i gotować do jego zwiędnięcia."
 
 export interface ReplecableIndegredient {
   name: string
@@ -47,58 +47,10 @@ export interface TrueDishData {
   nutrients: Ingredient[]
   id: number
 }
-const indgredientsExample: ReplecableIndegredient[] = [
-  {
-    name: "Papryka czerwona",
-    amount: "2 sztuki",
-    replacements: [
-      { name: "Papryka żółta", amount: "2 sztuki" },
-      { name: "Papryka zielona ", amount: "2 sztuki" },
-    ],
-  },
-  {
-    name: "Kurczak",
-    amount: "2 udka sztuki",
-    replacements: [
-      { name: "Gęś", amount: "200g" },
-      { name: "Wieprzowina", amount: "2kg" },
-    ],
-  },
-  {
-    name: "cebula",
-    amount: "50 g",
-    replacements: [
-      { name: "Czerwona cebula", amount: "2 sztuki" },
-      { name: "czosnek", amount: "3 ząbki" },
-    ],
-  },
-]
-
-const nutrientsExample: Ingredient[] = [{ name: "kalorie", amount: "12asdasd" }]
-
-const replacementsExample: BaseDishData[] = []
-
-const dishExample: TrueDishData = {
-  category: "Śniadanie",
-  imageData: "",
-  indgredients: indgredientsExample,
-  name: "Jajecznica z jajkami",
-  nutrients: nutrientsExample,
-  recipe: recipe,
-  replacements: replacementsExample,
-  id: 1,
-}
-
 export interface SingleDietDayData {
   date: Date
   dishes: TrueDishData[]
   id: number
-}
-
-const singleDietDay: SingleDietDayData = {
-  date: startOfToday(),
-  dishes: [dishExample],
-  id: 1,
 }
 
 export interface ObjectFrontendIndexes {
@@ -108,8 +60,7 @@ export interface ObjectFrontendIndexes {
   replacebleId?: number
 }
 
-const diets: SingleDietDayData[] = [singleDietDay]
-const diet = () => {
+const diet = ({ userData, diet, userDiet }) => {
   const [dates, setDates] = useState<StartAndEndDate>({
     start: startOfToday(),
     end: startOfToday(),
@@ -122,7 +73,7 @@ const diet = () => {
   const [singleDate, setSingleDate] = useState<Date>(startOfToday())
   const [showRange, setShowRange] = useState(false)
 
-  const [dietData, setDietData] = useState<SingleDietDayData[]>(diets)
+  const [dietData, setDietData] = useState<SingleDietDayData[]>(dietExample)
 
   const filterDiet = (diets: SingleDietDayData[]): SingleDietDayData[] => {
     if (showRange) {
@@ -165,8 +116,15 @@ const diet = () => {
     setDietData(stateCopy)
   }
 
+  useEffect(() => {
+    console.log(diet)
+  }, [diet])
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
+      {/* <pre>{JSON.stringify(diet, null, 2)}</pre>
+      <p>XD</p> */}
+      <pre>{JSON.stringify(userDiet, null, 2)}</pre>
+
       <MyCalendar
         singleDate={singleDate}
         setSingleDate={setSingleDate}
@@ -187,4 +145,83 @@ const diet = () => {
 
 export default diet
 
-// from api we get the data reange
+export async function getServerSideProps(ctx) {
+  const jwt = parseCookies(ctx).jwt
+
+  const userData = await fetchAPI(`/users/me`, {
+    urlParamsObject: {
+      populate: {
+        populate: "*",
+        role: {
+          populate: "*",
+        },
+        userData: {
+          populate: "*",
+        },
+      },
+    },
+    jwt,
+  })
+
+  const id = userData.id
+
+  const diet = await fetchAPI(`/user-combined-datas`, {
+    urlParamsObject: {
+      userId: {
+        $eq: [id],
+      },
+      populate: {
+        // populate: "*",
+        userData: {
+          height: "*",
+          age: "*",
+          weight: "*",
+        },
+        userDiet: {
+          populate: "*",
+          dishPreferences:"*",
+          dishPreference:"*"
+
+        },
+      },
+
+      encodeValuesOnly: true,
+    },
+    jwt,
+  })
+  const unpacked = diet.data[0].attributes
+  console.log(unpacked)
+  const dietId = unpacked.userDiet.data.id 
+  const userDiet = await fetchAPI(`/user-diets/${dietId}`, {
+    urlParamsObject: {
+      populate: {
+        diet:{
+          populate:"*"
+        },
+        dishPreference: {
+          populate: {
+            base:"*",
+            replacement:"*"
+          },
+        },
+        ingredientPreferences:"*",
+
+        // ingredientPreferences: {
+        //    populate: "*"
+        // },
+        dishPreferences:{
+          // array of objects with id so it wordks
+          populate:"*",
+        },
+        // done
+        timeRange: {
+          populate: "*",
+        },
+      },
+    },
+    jwt,
+  })
+  return {
+    props: { userData, diet: unpacked, userDiet },
+  }
+}

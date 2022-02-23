@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "diets",
+  "info": {
+    "singularName": "diet",
+    "pluralName": "diets",
+    "displayName": "diet",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "day": {
+      "displayName": "days",
+      "type": "component",
+      "repeatable": true,
+      "component": "diet.days"
+    }
+  }
+}

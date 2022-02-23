@@ -49,6 +49,7 @@ const DishRow = ({ dish,indexes,replaceIngredient }: DishRowProps) => {
             indgredients={indgredients}
             nutrients={nutrients}
             recipe={recipe}
+            replacements={replacements}
           />
         </Flex>
       </AccordionPanel>

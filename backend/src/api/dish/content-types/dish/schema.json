@@ -8,43 +8,47 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
-      "unique": true,
       "required": true
-    },
-    "recipe": {
-      "type": "richtext",
-      "required": true
-    },
-    "indigrients": {
-      "type": "dynamiczone",
-      "components": [
-        "dish.indigrient"
-      ]
-    },
-    "dishTimeCategory": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::dish-category.dish-category"
-    },
-    "dish_indigrient_categories": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::dish-indigrient-category.dish-indigrient-category"
     },
     "image": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
       "type": "media",
-      "multiple": true
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "nutrients": {
+      "displayName": "nameAmount",
+      "type": "component",
+      "repeatable": true,
+      "component": "dish.name-amount"
+    },
+    "ingredients": {
+      "displayName": "ingredient",
+      "type": "component",
+      "repeatable": true,
+      "component": "dish.ingredient"
+    },
+    "dish_time_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish-time-category.dish-time-category"
+    },
+    "dish_page": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish-page.dish-page"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
     }
   }
 }

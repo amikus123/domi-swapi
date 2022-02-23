@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_dish_ingredients",
+  "info": {
+    "displayName": "ingredient",
+    "icon": "award",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "replacements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "dish.name-amount"
+    },
+    "name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "string"
+    }
+  }
+}

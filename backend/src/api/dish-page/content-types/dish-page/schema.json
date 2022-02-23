@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dish_pages",
+  "info": {
+    "singularName": "dish-page",
+    "pluralName": "dish-pages",
+    "displayName": "DishPage",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    }
+  }
+}

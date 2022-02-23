@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_combined_datas",
+  "info": {
+    "singularName": "user-combined-data",
+    "pluralName": "user-combined-datas",
+    "displayName": "UserCombinedData",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "userId": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "userData": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-data.user-data",
+      "inversedBy": "user_combined_datum"
+    },
+    "userDiet": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-diet.user-diet",
+      "mappedBy": "user_combined_datum"
+    }
+  }
+}

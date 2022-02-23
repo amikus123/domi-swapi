@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dish_preferences",
+  "info": {
+    "singularName": "dish-preference",
+    "pluralName": "dish-preferences",
+    "displayName": "dishPreference"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "original": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish.dish"
+    },
+    "preferred": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish.dish"
+    }
+  }
+}

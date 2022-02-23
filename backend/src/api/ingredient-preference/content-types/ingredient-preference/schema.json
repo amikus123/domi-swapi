@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ingredient_preferences",
+  "info": {
+    "singularName": "ingredient-preference",
+    "pluralName": "ingredient-preferences",
+    "displayName": "ingredientPreference",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "dish": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish.dish"
+    },
+    "preferredIngredients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-diet.preferred-replacements"
+    }
+  }
+}

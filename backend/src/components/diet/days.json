@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_diet_days",
+  "info": {
+    "displayName": "days",
+    "icon": "balance-scale"
+  },
+  "options": {},
+  "attributes": {
+    "dishes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::dish.dish"
+    }
+  }
+}

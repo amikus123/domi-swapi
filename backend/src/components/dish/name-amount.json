@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_dish_name_amounts",
+  "info": {
+    "displayName": "nameAmount",
+    "icon": "anchor"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "string"
+    }
+  }
+}
