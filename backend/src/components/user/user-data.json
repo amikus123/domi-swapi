@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_user_user_data",
+  "info": {
+    "displayName": "userData",
+    "icon": "arrow-circle-right"
+  },
+  "options": {},
+  "attributes": {
+    "age": {
+      "type": "integer",
+      "default": 18
+    }
+  }
+}

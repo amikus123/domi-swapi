@@ -17,17 +17,17 @@
       "required": true,
       "unique": true
     },
-    "userData": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::user-data.user-data",
-      "inversedBy": "user_combined_datum"
-    },
     "userDiet": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::user-diet.user-diet",
-      "mappedBy": "user_combined_datum"
+      "displayName": "userDiet",
+      "type": "component",
+      "repeatable": false,
+      "component": "user.user-diet"
+    },
+    "userData": {
+      "displayName": "userData",
+      "type": "component",
+      "repeatable": false,
+      "component": "user.user-data"
     }
   }
 }

@@ -17,6 +17,7 @@ import { dietExample } from "../../components/User/diet/dummyData"
 import { fetchAPI } from "../../lib/api"
 import { parseCookies } from "nookies"
 import qs from "qs"
+import { fire, handleUser } from "../../lib/helpers/jsonToState"
 
 export interface StartAndEndDate {
   start: Date
@@ -62,7 +63,38 @@ export interface ObjectFrontendIndexes {
   replacebleId?: number
 }
 
-const diet = ({ userData, diet, userDiet }) => {
+interface UserData {
+  id: number
+  age: number
+}
+interface IngredientPreference {}
+
+interface IngredientPreferenceWrap {
+  data: IngredientPreference[]
+}
+interface UserDiet {
+  id: number
+  ingredientPreferences: IngredientPreferenceWrap
+}
+interface kms {
+  userId: number
+  userData: UserData
+  userDiet: UserDiet
+}
+
+const fixShit = (xd: any) => {
+  // unpacking
+  // docelowo arraty
+  const ingredientPreferences = xd.userDiet.ingredientPreferences.data
+  const res = {
+    userId: xd.userId,
+    userData: xd.userData,
+  }
+
+  return res
+}
+
+const diet = ({ raw, user }) => {
   const [dates, setDates] = useState<StartAndEndDate>({
     start: startOfToday(),
     end: startOfToday(),
@@ -119,13 +151,16 @@ const diet = ({ userData, diet, userDiet }) => {
   }
 
   useEffect(() => {
-    console.log(diet)
-  }, [diet])
+    console.log(fire())
+  }, [])
+
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
       {/* <pre>{JSON.stringify(diet, null, 2)}</pre>
       <p>XD</p> */}
-      <pre>{JSON.stringify(userDiet, null, 2)}</pre>
+      <pre>{JSON.stringify(raw, null, 2)}</pre>
+      <p>sss</p>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
 
       <MyCalendar
         singleDate={singleDate}
@@ -167,32 +202,6 @@ export async function getServerSideProps(ctx) {
 
   const id = userData.id
 
-  const diet = await fetchAPI(`/user-combined-datas`, {
-    urlParamsObject: {
-      userId: {
-        $eq: [id],
-      },
-      populate: {
-        // populate: "*",
-        userData: {
-          height: "*",
-          age: "*",
-          weight: "*",
-        },
-        userDiet: {
-          populate: "*",
-          dishPreferences: "*",
-          dishPreference: "*",
-        },
-      },
-
-      encodeValuesOnly: true,
-    },
-    jwt,
-  })
-  const unpacked = diet.data[0].attributes
-  console.log(unpacked)
-  const dietId = unpacked.userDiet.data.id
   const query = qs.stringify(
     {
       populate: [
@@ -206,13 +215,10 @@ export async function getServerSideProps(ctx) {
         "userDiet.ingredientPreferences",
         "userDiet.ingredientPreferences.dish",
         "userDiet.ingredientPreferences.preferredIngredients",
-
-
-
       ],
       filters: {
-        id: {
-          $eq: dietId,
+        userId: {
+          $eq: id,
         },
       },
     },
@@ -220,8 +226,6 @@ export async function getServerSideProps(ctx) {
       encodeValuesOnly: true,
     }
   )
-
-
 
   let userDiet = await fetch(
     `http://localhost:1337/api/user-combined-datas?${query}`,
@@ -231,11 +235,13 @@ export async function getServerSideProps(ctx) {
       },
     }
   )
-  userDiet = await userDiet.json()
+  const temp = await userDiet.json()
 
-  console.log("!!!!\n", Object.keys(userDiet), "XD")
+  const raw = temp.data[0].attributes
+  const user = handleUser(raw)
+  console.log("!!!!\n", Object.keys(user), "XD")
 
   return {
-    props: { userData, diet: unpacked, userDiet },
+    props: { raw, user },
   }
 }

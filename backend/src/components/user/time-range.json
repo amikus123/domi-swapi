@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_user_time_ranges",
+  "info": {
+    "displayName": "timeRange",
+    "icon": "angle-double-up"
+  },
+  "options": {},
+  "attributes": {
+    "start": {
+      "type": "date",
+      "required": true
+    },
+    "end": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

@@ -1,15 +1,10 @@
 {
-  "kind": "collectionType",
-  "collectionName": "dish_preferences",
+  "collectionName": "components_user_dish_preferences",
   "info": {
-    "singularName": "dish-preference",
-    "pluralName": "dish-preferences",
-    "displayName": "dishPreference"
+    "displayName": "dishPreferences",
+    "icon": "ambulance"
   },
-  "options": {
-    "draftAndPublish": false
-  },
-  "pluginOptions": {},
+  "options": {},
   "attributes": {
     "original": {
       "type": "relation",
