@@ -15,7 +15,7 @@
     "name": {
       "type": "string"
     },
-    "day": {
+    "days": {
       "displayName": "days",
       "type": "component",
       "repeatable": true,

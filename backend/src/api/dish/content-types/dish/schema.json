@@ -36,12 +36,12 @@
       "repeatable": true,
       "component": "dish.ingredient"
     },
-    "dish_time_category": {
+    "timeCategory": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::dish-time-category.dish-time-category"
     },
-    "dish_page": {
+    "dishPage": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::dish-page.dish-page"

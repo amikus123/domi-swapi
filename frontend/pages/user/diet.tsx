@@ -63,37 +63,6 @@ export interface ObjectFrontendIndexes {
   replacebleId?: number
 }
 
-interface UserData {
-  id: number
-  age: number
-}
-interface IngredientPreference {}
-
-interface IngredientPreferenceWrap {
-  data: IngredientPreference[]
-}
-interface UserDiet {
-  id: number
-  ingredientPreferences: IngredientPreferenceWrap
-}
-interface kms {
-  userId: number
-  userData: UserData
-  userDiet: UserDiet
-}
-
-const fixShit = (xd: any) => {
-  // unpacking
-  // docelowo arraty
-  const ingredientPreferences = xd.userDiet.ingredientPreferences.data
-  const res = {
-    userId: xd.userId,
-    userData: xd.userData,
-  }
-
-  return res
-}
-
 const diet = ({ raw, user }) => {
   const [dates, setDates] = useState<StartAndEndDate>({
     start: startOfToday(),
@@ -151,7 +120,11 @@ const diet = ({ raw, user }) => {
   }
 
   useEffect(() => {
-    console.log(fire())
+    console.log(user.userDiet.diet.days[0].dishes[0],"lul")
+    console.log(user.userDiet.diet.days[0].dishes[1],"lul")
+
+    console.log(raw,"lu2l")
+
   }, [])
 
   return (
@@ -199,6 +172,16 @@ export async function getServerSideProps(ctx) {
     },
     jwt,
   })
+  // "timeCategory": {
+  //   "data": {
+  //     "id": 2,
+  //     "attributes": {
+  //       "name": "Obiad",
+  //       "createdAt": "2022-02-22T13:23:00.700Z",
+  //       "updatedAt": "2022-02-22T13:23:00.700Z"
+  //     }
+  //   }
+  // },
 
   const id = userData.id
 
@@ -208,6 +191,15 @@ export async function getServerSideProps(ctx) {
         "userData",
         "userDiet",
         "userDiet.diet",
+        "userDiet.diet.days",
+        "userDiet.diet.days.dishes",
+        "userDiet.diet.days.dishes.image",
+        "userDiet.diet.days.dishes.nutrients",
+        "userDiet.diet.days.dishes.ingredients",
+        "userDiet.diet.days.dishes.ingredients.replacements",
+        "userDiet.diet.days.dishes.timeCategory",
+        "userDiet.diet.days.dishes.dishPage",
+
         "userDiet.timeRange",
         "userDiet.dishPreferences",
         "userDiet.dishPreferences.original",
@@ -239,9 +231,135 @@ export async function getServerSideProps(ctx) {
 
   const raw = temp.data[0].attributes
   const user = handleUser(raw)
-  console.log("!!!!\n", Object.keys(user), "XD")
+  console.log("!!!!\n", user, "XD")
 
   return {
     props: { raw, user },
   }
 }
+
+const xd = [
+  {
+    id: 3,
+    dishes: {
+      data: [
+        {
+          id: 1,
+          attributes: {
+            name: "Spaghetti",
+            createdAt: "2022-02-22T13:38:04.474Z",
+            updatedAt: "2022-02-22T13:52:36.475Z",
+            slug: null,
+            nutrients: [
+              {
+                id: 1,
+                name: "Kalorie",
+                amount: "300 kcal",
+              },
+              {
+                id: 2,
+                name: "Białko",
+                amount: "20g",
+              },
+              {
+                id: 3,
+                name: "Tłuszcz",
+                amount: "10g",
+              },
+              {
+                id: 4,
+                name: "Witamina A",
+                amount: "10ug",
+              },
+            ],
+            ingredients: [
+              {
+                id: 2,
+                name: "Makaron",
+                amount: "100g",
+                replacements: [
+                  {
+                    id: 8,
+                    name: "Makaron rurki",
+                    amount: "100g",
+                  },
+                  {
+                    id: 9,
+                    name: "Makaron spaghtetii",
+                    amount: "100g",
+                  },
+                ],
+              },
+              {
+                id: 1,
+                name: "Sos pomidorowy",
+                amount: "100g",
+                replacements: [],
+              },
+              {
+                id: 3,
+                name: "Oregano",
+                amount: "10g",
+                replacements: [
+                  {
+                    id: 10,
+                    name: "Curry",
+                    amount: "10g",
+                  },
+                ],
+              },
+            ],
+            timeCategory: {
+              data: null,
+            },
+          },
+        },
+        {
+          id: 2,
+          attributes: {
+            name: "Jajecznica",
+            createdAt: "2022-02-22T13:49:30.901Z",
+            updatedAt: "2022-02-22T13:53:30.242Z",
+            slug: null,
+            nutrients: [
+              {
+                id: 11,
+                name: "Kalorie",
+                amount: "100 kcal",
+              },
+            ],
+            ingredients: [
+              {
+                id: 4,
+                name: "Jaja kurze",
+                amount: "3 jaja",
+                replacements: [
+                  {
+                    id: 14,
+                    name: "Jaja gęsie",
+                    amount: "3",
+                  },
+                ],
+              },
+              {
+                id: 5,
+                name: "Olej",
+                amount: "1 łyżka",
+                replacements: [
+                  {
+                    id: 15,
+                    name: "Oliwa",
+                    amount: "1 łyżka",
+                  },
+                ],
+              },
+            ],
+            timeCategory: {
+              data: null,
+            },
+          },
+        },
+      ],
+    },
+  },
+]
