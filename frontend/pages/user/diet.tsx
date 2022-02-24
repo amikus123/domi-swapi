@@ -5,13 +5,23 @@ import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
 import MyCalendar from "../../components/User/diet/MyCalendar"
 // perchance move to difftent file so it does not always load
 import "react-datepicker/dist/react-datepicker.css"
+import qs from "qs"
 import { cloneDeep } from "lodash"
 import { dietExample } from "../../components/User/diet/dummyData"
 import { fetchAPI } from "../../lib/api"
 import { parseCookies } from "nookies"
-import qs from "qs"
-import { DateRange, handleUser, User } from "../../lib/helpers/jsonToState"
-import { stringToDate } from "../../lib/helpers/formating"
+import {
+  DateRange,
+  DietDay,
+  handleUser,
+  User,
+} from "../../lib/helpers/jsonToState"
+import {
+  filterRange,
+  filterSingleDay,
+  getDietArr,
+  stringToDate,
+} from "../../lib/helpers/formating"
 import { datesFromUser } from "../../components/User/diet/functions"
 
 export interface Ingredient {
@@ -68,72 +78,53 @@ const diet = ({ raw, user }: DietProps) => {
     start: startOfToday(),
     end: startOfToday(),
   })
+  //* edge dates
   const [dateRange, setDateRange] = useState<DateRange>(datesFromUser(user))
   const [singleDate, setSingleDate] = useState<Date>(startOfToday())
   const [showRange, setShowRange] = useState(false)
 
   const [dietData, setDietData] = useState<SingleDietDayData[]>(dietExample)
   // move to separate
-  const filterDiet = (diets: SingleDietDayData[]): SingleDietDayData[] => {
-    if (showRange && dates.end !== null) {
-      const x = diets.filter((item) => {
-        // * filtering based on range, this handles edge cases (or at least it should)
-        return (
-          isSameDay(item.date, dates.start) ||
-          (isAfter(item.date, dates.start) && isBefore(item.date, dates.end))
-        )
-      })
-      console.log(x)
-      return x
-    } else if (dates.end === null) {
-      const x = diets.filter((item) => {
-        return isSameDay(item.date, dates.start)
-      })
-      console.log(x)
-      return x
+  const [fullDietArr, setFullDietArr] = useState<DietDay[]>(
+    getDietArr(dateRange, user.userDiet.diet.days)
+  )
+
+  const filterHelper = (
+    fShowRange: boolean,
+    fDates: DateRangeNullable,
+    fSingleDate: Date,
+    fDateRange: DateRange,
+    fFullDierArr: DietDay[]
+  ) => {
+    if (fShowRange && fDates.end !== null) {
+      return filterRange(fDates.start, fDates.end, fDateRange.end, fFullDierArr)
+    } else if (fDates.end === null) {
+      return filterSingleDay(fDates.start, fDateRange.end, fFullDierArr)
     } else {
-      const x = diets.filter((item) => {
-        return isSameDay(item.date, singleDate)
-      })
-      console.log(x, diets, singleDate)
-      return x
+      return filterSingleDay(fSingleDate, fDateRange.end, fFullDierArr)
     }
   }
-  // * date controls data passed to the next components
-  const replaceIngredient = (indexes: ObjectFrontendIndexes) => {
-    // *these are font end only, requesty to db has to use objects ids
-    const { dayId, dishId, indgredientId, replacebleId } = indexes
-    const stateCopy = cloneDeep(dietData)
-    const replecable =
-      stateCopy[dayId].dishes[dishId].indgredients[indgredientId]
-    const ogAmount = replecable.amount
-    const ogName = replecable.name
-    const newName = replecable.replacements[replacebleId].name
-    const newAmount = replecable.replacements[replacebleId].amount
-    replecable.name = newName
-    replecable.amount = newAmount
-    replecable.replacements[replacebleId].amount = ogAmount
-    replecable.replacements[replacebleId].name = ogName
 
-    // * request to db  or sth
-    setDietData(stateCopy)
-  }
+  const [filteredDietDays, setFilteredDietDays] = useState<DietDay[]>(
+    filterHelper(showRange, dates, singleDate, dateRange, fullDietArr)
+  )
 
   useEffect(() => {
-    console.log(user.userDiet.diet.days[0].dishes[0], "lul")
-    console.log(user.userDiet.diet.days[0].dishes[1], "lul")
-    console.log(raw, "lu2l")
-    console.log(stringToDate(user.userDiet.timeRange.start))
-    console.log(stringToDate(user.userDiet.timeRange.end))
-  }, [])
+    setFilteredDietDays(filterHelper(showRange,dates,singleDate,dateRange,fullDietArr))
+  }, [singleDate,showRange,dates,dateRange,fullDietArr])
+
+  useEffect(() => {
+    console.log(fullDietArr, filteredDietDays, "XDED")
+  }, [filteredDietDays])
 
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
       {/* <pre>{JSON.stringify(diet, null, 2)}</pre>
       <p>XD</p> */}
-      <pre>{JSON.stringify(raw, null, 2)}</pre>
-      <p>sss</p>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+      <pre>{JSON.stringify(filteredDietDays, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(user, null, 2)}</pre>
+      <pre>{JSON.stringify(user, null, 2)}</pre> */}
 
       <MyCalendar
         singleDate={singleDate}
@@ -144,10 +135,10 @@ const diet = ({ raw, user }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      <DishColumn
+      {/* <DishColumn
         diet={filterDiet(dietData)}
         replaceIngredient={replaceIngredient}
-      />
+      /> */}
 
       <Button>Pobierz</Button>
     </Stack>
@@ -228,3 +219,21 @@ export async function getServerSideProps(ctx) {
     props: { raw, user },
   }
 }
+
+// * date controls data passed to the next components
+// const replaceIngredient = (indexes: ObjectFrontendIndexes) => {
+//   const { dayId, dishId, indgredientId, replacebleId } = indexes
+//   const stateCopy = cloneDeep(dietData)
+//   const replecable =
+//     stateCopy[dayId].dishes[dishId].indgredients[indgredientId]
+//   const ogAmount = replecable.amount
+//   const ogName = replecable.name
+//   const newName = replecable.replacements[replacebleId].name
+//   const newAmount = replecable.replacements[replacebleId].amount
+//   replecable.name = newName
+//   replecable.amount = newAmount
+//   replecable.replacements[replacebleId].amount = ogAmount
+//   replecable.replacements[replacebleId].name = ogName
+
+//   setDietData(stateCopy)
+// }

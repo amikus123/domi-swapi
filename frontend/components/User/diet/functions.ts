@@ -1,5 +1,5 @@
 import { stringToDate } from "../../../lib/helpers/formating"
-import { DateRange, TimeRange, User } from "../../../lib/helpers/jsonToState"
+import { DateRange, User } from "../../../lib/helpers/jsonToState"
 import { TrueDishData } from "../../../pages/user/diet"
 
 export const getKcal = (dishes: TrueDishData[]) => {
