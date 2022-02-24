@@ -15,24 +15,29 @@ export interface PreferedIngredient {
 }
 
 // * user personal information, age height etc
-interface UserData {
+export interface UserData {
   age: number
 }
 
 // * these string are in format YYYY-MM-DD
 // * they show the days for which diet is prescribed
-interface TimeRange {
+export interface TimeRange {
   start: string
   end: string
 }
+
+export interface DateRange{
+  start: Date
+  end: Date
+}
 // * if possible in diet, we should swap the dish for the preffered one
-interface DishPreference {
+export interface DishPreference {
   id: number
   originalName: string
   preferedName: string
 }
 
-interface UserDiet {
+export interface UserDiet {
   ingredientPreferences: IngredientPreference[]
   dishPreferences: DishPreference[]
   timeRange: TimeRange
@@ -44,31 +49,31 @@ export interface User {
   userDiet: UserDiet
 }
 
-interface Ingredient extends NameAmount {
+export interface Ingredient extends NameAmount {
   replacements: NameAmount[]
 }
-interface NameAmount {
+export interface NameAmount {
   name: string
   amount: string
 }
-type DishTimeCategory = "Obiad" | "Kolacja" | "Sniadanie"
-interface Dish {
+export type DishTimeCategory = "Obiad" | "Kolacja" | "Sniadanie"
+export interface Dish {
   id: number
   name: string
   slug: string
   nutrients: NameAmount[]
   ingredients: Ingredient[]
   timeCategory: DishTimeCategory
-  // if it exists, create
+  // * if it exists, create url to page
   dishPage: null | string
   // * image object, idk how to type it
   image: any
 }
-interface DietDay {
+export interface DietDay {
   id: number
   dishes: Dish[]
 }
-interface Diet {
+export interface Diet {
   name: string
   days: DietDay[]
 }

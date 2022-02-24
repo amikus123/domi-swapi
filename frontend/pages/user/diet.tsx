@@ -1,12 +1,5 @@
 import { Stack, Button } from "@chakra-ui/react"
-import {
-  addDays,
-  isAfter,
-  isBefore,
-  isSameDay,
-  startOfToday,
-  subDays,
-} from "date-fns"
+import { isAfter, isBefore, isSameDay, startOfToday } from "date-fns"
 import React, { useEffect, useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
 import MyCalendar from "../../components/User/diet/MyCalendar"
@@ -17,12 +10,10 @@ import { dietExample } from "../../components/User/diet/dummyData"
 import { fetchAPI } from "../../lib/api"
 import { parseCookies } from "nookies"
 import qs from "qs"
-import { fire, handleUser } from "../../lib/helpers/jsonToState"
+import { DateRange, handleUser, User } from "../../lib/helpers/jsonToState"
+import { stringToDate } from "../../lib/helpers/formating"
+import { datesFromUser } from "../../components/User/diet/functions"
 
-export interface StartAndEndDate {
-  start: Date
-  end: Date
-}
 export interface Ingredient {
   name: string
   amount: string
@@ -63,29 +54,40 @@ export interface ObjectFrontendIndexes {
   replacebleId?: number
 }
 
-const diet = ({ raw, user }) => {
-  const [dates, setDates] = useState<StartAndEndDate>({
+interface DietProps {
+  user: User
+  raw: any
+}
+export interface DateRangeNullable {
+  start: Date
+  end: Date | null
+}
+
+const diet = ({ raw, user }: DietProps) => {
+  const [dates, setDates] = useState<DateRangeNullable>({
     start: startOfToday(),
     end: startOfToday(),
   })
-  const minMaxDate: StartAndEndDate = {
-    start: subDays(startOfToday(), 4),
-    end: addDays(startOfToday(), 4),
-  }
-
+  const [dateRange, setDateRange] = useState<DateRange>(datesFromUser(user))
   const [singleDate, setSingleDate] = useState<Date>(startOfToday())
   const [showRange, setShowRange] = useState(false)
 
   const [dietData, setDietData] = useState<SingleDietDayData[]>(dietExample)
-
+  // move to separate
   const filterDiet = (diets: SingleDietDayData[]): SingleDietDayData[] => {
-    if (showRange) {
+    if (showRange && dates.end !== null) {
       const x = diets.filter((item) => {
-        // filtering based on range, this handles edge cases (or at least it should)
+        // * filtering based on range, this handles edge cases (or at least it should)
         return (
           isSameDay(item.date, dates.start) ||
           (isAfter(item.date, dates.start) && isBefore(item.date, dates.end))
         )
+      })
+      console.log(x)
+      return x
+    } else if (dates.end === null) {
+      const x = diets.filter((item) => {
+        return isSameDay(item.date, dates.start)
       })
       console.log(x)
       return x
@@ -97,9 +99,7 @@ const diet = ({ raw, user }) => {
       return x
     }
   }
-  // const [dietData, setDietData] = useState<>([])
   // * date controls data passed to the next components
-
   const replaceIngredient = (indexes: ObjectFrontendIndexes) => {
     // *these are font end only, requesty to db has to use objects ids
     const { dayId, dishId, indgredientId, replacebleId } = indexes
@@ -120,11 +120,11 @@ const diet = ({ raw, user }) => {
   }
 
   useEffect(() => {
-    console.log(user.userDiet.diet.days[0].dishes[0],"lul")
-    console.log(user.userDiet.diet.days[0].dishes[1],"lul")
-
-    console.log(raw,"lu2l")
-
+    console.log(user.userDiet.diet.days[0].dishes[0], "lul")
+    console.log(user.userDiet.diet.days[0].dishes[1], "lul")
+    console.log(raw, "lu2l")
+    console.log(stringToDate(user.userDiet.timeRange.start))
+    console.log(stringToDate(user.userDiet.timeRange.end))
   }, [])
 
   return (
@@ -140,7 +140,7 @@ const diet = ({ raw, user }) => {
         setSingleDate={setSingleDate}
         dates={dates}
         setDates={setDates}
-        minMaxDate={minMaxDate}
+        minMaxDate={dateRange}
         showRange={showRange}
         setShowRange={setShowRange}
       />
@@ -148,6 +148,7 @@ const diet = ({ raw, user }) => {
         diet={filterDiet(dietData)}
         replaceIngredient={replaceIngredient}
       />
+
       <Button>Pobierz</Button>
     </Stack>
   )
@@ -158,6 +159,7 @@ export default diet
 export async function getServerSideProps(ctx) {
   const jwt = parseCookies(ctx).jwt
 
+  //* from this call we receive id
   const userData = await fetchAPI(`/users/me`, {
     urlParamsObject: {
       populate: {
@@ -172,16 +174,6 @@ export async function getServerSideProps(ctx) {
     },
     jwt,
   })
-  // "timeCategory": {
-  //   "data": {
-  //     "id": 2,
-  //     "attributes": {
-  //       "name": "Obiad",
-  //       "createdAt": "2022-02-22T13:23:00.700Z",
-  //       "updatedAt": "2022-02-22T13:23:00.700Z"
-  //     }
-  //   }
-  // },
 
   const id = userData.id
 
@@ -199,7 +191,6 @@ export async function getServerSideProps(ctx) {
         "userDiet.diet.days.dishes.ingredients.replacements",
         "userDiet.diet.days.dishes.timeCategory",
         "userDiet.diet.days.dishes.dishPage",
-
         "userDiet.timeRange",
         "userDiet.dishPreferences",
         "userDiet.dishPreferences.original",
@@ -237,129 +228,3 @@ export async function getServerSideProps(ctx) {
     props: { raw, user },
   }
 }
-
-const xd = [
-  {
-    id: 3,
-    dishes: {
-      data: [
-        {
-          id: 1,
-          attributes: {
-            name: "Spaghetti",
-            createdAt: "2022-02-22T13:38:04.474Z",
-            updatedAt: "2022-02-22T13:52:36.475Z",
-            slug: null,
-            nutrients: [
-              {
-                id: 1,
-                name: "Kalorie",
-                amount: "300 kcal",
-              },
-              {
-                id: 2,
-                name: "Białko",
-                amount: "20g",
-              },
-              {
-                id: 3,
-                name: "Tłuszcz",
-                amount: "10g",
-              },
-              {
-                id: 4,
-                name: "Witamina A",
-                amount: "10ug",
-              },
-            ],
-            ingredients: [
-              {
-                id: 2,
-                name: "Makaron",
-                amount: "100g",
-                replacements: [
-                  {
-                    id: 8,
-                    name: "Makaron rurki",
-                    amount: "100g",
-                  },
-                  {
-                    id: 9,
-                    name: "Makaron spaghtetii",
-                    amount: "100g",
-                  },
-                ],
-              },
-              {
-                id: 1,
-                name: "Sos pomidorowy",
-                amount: "100g",
-                replacements: [],
-              },
-              {
-                id: 3,
-                name: "Oregano",
-                amount: "10g",
-                replacements: [
-                  {
-                    id: 10,
-                    name: "Curry",
-                    amount: "10g",
-                  },
-                ],
-              },
-            ],
-            timeCategory: {
-              data: null,
-            },
-          },
-        },
-        {
-          id: 2,
-          attributes: {
-            name: "Jajecznica",
-            createdAt: "2022-02-22T13:49:30.901Z",
-            updatedAt: "2022-02-22T13:53:30.242Z",
-            slug: null,
-            nutrients: [
-              {
-                id: 11,
-                name: "Kalorie",
-                amount: "100 kcal",
-              },
-            ],
-            ingredients: [
-              {
-                id: 4,
-                name: "Jaja kurze",
-                amount: "3 jaja",
-                replacements: [
-                  {
-                    id: 14,
-                    name: "Jaja gęsie",
-                    amount: "3",
-                  },
-                ],
-              },
-              {
-                id: 5,
-                name: "Olej",
-                amount: "1 łyżka",
-                replacements: [
-                  {
-                    id: 15,
-                    name: "Oliwa",
-                    amount: "1 łyżka",
-                  },
-                ],
-              },
-            ],
-            timeCategory: {
-              data: null,
-            },
-          },
-        },
-      ],
-    },
-  },
-]

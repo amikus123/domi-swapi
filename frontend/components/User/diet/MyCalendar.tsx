@@ -2,14 +2,15 @@ import React, { useState } from "react"
 import ReactDatePicker, { registerLocale } from "react-datepicker"
 import pl from "date-fns/locale/pl"
 import { Button, Flex } from "@chakra-ui/react"
-import { StartAndEndDate } from "../../../pages/user/diet"
+import { DateRange } from "../../../lib/helpers/jsonToState"
+import { DateRangeNullable } from "../../../pages/user/diet"
 
 registerLocale("pl", pl)
 
 export interface DatePickerProps {
-  minMaxDate: StartAndEndDate
-  dates: StartAndEndDate
-  setDates: React.Dispatch<React.SetStateAction<StartAndEndDate>>
+  minMaxDate: DateRange
+  dates: DateRangeNullable
+  setDates: React.Dispatch<React.SetStateAction<DateRangeNullable>>
   singleDate: Date
   setSingleDate: React.Dispatch<React.SetStateAction<Date>>
   showRange: boolean
