@@ -26,7 +26,7 @@ export interface TimeRange {
   end: string
 }
 
-export interface DateRange{
+export interface DateRange {
   start: Date
   end: Date
 }
@@ -73,9 +73,15 @@ export interface DietDay {
   id: number
   dishes: Dish[]
 }
+export interface DishReplacements {
+  // name of base dish
+  original: string
+  replacements: string[]
+}
 export interface Diet {
   name: string
   days: DietDay[]
+  dishReplacements: DishReplacements[]
 }
 
 const createUrl = (slug: string) => {
@@ -106,7 +112,7 @@ export const handleDishes = (dishes): Dish[] => {
       slug: item.attributes.slug,
       ingredients: item.attributes.ingredients,
       nutrients: item.attributes.nutrients,
-      timeCategory: item.attributes.timeCategory.data.attributes.name,
+      timeCategory: item.attributes.meal,
     }
     return a
   })
@@ -151,10 +157,20 @@ const handleTimeRange = (timeRange): TimeRange => {
     end: timeRange.end,
   }
 }
+const handleDishReplacements = (dishReplacements): DishReplacements[] => {
+  const res: DishReplacements[] = dishReplacements.map((i) => {
+    const replacements = i.replacements.data.map((d) => d.attributes.name)
+    return { original: i.original.data.attributes.name, replacements }
+  })
+  return res
+}
 const handleDiet = (diet): Diet => {
   return {
     name: diet.data.attributes.name,
     days: handleDietDays(diet.data.attributes.days),
+    dishReplacements: handleDishReplacements(
+      diet.data.attributes.dishReplacements
+    ),
   }
 }
 const handleUserDiet = (diet: any): UserDiet => {
@@ -207,8 +223,9 @@ export const example = {
                 attributes: {
                   name: "Spaghetti",
                   createdAt: "2022-02-22T13:38:04.474Z",
-                  updatedAt: "2022-02-22T13:52:36.475Z",
-                  slug: null,
+                  updatedAt: "2022-02-25T00:48:08.793Z",
+                  slug: "spaghetti",
+                  meal: "obiad",
                 },
               },
             },
@@ -237,8 +254,9 @@ export const example = {
                 attributes: {
                   name: "Jajecznica",
                   createdAt: "2022-02-22T13:49:30.901Z",
-                  updatedAt: "2022-02-22T13:53:30.242Z",
-                  slug: null,
+                  updatedAt: "2022-02-25T00:48:16.390Z",
+                  slug: "jajecznica",
+                  meal: "sniadanie",
                 },
               },
             },
@@ -267,8 +285,9 @@ export const example = {
             attributes: {
               name: "Spaghetti",
               createdAt: "2022-02-22T13:38:04.474Z",
-              updatedAt: "2022-02-22T13:52:36.475Z",
-              slug: null,
+              updatedAt: "2022-02-25T00:48:08.793Z",
+              slug: "spaghetti",
+              meal: "obiad",
             },
           },
         },
@@ -278,8 +297,9 @@ export const example = {
             attributes: {
               name: "Jajecznica",
               createdAt: "2022-02-22T13:49:30.901Z",
-              updatedAt: "2022-02-22T13:53:30.242Z",
-              slug: null,
+              updatedAt: "2022-02-25T00:48:16.390Z",
+              slug: "jajecznica",
+              meal: "sniadanie",
             },
           },
         },
@@ -292,8 +312,9 @@ export const example = {
             attributes: {
               name: "Jajecznica",
               createdAt: "2022-02-22T13:49:30.901Z",
-              updatedAt: "2022-02-22T13:53:30.242Z",
-              slug: null,
+              updatedAt: "2022-02-25T00:48:16.390Z",
+              slug: "jajecznica",
+              meal: "sniadanie",
             },
           },
         },
@@ -303,8 +324,9 @@ export const example = {
             attributes: {
               name: "Spaghetti",
               createdAt: "2022-02-22T13:38:04.474Z",
-              updatedAt: "2022-02-22T13:52:36.475Z",
-              slug: null,
+              updatedAt: "2022-02-25T00:48:08.793Z",
+              slug: "spaghetti",
+              meal: "obiad",
             },
           },
         },
@@ -320,8 +342,107 @@ export const example = {
         id: 1,
         attributes: {
           createdAt: "2022-02-22T13:59:06.019Z",
-          updatedAt: "2022-02-23T23:10:42.518Z",
+          updatedAt: "2022-02-25T00:50:08.729Z",
           name: "Dieta testowa",
+          dishReplacements: [
+            {
+              id: 1,
+              replacements: {
+                data: [
+                  {
+                    id: 2,
+                    attributes: {
+                      name: "Jajecznica",
+                      createdAt: "2022-02-22T13:49:30.901Z",
+                      updatedAt: "2022-02-25T00:48:16.390Z",
+                      slug: "jajecznica",
+                      meal: "sniadanie",
+                    },
+                  },
+                  {
+                    id: 3,
+                    attributes: {
+                      name: "Salad",
+                      createdAt: "2022-02-25T00:27:57.868Z",
+                      updatedAt: "2022-02-25T00:48:01.631Z",
+                      slug: "sala",
+                      meal: "obiad",
+                    },
+                  },
+                ],
+              },
+              original: {
+                data: {
+                  id: 5,
+                  attributes: {
+                    name: "Tost",
+                    createdAt: "2022-02-25T00:48:48.107Z",
+                    updatedAt: "2022-02-25T00:48:48.107Z",
+                    slug: "tost",
+                    meal: "sniadanie",
+                  },
+                },
+              },
+            },
+            {
+              id: 2,
+              replacements: {
+                data: [
+                  {
+                    id: 2,
+                    attributes: {
+                      name: "Jajecznica",
+                      createdAt: "2022-02-22T13:49:30.901Z",
+                      updatedAt: "2022-02-25T00:48:16.390Z",
+                      slug: "jajecznica",
+                      meal: "sniadanie",
+                    },
+                  },
+                ],
+              },
+              original: {
+                data: {
+                  id: 1,
+                  attributes: {
+                    name: "Spaghetti",
+                    createdAt: "2022-02-22T13:38:04.474Z",
+                    updatedAt: "2022-02-25T00:48:08.793Z",
+                    slug: "spaghetti",
+                    meal: "obiad",
+                  },
+                },
+              },
+            },
+            {
+              id: 3,
+              replacements: {
+                data: [
+                  {
+                    id: 1,
+                    attributes: {
+                      name: "Spaghetti",
+                      createdAt: "2022-02-22T13:38:04.474Z",
+                      updatedAt: "2022-02-25T00:48:08.793Z",
+                      slug: "spaghetti",
+                      meal: "obiad",
+                    },
+                  },
+                ],
+              },
+              original: {
+                data: {
+                  id: 2,
+                  attributes: {
+                    name: "Jajecznica",
+                    createdAt: "2022-02-22T13:49:30.901Z",
+                    updatedAt: "2022-02-25T00:48:16.390Z",
+                    slug: "jajecznica",
+                    meal: "sniadanie",
+                  },
+                },
+              },
+            },
+          ],
           days: [
             {
               id: 3,
@@ -332,8 +453,10 @@ export const example = {
                     attributes: {
                       name: "Spaghetti",
                       createdAt: "2022-02-22T13:38:04.474Z",
-                      updatedAt: "2022-02-22T13:52:36.475Z",
-                      slug: null,
+                      updatedAt: "2022-02-25T00:48:08.793Z",
+                      slug: "spaghetti",
+                      meal: "obiad",
+
                       nutrients: [
                         {
                           id: 1,
@@ -393,7 +516,7 @@ export const example = {
                           ],
                         },
                       ],
-                      timeCategory: {
+                      dishPage: {
                         data: null,
                       },
                     },
@@ -403,42 +526,187 @@ export const example = {
                     attributes: {
                       name: "Jajecznica",
                       createdAt: "2022-02-22T13:49:30.901Z",
-                      updatedAt: "2022-02-22T13:53:30.242Z",
-                      slug: null,
+                      updatedAt: "2022-02-25T00:48:16.390Z",
+                      slug: "jajecznica",
+                      meal: "sniadanie",
+
                       nutrients: [
                         {
-                          id: 11,
+                          id: 17,
                           name: "Kalorie",
                           amount: "100 kcal",
                         },
                       ],
                       ingredients: [
                         {
-                          id: 4,
-                          name: "Jaja kurze",
-                          amount: "3 jaja",
-                          replacements: [
-                            {
-                              id: 14,
-                              name: "Jaja gęsie",
-                              amount: "3",
-                            },
-                          ],
+                          id: 7,
+                          name: "jaja",
+                          amount: "3 sztuki",
+                          replacements: [],
+                        },
+                      ],
+                      dishPage: {
+                        data: null,
+                      },
+                    },
+                  },
+                  {
+                    id: 3,
+                    attributes: {
+                      name: "Salad",
+                      createdAt: "2022-02-25T00:27:57.868Z",
+                      updatedAt: "2022-02-25T00:48:01.631Z",
+                      slug: "sala",
+                      meal: "obiad",
+
+                      nutrients: [
+                        {
+                          id: 16,
+                          name: "Kalorie",
+                          amount: "100 kcal",
+                        },
+                      ],
+                      ingredients: [
+                        {
+                          id: 6,
+                          name: "salata",
+                          amount: "10 lisi",
+                          replacements: [],
                         },
                         {
-                          id: 5,
-                          name: "Olej",
-                          amount: "1 łyżka",
+                          id: 8,
+                          name: "a",
+                          amount: "b",
                           replacements: [
                             {
-                              id: 15,
-                              name: "Oliwa",
-                              amount: "1 łyżka",
+                              id: 18,
+                              name: "c",
+                              amount: "d",
                             },
                           ],
                         },
                       ],
-                      timeCategory: {
+                      dishPage: {
+                        data: null,
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              id: 5,
+              dishes: {
+                data: [
+                  {
+                    id: 1,
+                    attributes: {
+                      name: "Spaghetti",
+                      createdAt: "2022-02-22T13:38:04.474Z",
+                      updatedAt: "2022-02-25T00:48:08.793Z",
+                      slug: "spaghetti",
+                      meal: "obiad",
+
+                      nutrients: [
+                        {
+                          id: 1,
+                          name: "Kalorie",
+                          amount: "300 kcal",
+                        },
+                        {
+                          id: 2,
+                          name: "Białko",
+                          amount: "20g",
+                        },
+                        {
+                          id: 3,
+                          name: "Tłuszcz",
+                          amount: "10g",
+                        },
+                        {
+                          id: 4,
+                          name: "Witamina A",
+                          amount: "10ug",
+                        },
+                      ],
+                      ingredients: [
+                        {
+                          id: 2,
+                          name: "Makaron",
+                          amount: "100g",
+                          replacements: [
+                            {
+                              id: 8,
+                              name: "Makaron rurki",
+                              amount: "100g",
+                            },
+                            {
+                              id: 9,
+                              name: "Makaron spaghtetii",
+                              amount: "100g",
+                            },
+                          ],
+                        },
+                        {
+                          id: 1,
+                          name: "Sos pomidorowy",
+                          amount: "100g",
+                          replacements: [],
+                        },
+                        {
+                          id: 3,
+                          name: "Oregano",
+                          amount: "10g",
+                          replacements: [
+                            {
+                              id: 10,
+                              name: "Curry",
+                              amount: "10g",
+                            },
+                          ],
+                        },
+                      ],
+                      dishPage: {
+                        data: null,
+                      },
+                    },
+                  },
+                  {
+                    id: 4,
+                    attributes: {
+                      name: "Pancake",
+                      createdAt: "2022-02-25T00:40:50.344Z",
+                      updatedAt: "2022-02-25T00:47:50.189Z",
+                      slug: "pan",
+                      meal: "obiad",
+
+                      nutrients: [
+                        {
+                          id: 19,
+                          name: "sss",
+                          amount: "ss",
+                        },
+                      ],
+                      ingredients: [
+                        {
+                          id: 9,
+                          name: "1",
+                          amount: "2",
+                          replacements: [
+                            {
+                              id: 20,
+                              name: "3",
+                              amount: "4",
+                            },
+                            {
+                              id: 21,
+                              name: "5",
+                              amount: "6",
+                            },
+                          ],
+                        },
+                      ],
+                      dishPage: {
                         data: null,
                       },
                     },

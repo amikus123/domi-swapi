@@ -78,71 +78,10 @@ export interface DishColumnData {
 }
 
 const diet = ({ raw, user }: DietProps) => {
-  const { userDiet } = user
-  const { diet, dishPreferences, ingredientPreferences } = userDiet
-
-  const [dates, setDates] = useState<DateRangeNullable>({
-    start: startOfToday(),
-    end: startOfToday(),
-  })
-  //* edge dates
-  const [dateRange, setDateRange] = useState<DateRange>(datesFromUser(user))
-  const [singleDate, setSingleDate] = useState<Date>(startOfToday())
-  const [showRange, setShowRange] = useState(false)
-
-  const [dietData, setDietData] = useState<Diet>(diet)
-  // * parse diet based on preferences
-
-  // move to separate
-  const [fullDietArr, setFullDietArr] = useState<DietDay[]>(
-    getDietArr(dateRange, user.userDiet.diet.days)
-  )
-
-  const filterHelper = (
-    fShowRange: boolean,
-    fDates: DateRangeNullable,
-    fSingleDate: Date,
-    fDateRange: DateRange,
-    fFullDierArr: DietDay[]
-  ) => {
-    console.log("XDD")
-    if (fShowRange && fDates.end !== null) {
-      return filterRange(fDates.start, fDates.end, fDateRange.end, fFullDierArr)
-    } else if (fDates.end === null) {
-      return filterSingleDay(fDates.start, fDateRange.end, fFullDierArr)
-    } else {
-      return filterSingleDay(fSingleDate, fDateRange.end, fFullDierArr)
-    }
-  }
-
-  const [columnData, setColumnData] = useState<DishColumnData[]>(
-    filterHelper(showRange, dates, singleDate, dateRange, fullDietArr)
-  )
-
-  useEffect(() => {
-    setColumnData(
-      filterHelper(showRange, dates, singleDate, dateRange, fullDietArr)
-    )
-  }, [singleDate, showRange, dates, dateRange, fullDietArr])
-
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
-      <pre>{JSON.stringify(dietData, null, 2)}</pre>
-      <pre>{JSON.stringify(dishPreferences, null, 2)}</pre>
-      <pre>{JSON.stringify(ingredientPreferences, null, 2)}</pre>
-
-      <MyCalendar
-        singleDate={singleDate}
-        setSingleDate={setSingleDate}
-        dates={dates}
-        setDates={setDates}
-        minMaxDate={dateRange}
-        showRange={showRange}
-        setShowRange={setShowRange}
-      />
-      <DishColumn dishColumnData={columnData} />
-
-      <Button>Pobierz</Button>
+      <pre>{JSON.stringify(raw, null, 2)}</pre>
+      <pre>{JSON.stringify(user, null, 2)}</pre>
     </Stack>
   )
 }
@@ -204,8 +143,7 @@ export async function getServerSideProps(ctx) {
       encodeValuesOnly: true,
     }
   )
-  
-  // TODO fecth all dishes herem not isnide the function above
+
   let userDiet = await fetch(
     `http://localhost:1337/api/user-combined-datas?${query}`,
     {
@@ -218,27 +156,10 @@ export async function getServerSideProps(ctx) {
 
   const raw = temp.data[0].attributes
   const user = handleUser(raw)
+
   console.log("!!!!\n", user, "XD")
 
   return {
     props: { raw, user },
   }
 }
-
-// * date controls data passed to the next components
-// const replaceIngredient = (indexes: ObjectFrontendIndexes) => {
-//   const { dayId, dishId, indgredientId, replacebleId } = indexes
-//   const stateCopy = cloneDeep(dietData)
-//   const replecable =
-//     stateCopy[dayId].dishes[dishId].indgredients[indgredientId]
-//   const ogAmount = replecable.amount
-//   const ogName = replecable.name
-//   const newName = replecable.replacements[replacebleId].name
-//   const newAmount = replecable.replacements[replacebleId].amount
-//   replecable.name = newName
-//   replecable.amount = newAmount
-//   replecable.replacements[replacebleId].amount = ogAmount
-//   replecable.replacements[replacebleId].name = ogName
-
-//   setDietData(stateCopy)
-// }
