@@ -39,7 +39,7 @@ export interface DishPreference {
 }
 
 export interface UserDiet {
-  ingredientPreferences: Record<string,IngredientPreference>
+  ingredientPreferences: Record<string, IngredientPreference>
   dishPreferences: DishPreference[]
   timeRange: TimeRange
   diet: Diet
@@ -53,7 +53,7 @@ export interface User {
 
 export interface Ingredient extends NameAmount {
   replacements: NameAmount[]
-  originalName:string
+  originalName: string
 }
 export interface NameAmount {
   name: string
@@ -79,15 +79,37 @@ export interface DietDay {
 export interface DishReplacement {
   // name of base dish
   original: string
+  currrent: string
   replacements: string[]
 }
 export interface DishUniqueData {
   id: number
   name: string
+  originalName: string
 }
 export interface Diet {
   name: string
   days: DietDay[]
-  dishReplacements: DishReplacement[]
+  dishReplacements: Record<string, DishReplacement>
 }
 
+export interface DateRangeNullable {
+  start: Date
+  end: Date | null
+}
+
+export interface DishColumnData {
+  fullDietDay: FullDietDay
+  date: Date
+}
+
+
+export interface FullDish {
+    dish: Dish
+    replacements: Dish[]
+    originalDishName: string
+  }
+export interface FullDietDay{
+    dishes: FullDish[]
+
+}
