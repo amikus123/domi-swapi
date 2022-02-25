@@ -1,7 +1,8 @@
-import { fetchAPI, getApiUrl } from "../../../../lib/api"
-import { handleUser, User } from "../../../../lib/helpers/jsonToState"
 import qs from "qs"
-import { uniqueDishHandler } from "../../../../lib/helpers/copy"
+import { getApiUrl } from "../../../../lib/api"
+import { uniqueDishHandler } from "./parseJSON/parseDishes"
+import { handleUser } from "./parseJSON/parseUset"
+import { User } from "./types"
 
 export const fetchMe = async (jwt: string) => {
   const meResponse = await fetch(`${getApiUrl()}/api/users/me`, {

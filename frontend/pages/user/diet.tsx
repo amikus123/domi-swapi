@@ -5,68 +5,24 @@ import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
 import MyCalendar from "../../components/User/diet/MyCalendar"
 // perchance move to difftent file so it does not always load
 import "react-datepicker/dist/react-datepicker.css"
-import qs from "qs"
-import { dietExample } from "../../components/User/diet/dummyData"
-import { fetchAPI } from "../../lib/api"
 import { parseCookies } from "nookies"
+
+import { datesFromUser } from "../../components/User/diet/functions"
+import { getUser, getDishes } from "../../components/User/diet/api/serverSide"
+import { changeDishesIngredients } from "../../components/User/diet/api/dietState"
 import {
-  DateRange,
-  Diet,
-  DietDay,
-  handleUser,
-  User,
-} from "../../lib/helpers/jsonToState"
-import {
+  getDietArr,
   filterRange,
   filterSingleDay,
-  getDietArr,
-} from "../../lib/helpers/formating"
-import { datesFromUser } from "../../components/User/diet/functions"
+} from "../../components/User/diet/api/timeHelpers"
+import {
+  DietDay,
+  User,
+  Dish,
+  DateRange,
+  Diet,
+} from "../../components/User/diet/api/types"
 
-export interface Ingredient {
-  name: string
-  amount: string
-}
-
-export interface ReplecableIndegredient {
-  name: string
-  amount: string
-  replacements?: Ingredient[]
-}
-
-export interface BaseDishData {
-  name: string
-  image: any
-  description: any
-}
-export interface TrueDishData {
-  category: string
-  name: string
-  imageData: any
-  // markdown
-  recipe: any
-  replacements: BaseDishData[]
-  indgredients: ReplecableIndegredient[]
-  nutrients: Ingredient[]
-  id: number
-}
-export interface SingleDietDayData {
-  date: Date
-  dishes: TrueDishData[]
-  id: number
-}
-
-export interface ObjectFrontendIndexes {
-  dayId?: number
-  dishId?: number
-  indgredientId?: number
-  replacebleId?: number
-}
-
-interface DietProps {
-  user: User
-  raw: any
-}
 export interface DateRangeNullable {
   start: Date
   end: Date | null
@@ -77,7 +33,12 @@ export interface DishColumnData {
   date: Date
 }
 
-const diet = ({ raw, user }: DietProps) => {
+interface DietProps {
+  user: User
+  originalDishes: Record<string, Dish>
+}
+
+const diet = ({ user, originalDishes }: DietProps) => {
   const { userDiet } = user
   const { diet, dishPreferences, ingredientPreferences } = userDiet
 
@@ -97,6 +58,13 @@ const diet = ({ raw, user }: DietProps) => {
   const [fullDietArr, setFullDietArr] = useState<DietDay[]>(
     getDietArr(dateRange, user.userDiet.diet.days)
   )
+
+  const [dishes, setDishes] = useState(
+    changeDishesIngredients(originalDishes, ingredientPreferences)
+  )
+  // useEffect(() => {
+  //   setDishes(changeDishesIngredients(originalDishes, ingredientPreferences))
+  // }, [ingredientPreferences, originalDishes])
 
   const filterHelper = (
     fShowRange: boolean,
@@ -127,8 +95,13 @@ const diet = ({ raw, user }: DietProps) => {
 
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
+      <p>dishes</p>
+      <pre>{JSON.stringify(dishes, null, 2)}</pre>
+      <p>dietData</p>
       <pre>{JSON.stringify(dietData, null, 2)}</pre>
+      <p>dishPreferences</p>
       <pre>{JSON.stringify(dishPreferences, null, 2)}</pre>
+      <p>ingredientPreferences</p>
       <pre>{JSON.stringify(ingredientPreferences, null, 2)}</pre>
 
       <MyCalendar
@@ -140,7 +113,7 @@ const diet = ({ raw, user }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      <DishColumn dishColumnData={columnData} />
+      {/* <DishColumn dishColumnData={columnData} /> */}
 
       <Button>Pobierz</Button>
     </Stack>
@@ -151,93 +124,10 @@ export default diet
 
 export async function getServerSideProps(ctx) {
   const jwt = parseCookies(ctx).jwt
-
-  //* from this call we receive id
-  const userData = await fetchAPI(`/users/me`, {
-    urlParamsObject: {
-      populate: {
-        populate: "*",
-        role: {
-          populate: "*",
-        },
-        userData: {
-          populate: "*",
-        },
-      },
-    },
-    jwt,
-  })
-
-  const id = userData.id
-
-  const query = qs.stringify(
-    {
-      populate: [
-        "userData",
-        "userDiet",
-        "userDiet.diet",
-        "userDiet.diet.dishReplacements",
-        "userDiet.diet.dishReplacements.original",
-        "userDiet.diet.dishReplacements.replacements",
-        "userDiet.diet.days",
-        "userDiet.diet.days.dishes",
-        "userDiet.diet.days.dishes.image",
-        "userDiet.diet.days.dishes.nutrients",
-        "userDiet.diet.days.dishes.ingredients",
-        "userDiet.diet.days.dishes.ingredients.replacements",
-        "userDiet.diet.days.dishes.dishPage",
-        "userDiet.timeRange",
-        "userDiet.dishPreferences",
-        "userDiet.dishPreferences.original",
-        "userDiet.dishPreferences.preferred",
-        "userDiet.ingredientPreferences",
-        "userDiet.ingredientPreferences.dish",
-        "userDiet.ingredientPreferences.preferredIngredients",
-      ],
-      filters: {
-        userId: {
-          $eq: id,
-        },
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  )
-  
-  let userDiet = await fetch(
-    `http://localhost:1337/api/user-combined-datas?${query}`,
-    {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    }
-  )
-  const temp = await userDiet.json()
-
-  const raw = temp.data[0].attributes
-  const user = handleUser(raw)
-  console.log("!!!!\n", user, "XD")
+  const user = await getUser(jwt)
+  const dishes = await getDishes(user, jwt)
 
   return {
-    props: { raw, user },
+    props: { user, originalDishes: dishes },
   }
 }
-
-// * date controls data passed to the next components
-// const replaceIngredient = (indexes: ObjectFrontendIndexes) => {
-//   const { dayId, dishId, indgredientId, replacebleId } = indexes
-//   const stateCopy = cloneDeep(dietData)
-//   const replecable =
-//     stateCopy[dayId].dishes[dishId].indgredients[indgredientId]
-//   const ogAmount = replecable.amount
-//   const ogName = replecable.name
-//   const newName = replecable.replacements[replacebleId].name
-//   const newAmount = replecable.replacements[replacebleId].amount
-//   replecable.name = newName
-//   replecable.amount = newAmount
-//   replecable.replacements[replacebleId].amount = ogAmount
-//   replecable.replacements[replacebleId].name = ogName
-
-//   setDietData(stateCopy)
-// }

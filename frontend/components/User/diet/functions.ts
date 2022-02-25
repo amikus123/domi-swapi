@@ -1,5 +1,5 @@
-import { stringToDate } from "../../../lib/helpers/formating"
-import { DateRange, Dish, User } from "../../../lib/helpers/jsonToState"
+import { stringToDate } from "./api/timeHelpers"
+import { Dish, User, DateRange } from "./api/types"
 
 export const getKcal = (dishes: Dish[]) => {
   let kcalCount = 0
