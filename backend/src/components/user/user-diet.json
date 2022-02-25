@@ -11,7 +11,8 @@
       "displayName": "timeRange",
       "type": "component",
       "repeatable": false,
-      "component": "user.time-range"
+      "component": "user.time-range",
+      "required": true
     },
     "dishPreferences": {
       "type": "component",

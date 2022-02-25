@@ -14,7 +14,8 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "image": {
       "type": "media",
@@ -28,18 +29,15 @@
       "displayName": "nameAmount",
       "type": "component",
       "repeatable": true,
-      "component": "dish.name-amount"
+      "component": "dish.name-amount",
+      "required": true
     },
     "ingredients": {
       "displayName": "ingredient",
       "type": "component",
       "repeatable": true,
-      "component": "dish.ingredient"
-    },
-    "timeCategory": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::dish-time-category.dish-time-category"
+      "component": "dish.ingredient",
+      "required": true
     },
     "dishPage": {
       "type": "relation",
@@ -49,6 +47,15 @@
     "slug": {
       "type": "uid",
       "targetField": "name"
+    },
+    "meal": {
+      "type": "enumeration",
+      "enum": [
+        "obiad",
+        "sniadanie"
+      ],
+      "default": "sniadanie",
+      "required": true
     }
   }
 }

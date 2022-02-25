@@ -8,33 +8,27 @@ import {
   Box,
 } from "@chakra-ui/react"
 import React from "react"
-import { ObjectFrontendIndexes, TrueDishData } from "../../../../pages/user/diet"
+import { Dish } from "../../../../lib/helpers/jsonToState"
+import {
+  ObjectFrontendIndexes,
+  TrueDishData,
+} from "../../../../pages/user/diet"
 import DishLeft from "../DishColumn/DishLeft"
 import DishRight from "../DishColumn/DishRight"
 
 interface DishRowProps {
-  dish: TrueDishData
-  indexes:ObjectFrontendIndexes
-  replaceIngredient:(IDs: ObjectFrontendIndexes) => void,
-
-  
+  dish: Dish
+  indexes: ObjectFrontendIndexes
+  replaceIngredient: (IDs: ObjectFrontendIndexes) => void
 }
-const DishRow = ({ dish,indexes,replaceIngredient }: DishRowProps) => {
-  const {
-    category,
-    imageData,
-    indgredients,
-    name,
-    nutrients,
-    recipe,
-    replacements,
-  } = dish
+const DishRow = ({ dish, indexes, replaceIngredient }: DishRowProps) => {
+  const { dishPage, id, image, ingredients, name, nutrients, slug ,timeCategory} = dish
   return (
     <AccordionItem>
       <AccordionButton>
         <Box flex="1" textAlign="left">
           <Text py={2} fontSize={20} fontWeight={600}>
-            {category} - {name}
+            {timeCategory} - {name}
           </Text>{" "}
         </Box>
         <AccordionIcon />
@@ -42,14 +36,13 @@ const DishRow = ({ dish,indexes,replaceIngredient }: DishRowProps) => {
 
       <AccordionPanel pb={4}>
         <Flex px={4} align="flex-start">
-          <DishLeft imageData={imageData} name={name} />
+          <DishLeft image={image}  />
           <DishRight
-          replaceIngredient={replaceIngredient}
-          indexes={indexes}
-            indgredients={indgredients}
+            replaceIngredient={replaceIngredient}
+            indexes={indexes}
+            ingredients={ingredients}
             nutrients={nutrients}
-            recipe={recipe}
-            replacements={replacements}
+            recipe={""}
           />
         </Flex>
       </AccordionPanel>

@@ -1,17 +1,17 @@
 import { stringToDate } from "../../../lib/helpers/formating"
-import { DateRange, User } from "../../../lib/helpers/jsonToState"
-import { TrueDishData } from "../../../pages/user/diet"
+import { DateRange, Dish, User } from "../../../lib/helpers/jsonToState"
 
-export const getKcal = (dishes: TrueDishData[]) => {
+export const getKcal = (dishes: Dish[]) => {
   let kcalCount = 0
   dishes.forEach((item) => {
-    const kcalString = item.nutrients["kalorie"]
-      ? item.nutrients["kalorie"]
-      : item.nutrients["Kalorie"]
-    if (kcalString) {
-      const kcalNumber = Number(kcalString.replace("kcal", ""))
-      if (!isNaN(kcalNumber)) {
-        kcalCount += kcalNumber
+    for (const nut of item.nutrients) {
+      if (nut.name.toLowerCase() === "kalorie") {
+        const kcalString = nut.amount
+        const kcalNumber = Number(kcalString.replace("kcal", ""))
+        if (!isNaN(kcalNumber)) {
+          kcalCount += kcalNumber
+        }
+        break
       }
     }
   })
@@ -24,9 +24,3 @@ export const datesFromUser = (user: User): DateRange => {
     start: stringToDate(user.userDiet.timeRange.start),
   }
 }
-
-
-//* based on original base Date range, calculate which day should have which dietDay
-
-
-// * prepare dietg based on preferences

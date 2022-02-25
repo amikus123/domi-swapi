@@ -20,7 +20,9 @@
     "preferredIngredients": {
       "type": "component",
       "repeatable": true,
-      "component": "user-diet.preferred-replacements"
+      "component": "user-diet.preferred-replacements",
+      "required": true,
+      "min": 0
     }
   }
 }

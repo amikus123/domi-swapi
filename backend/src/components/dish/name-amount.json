@@ -2,15 +2,19 @@
   "collectionName": "components_dish_name_amounts",
   "info": {
     "displayName": "nameAmount",
-    "icon": "anchor"
+    "icon": "anchor",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "unique": false,
+      "required": true
     },
     "amount": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }

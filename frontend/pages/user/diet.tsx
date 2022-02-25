@@ -1,17 +1,17 @@
 import { Stack, Button } from "@chakra-ui/react"
-import { isAfter, isBefore, isSameDay, startOfToday } from "date-fns"
+import { startOfToday } from "date-fns"
 import React, { useEffect, useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
 import MyCalendar from "../../components/User/diet/MyCalendar"
 // perchance move to difftent file so it does not always load
 import "react-datepicker/dist/react-datepicker.css"
 import qs from "qs"
-import { cloneDeep } from "lodash"
 import { dietExample } from "../../components/User/diet/dummyData"
 import { fetchAPI } from "../../lib/api"
 import { parseCookies } from "nookies"
 import {
   DateRange,
+  Diet,
   DietDay,
   handleUser,
   User,
@@ -20,7 +20,6 @@ import {
   filterRange,
   filterSingleDay,
   getDietArr,
-  stringToDate,
 } from "../../lib/helpers/formating"
 import { datesFromUser } from "../../components/User/diet/functions"
 
@@ -73,7 +72,15 @@ export interface DateRangeNullable {
   end: Date | null
 }
 
+export interface DishColumnData {
+  dietDay: DietDay
+  date: Date
+}
+
 const diet = ({ raw, user }: DietProps) => {
+  const { userDiet } = user
+  const { diet, dishPreferences, ingredientPreferences } = userDiet
+
   const [dates, setDates] = useState<DateRangeNullable>({
     start: startOfToday(),
     end: startOfToday(),
@@ -83,7 +90,10 @@ const diet = ({ raw, user }: DietProps) => {
   const [singleDate, setSingleDate] = useState<Date>(startOfToday())
   const [showRange, setShowRange] = useState(false)
 
-  const [dietData, setDietData] = useState<SingleDietDayData[]>(dietExample)
+  const [dietData, setDietData] = useState<Diet>(diet)
+  // * parse diet based on preferences
+
+
   // move to separate
   const [fullDietArr, setFullDietArr] = useState<DietDay[]>(
     getDietArr(dateRange, user.userDiet.diet.days)
@@ -96,6 +106,7 @@ const diet = ({ raw, user }: DietProps) => {
     fDateRange: DateRange,
     fFullDierArr: DietDay[]
   ) => {
+    console.log("XDD")
     if (fShowRange && fDates.end !== null) {
       return filterRange(fDates.start, fDates.end, fDateRange.end, fFullDierArr)
     } else if (fDates.end === null) {
@@ -105,26 +116,21 @@ const diet = ({ raw, user }: DietProps) => {
     }
   }
 
-  const [filteredDietDays, setFilteredDietDays] = useState<DietDay[]>(
+  const [columnData, setColumnData] = useState<DishColumnData[]>(
     filterHelper(showRange, dates, singleDate, dateRange, fullDietArr)
   )
 
   useEffect(() => {
-    setFilteredDietDays(filterHelper(showRange,dates,singleDate,dateRange,fullDietArr))
-  }, [singleDate,showRange,dates,dateRange,fullDietArr])
-
-  useEffect(() => {
-    console.log(fullDietArr, filteredDietDays, "XDED")
-  }, [filteredDietDays])
+    setColumnData(
+      filterHelper(showRange, dates, singleDate, dateRange, fullDietArr)
+    )
+  }, [singleDate, showRange, dates, dateRange, fullDietArr])
 
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
-      {/* <pre>{JSON.stringify(diet, null, 2)}</pre>
-      <p>XD</p> */}
-      {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
-      <pre>{JSON.stringify(filteredDietDays, null, 2)}</pre>
-      {/* <pre>{JSON.stringify(user, null, 2)}</pre>
-      <pre>{JSON.stringify(user, null, 2)}</pre> */}
+      <pre>{JSON.stringify(dietData, null, 2)}</pre>
+      <pre>{JSON.stringify(dishPreferences, null, 2)}</pre>
+      <pre>{JSON.stringify(ingredientPreferences, null, 2)}</pre>
 
       <MyCalendar
         singleDate={singleDate}
@@ -135,10 +141,7 @@ const diet = ({ raw, user }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      {/* <DishColumn
-        diet={filterDiet(dietData)}
-        replaceIngredient={replaceIngredient}
-      /> */}
+      <DishColumn dishColumnData={columnData} />
 
       <Button>Pobierz</Button>
     </Stack>

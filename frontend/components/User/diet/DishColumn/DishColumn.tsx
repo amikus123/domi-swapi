@@ -1,36 +1,45 @@
 import { Accordion, Divider, Stack } from "@chakra-ui/react"
 import React from "react"
-import {  ObjectFrontendIndexes, SingleDietDayData, } from "../../../../pages/user/diet"
+import { DietDay } from "../../../../lib/helpers/jsonToState"
+import diet, {
+  DishColumnData,
+  ObjectFrontendIndexes,
+  SingleDietDayData,
+} from "../../../../pages/user/diet"
 import DishColumnHeader from "../DishRow/DishColumnHeader"
 import DishRow from "../DishRow/DishRow"
 
 interface DishColumnProps {
-  diet: SingleDietDayData[]
-  replaceIngredient:(IDs: ObjectFrontendIndexes) => void,
-  
+  dishColumnData: DishColumnData[]
+  replaceIngredient?: (IDs: ObjectFrontendIndexes) => void
 }
 
 // * if we show more than one day, we hide all of them expect the fisrt
-const DishColumn = ({ diet,replaceIngredient }: DishColumnProps) => {
+const DishColumn = ({ dishColumnData, replaceIngredient }: DishColumnProps) => {
   return (
     <>
-      {diet.map((item, key) => {
+      {dishColumnData.map((item, key) => {
+        const { date, dietDay } = item
         return (
           <Stack w="100%" key={key}>
-            <DishColumnHeader data={item} />
-          
-            {item.dishes.map((dish, index) => {
+            <DishColumnHeader date={date} dishes={dietDay.dishes} />
+
+            {dietDay.dishes.map((dish, index) => {
               return (
                 <Accordion
                   defaultIndex={key === 0 ? [0] : []}
                   allowMultiple
                   key={index}
                 >
-                  <DishRow dish={dish}  replaceIngredient={replaceIngredient} indexes={{dayId:key,dishId:index}} />
+                  <DishRow
+                    dish={dish}
+                    replaceIngredient={replaceIngredient}
+                    indexes={{ dayId: key, dishId: index }}
+                  />
                 </Accordion>
               )
             })}
-            {key + 1 !== diet.length ? <Divider py={2} /> : null}
+            {key !== diet.length-1 ? <Divider py={2} /> : null}
           </Stack>
         )
       })}

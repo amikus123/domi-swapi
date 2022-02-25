@@ -8,10 +8,13 @@
   "options": {},
   "attributes": {
     "originalName": {
-      "type": "string"
+      "type": "string",
+      "unique": false,
+      "required": true
     },
     "preferredName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }
