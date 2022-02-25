@@ -24,6 +24,11 @@ import {
 import { datesFromUser } from "../../components/User/diet/functions"
 import { number } from "yup"
 import { Dish, uniqueDishHandler } from "../../lib/helpers/copy"
+import {
+  fetchMe,
+  getDishes,
+  getUser,
+} from "../../components/User/diet/api/serverSide"
 
 export interface Ingredient {
   name: string
@@ -67,9 +72,7 @@ export interface ObjectFrontendIndexes {
 
 interface DietProps {
   user: User
-  raw: any
-  dishData: any
-  dishesData: Record<string, Dish>
+  dishes: Record<string, Dish>
 }
 export interface DateRangeNullable {
   start: Date
@@ -81,21 +84,16 @@ export interface DishColumnData {
   date: Date
 }
 
-const diet = ({ raw, user, dishData, dishesData }: DietProps) => {
+const diet = ({ user, dishes }: DietProps) => {
   useEffect(() => {
-    console.log(raw)
+    console.log(dishes)
     console.log(user)
-    console.log(dishData)
-    console.log(dishesData)
   }, [])
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
-      <pre>{JSON.stringify(dishesData, null, 2)}</pre>
-
-      <pre>{JSON.stringify(dishData, null, 2)}</pre>
-
-      <pre>{JSON.stringify(raw, null, 2)}</pre>
       <pre>{JSON.stringify(user, null, 2)}</pre>
+
+      <pre>{JSON.stringify(dishes, null, 2)}</pre>
     </Stack>
   )
 }
@@ -104,107 +102,10 @@ export default diet
 
 export async function getServerSideProps(ctx) {
   const jwt = parseCookies(ctx).jwt
+  const user = await getUser(jwt)
+  const dishes = await getDishes(user, jwt)
 
-  //* from this call we receive id
-  const userData = await fetchAPI(`/users/me`, {
-    urlParamsObject: {
-      populate: {
-        populate: "*",
-        role: {
-          populate: "*",
-        },
-        userData: {
-          populate: "*",
-        },
-      },
-    },
-    jwt,
-  })
-
-  const id = userData.id
-
-  const query = qs.stringify(
-    {
-      populate: [
-        "userData",
-        "userDiet",
-        "userDiet.diet",
-        "userDiet.diet.dishReplacements",
-        "userDiet.diet.dishReplacements.original",
-        "userDiet.diet.dishReplacements.replacements",
-        "userDiet.diet.days",
-        "userDiet.diet.days.dishes",
-        "userDiet.timeRange",
-        "userDiet.dishPreferences",
-        "userDiet.dishPreferences.original",
-        "userDiet.dishPreferences.preferred",
-        "userDiet.ingredientPreferences",
-        "userDiet.ingredientPreferences.dish",
-        "userDiet.ingredientPreferences.preferredIngredients",
-      ],
-      filters: {
-        userId: {
-          $eq: id,
-        },
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  )
-
-  let userDiet = await fetch(
-    `http://localhost:1337/api/user-combined-datas?${query}`,
-    {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    }
-  )
-  const temp = await userDiet.json()
-
-  const raw = temp.data[0].attributes
-  const user = handleUser(raw)
-
-  //* getting uniqueDishesId
-  const arr = (user: User): number[] => {
-    return Object.values(user.userDiet.uniqueDishes).map((i) => {
-      return i.id
-    })
-  }
-
-  // fetch dishes
-  const dishQuery = qs.stringify(
-    {
-      populate: [
-        "image",
-        "nutrients",
-        "ingredients",
-        "ingredients.replacements",
-        "dishPage",
-      ],
-      filters: {
-        id: {
-          $in: arr,
-        },
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
-  )
-
-  const dishRequest = await fetch(
-    `http://localhost:1337/api/dishes?${dishQuery}`,
-    {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    }
-  )
-  const dishData = await dishRequest.json()
-  const dishesData = uniqueDishHandler(dishData)
   return {
-    props: { raw, user, dishData, dishesData },
+    props: { user, dishes },
   }
 }

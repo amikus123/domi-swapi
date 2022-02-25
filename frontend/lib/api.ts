@@ -9,6 +9,10 @@ export function getStrapiURL(path: string = ""): string {
   return `${process.env.API_URL || "http://localhost:1337"}${path}`
 }
 
+export const getApiUrl = ()=>{
+  return `${process.env.API_URL || "http://localhost:1337"}`
+
+}
 interface FetchApiOptions {
   headers?: Record<string, any>
   urlParamsObject?: Record<string, any>
