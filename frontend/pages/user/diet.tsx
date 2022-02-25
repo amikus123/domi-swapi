@@ -205,7 +205,6 @@ export async function getServerSideProps(ctx) {
     }
   )
   
-  // TODO fecth all dishes herem not isnide the function above
   let userDiet = await fetch(
     `http://localhost:1337/api/user-combined-datas?${query}`,
     {

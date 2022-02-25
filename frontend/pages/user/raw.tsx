@@ -1,4 +1,4 @@
-import { Stack, Button } from "@chakra-ui/react"
+import { Stack, Button, useControllableState } from "@chakra-ui/react"
 import { startOfToday } from "date-fns"
 import React, { useEffect, useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
@@ -22,6 +22,8 @@ import {
   getDietArr,
 } from "../../lib/helpers/formating"
 import { datesFromUser } from "../../components/User/diet/functions"
+import { number } from "yup"
+import { Dish, uniqueDishHandler } from "../../lib/helpers/copy"
 
 export interface Ingredient {
   name: string
@@ -66,6 +68,8 @@ export interface ObjectFrontendIndexes {
 interface DietProps {
   user: User
   raw: any
+  dishData: any
+  dishesData: Record<string, Dish>
 }
 export interface DateRangeNullable {
   start: Date
@@ -77,9 +81,19 @@ export interface DishColumnData {
   date: Date
 }
 
-const diet = ({ raw, user }: DietProps) => {
+const diet = ({ raw, user, dishData, dishesData }: DietProps) => {
+  useEffect(() => {
+    console.log(raw)
+    console.log(user)
+    console.log(dishData)
+    console.log(dishesData)
+  }, [])
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
+      <pre>{JSON.stringify(dishesData, null, 2)}</pre>
+
+      <pre>{JSON.stringify(dishData, null, 2)}</pre>
+
       <pre>{JSON.stringify(raw, null, 2)}</pre>
       <pre>{JSON.stringify(user, null, 2)}</pre>
     </Stack>
@@ -120,11 +134,6 @@ export async function getServerSideProps(ctx) {
         "userDiet.diet.dishReplacements.replacements",
         "userDiet.diet.days",
         "userDiet.diet.days.dishes",
-        "userDiet.diet.days.dishes.image",
-        "userDiet.diet.days.dishes.nutrients",
-        "userDiet.diet.days.dishes.ingredients",
-        "userDiet.diet.days.dishes.ingredients.replacements",
-        "userDiet.diet.days.dishes.dishPage",
         "userDiet.timeRange",
         "userDiet.dishPreferences",
         "userDiet.dishPreferences.original",
@@ -157,9 +166,45 @@ export async function getServerSideProps(ctx) {
   const raw = temp.data[0].attributes
   const user = handleUser(raw)
 
-  console.log("!!!!\n", user, "XD")
+  //* getting uniqueDishesId
+  const arr = (user: User): number[] => {
+    return Object.values(user.userDiet.uniqueDishes).map((i) => {
+      return i.id
+    })
+  }
 
+  // fetch dishes
+  const dishQuery = qs.stringify(
+    {
+      populate: [
+        "image",
+        "nutrients",
+        "ingredients",
+        "ingredients.replacements",
+        "dishPage",
+      ],
+      filters: {
+        id: {
+          $in: arr,
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+  const dishRequest = await fetch(
+    `http://localhost:1337/api/dishes?${dishQuery}`,
+    {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    }
+  )
+  const dishData = await dishRequest.json()
+  const dishesData = uniqueDishHandler(dishData)
   return {
-    props: { raw, user },
+    props: { raw, user, dishData, dishesData },
   }
 }
