@@ -1,25 +1,15 @@
 import { Button, Flex, Stack, Text, useToast } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React, { useState } from "react"
-import {
-  ObjectFrontendIndexes,
-  ReplecableIndegredient,
-} from "../../../../../pages/user/diet"
+import { Ingredient } from "../../../api/types"
 
 interface IndigredientChoiceProps {
-  data: ReplecableIndegredient
-  indexes: ObjectFrontendIndexes
-  replaceIngredient: (IDs: ObjectFrontendIndexes) => void
+  ingredient: Ingredient
 }
-const IndigredientChoice = ({
-  data,
-
-  indexes,
-  replaceIngredient,
-}: IndigredientChoiceProps) => {
+const IndigredientChoice = ({ ingredient }: IndigredientChoiceProps) => {
   const toast = useToast()
   const [loading, setLoading] = useState(false)
-  const { amount, name, replacements } = data
+  const { amount, name, replacements, originalName } = ingredient
   const handleClick = async (replaceableIndex: number) => {
     setLoading(true)
 
@@ -42,7 +32,6 @@ const IndigredientChoice = ({
         duration: 3000,
         isClosable: true,
       })
-      replaceIngredient({ ...indexes, replacebleId: replaceableIndex })
       setLoading(false)
     } else {
       toast({
@@ -55,7 +44,7 @@ const IndigredientChoice = ({
       setLoading(false)
     }
   }
-
+  // !implement context beascue too macz man
   return (
     <>
       {replacements && replacements.length > 0 ? (
@@ -64,6 +53,7 @@ const IndigredientChoice = ({
             {capitalize(name)} - {capitalize(amount)}
           </Text>
           <Stack alignSelf="flex-end">
+            {JSON.stringify(replacements)}
             {replacements.map((item, index) => {
               return (
                 <Button

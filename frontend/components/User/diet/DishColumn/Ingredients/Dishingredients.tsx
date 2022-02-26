@@ -11,19 +11,15 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import {
-  ObjectFrontendIndexes,
-  ReplecableIndegredient,
-} from "../../../../pages/user/diet"
+import { Ingredient } from "../../api/types"
+
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
-  data: ReplecableIndegredient[]
-  indexes: ObjectFrontendIndexes
-  replaceIngredient: (IDs: ObjectFrontendIndexes) => void
+  ingredients: Ingredient[]
 }
 
-const checkIfCanReplace = (data: ReplecableIndegredient[]) => {
+const checkIfCanReplace = (data: Ingredient[]) => {
   for (const i of data) {
     if (i.replacements && i.replacements.length > 0) {
       return true
@@ -32,11 +28,7 @@ const checkIfCanReplace = (data: ReplecableIndegredient[]) => {
   return false
 }
 
-const Dishingredients = ({
-  data,
-  indexes,
-  replaceIngredient,
-}: DishRecpipeProps) => {
+const Dishingredients = ({ ingredients }: DishRecpipeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   //* if there ar no viable options for replacements, we wont show the modal
@@ -50,7 +42,7 @@ const Dishingredients = ({
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((item, index) => {
+          {ingredients.map((item, index) => {
             return (
               <Tr key={index}>
                 <Td>{capitalize(item.name)}</Td>
@@ -60,20 +52,17 @@ const Dishingredients = ({
           })}
         </Tbody>
       </Table>
-
-      {checkIfCanReplace(data) || (
+      {checkIfCanReplace(ingredients) && (
         <>
           <Button mt={10} w={60} onClick={onOpen}>
             Zmień składniki
           </Button>
 
           <IndigredientModal
-            data={data}
             isOpen={isOpen}
             onClose={onClose}
             initialRef={initialRef}
-            replaceIngredient={replaceIngredient}
-            indexes={indexes}
+            ingredients={ingredients}
           />
         </>
       )}

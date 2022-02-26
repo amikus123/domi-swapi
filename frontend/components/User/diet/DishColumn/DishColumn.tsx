@@ -1,30 +1,27 @@
 import { Accordion, Divider, Stack } from "@chakra-ui/react"
 import React from "react"
-import { DietDay } from "../../../../lib/helpers/jsonToState"
-import diet, {
-  DishColumnData,
-  ObjectFrontendIndexes,
-  SingleDietDayData,
-} from "../../../../pages/user/diet"
-import DishColumnHeader from "../DishRow/DishColumnHeader"
-import DishRow from "../DishRow/DishRow"
+import diet from "../../../../pages/user/diet"
+import { DishColumnData } from "../api/types"
+
+import DishColumnHeader from "./DishColumnHeader"
+import DishRow from "./DishRow"
 
 interface DishColumnProps {
   dishColumnData: DishColumnData[]
-  replaceIngredient?: (IDs: ObjectFrontendIndexes) => void
 }
 
 // * if we show more than one day, we hide all of them expect the fisrt
-const DishColumn = ({ dishColumnData, replaceIngredient }: DishColumnProps) => {
+const DishColumn = ({ dishColumnData }: DishColumnProps) => {
   return (
     <>
       {dishColumnData.map((item, key) => {
-        const { date, dietDay } = item
+        const { date, fullDietDay } = item
+        const { dishes, kcalCount } = fullDietDay
         return (
           <Stack w="100%" key={key}>
-            <DishColumnHeader date={date} dishes={dietDay.dishes} />
+            <DishColumnHeader date={date} kcalCount={kcalCount} />
 
-            {dietDay.dishes.map((dish, index) => {
+            {dishes.map((dish, index) => {
               return (
                 <Accordion
                   defaultIndex={key === 0 ? [0] : []}
@@ -32,14 +29,12 @@ const DishColumn = ({ dishColumnData, replaceIngredient }: DishColumnProps) => {
                   key={index}
                 >
                   <DishRow
-                    dish={dish}
-                    replaceIngredient={replaceIngredient}
-                    indexes={{ dayId: key, dishId: index }}
+                    dish={dish.dish}
                   />
                 </Accordion>
               )
             })}
-            {key !== diet.length-1 ? <Divider py={2} /> : null}
+            {key !== diet.length - 1 ? <Divider py={2} /> : null}
           </Stack>
         )
       })}

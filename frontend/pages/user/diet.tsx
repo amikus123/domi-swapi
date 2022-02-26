@@ -19,11 +19,9 @@ import {
   filterSingleDay,
 } from "../../components/User/diet/api/timeHelpers"
 import {
-  DietDay,
   User,
   Dish,
   DateRange,
-  Diet,
   DateRangeNullable,
   DishColumnData,
   FullDietDay,
@@ -88,7 +86,14 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
     changeDishesInDays(days, dishReplacements, dishPreferences, dishes)
   )
   useEffect(() => {
-    changeDishesInDays(days, dishReplacements, dishPreferences, dishes)
+    const res = changeDishesInDays(
+      days,
+      dishReplacements,
+      dishPreferences,
+      dishes
+    )
+    console.log(res, "changeDishesInDays")
+    setFullDietDays(res)
   }, [days, dishReplacements, dishPreferences, dishes])
   const [columnData, setColumData] = useState<DishColumnData[]>([])
 
@@ -102,6 +107,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
       fullDietDays
     )
     setColumData(newData)
+    console.log(newData)
   }, [showRange, dates, singleDate, dateRange, indexesOfDays, fullDietDays])
 
   const filterHelper = (
@@ -139,15 +145,6 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
 
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
-      <p>dietDays</p>
-      <pre>{JSON.stringify(diet.days, null, 2)}</pre>
-      <p>disRep</p>
-      <pre>{JSON.stringify(diet.dishReplacements, null, 2)}</pre>
-      <p>dishes</p>
-      <pre>{JSON.stringify(dishes, null, 2)}</pre>
-      <p>ingredientPreferences</p>
-      <pre>{JSON.stringify(ingredientPreferences, null, 2)}</pre>
-
       <MyCalendar
         singleDate={singleDate}
         setSingleDate={setSingleDate}
@@ -157,7 +154,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      {/* <DishColumn dishColumnData={columnData} /> */}
+      <DishColumn dishColumnData={columnData} />
 
       <Button>Pobierz</Button>
     </Stack>

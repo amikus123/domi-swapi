@@ -13,6 +13,7 @@ const fixHeight = (w: number, h: number) => {
   return { h: 200, w: 200 * ratio }
 }
 const DishLeft = ({ image }: DishLeftProps) => {
+  
   const attributes = image.data.attributes
   const { alternativeText, formats } = attributes
   const { height, width, url } = formats.thumbnail

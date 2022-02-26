@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react"
 import React from "react"
-import { BaseDishData } from "../../../../../pages/user/diet"
+import { BaseDishData } from "../../../../../../pages/user/diet"
 import DishModalDish from "./DishModalDish"
 
 interface DishModalProps {

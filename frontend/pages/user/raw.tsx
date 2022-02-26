@@ -10,62 +10,13 @@ import { fetchAPI } from "../../lib/api"
 import { parseCookies } from "nookies"
 import { uniqueDishHandler } from "../../components/User/diet/api/parseJSON/parseDishes"
 import { handleUser } from "../../components/User/diet/api/parseJSON/parseUset"
-import { User, Dish, DietDay } from "../../components/User/diet/api/types"
-
-export interface Ingredient {
-  name: string
-  amount: string
-}
-
-export interface ReplecableIndegredient {
-  name: string
-  amount: string
-  replacements?: Ingredient[]
-}
-
-export interface BaseDishData {
-  name: string
-  image: any
-  description: any
-}
-export interface TrueDishData {
-  category: string
-  name: string
-  imageData: any
-  // markdown
-  recipe: any
-  replacements: BaseDishData[]
-  indgredients: ReplecableIndegredient[]
-  nutrients: Ingredient[]
-  id: number
-}
-export interface SingleDietDayData {
-  date: Date
-  dishes: TrueDishData[]
-  id: number
-}
-
-export interface ObjectFrontendIndexes {
-  dayId?: number
-  dishId?: number
-  indgredientId?: number
-  replacebleId?: number
-}
+import { User, Dish } from "../../components/User/diet/api/types"
 
 interface DietProps {
   user: User
   raw: any
   dishData: any
   dishesData: Record<string, Dish>
-}
-export interface DateRangeNullable {
-  start: Date
-  end: Date | null
-}
-
-export interface DishColumnData {
-  dietDay: DietDay
-  date: Date
 }
 
 const diet = ({ raw, user, dishData, dishesData }: DietProps) => {
@@ -78,11 +29,8 @@ const diet = ({ raw, user, dishData, dishesData }: DietProps) => {
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
       <pre>{JSON.stringify(raw, null, 2)}</pre>
-      <pre>{JSON.stringify(dishesData, null, 2)}</pre>
-
+      <p>XDDDDDDDDDDDDDDDDDDD</p>
       <pre>{JSON.stringify(dishData, null, 2)}</pre>
-
-      <pre>{JSON.stringify(user, null, 2)}</pre>
     </Stack>
   )
 }
@@ -195,103 +143,3 @@ export async function getServerSideProps(ctx) {
     props: { raw, user, dishData, dishesData },
   }
 }
-
-const xd = [
-  {
-    id: 1,
-    replacements: {
-      data: [
-        {
-          id: 2,
-          attributes: {
-            name: "Jajecznica",
-            createdAt: "2022-02-22T13:49:30.901Z",
-            updatedAt: "2022-02-25T13:35:30.209Z",
-            slug: "jajecznica",
-            meal: "sniadanie",
-          },
-        },
-        {
-          id: 3,
-          attributes: {
-            name: "Salad",
-            createdAt: "2022-02-25T00:27:57.868Z",
-            updatedAt: "2022-02-25T00:48:01.631Z",
-            slug: "sala",
-            meal: "obiad",
-          },
-        },
-      ],
-    },
-    original: {
-      data: {
-        id: 5,
-        attributes: {
-          name: "Tost",
-          createdAt: "2022-02-25T00:48:48.107Z",
-          updatedAt: "2022-02-25T00:48:48.107Z",
-          slug: "tost",
-          meal: "sniadanie",
-        },
-      },
-    },
-  },
-  {
-    id: 2,
-    replacements: {
-      data: [
-        {
-          id: 2,
-          attributes: {
-            name: "Jajecznica",
-            createdAt: "2022-02-22T13:49:30.901Z",
-            updatedAt: "2022-02-25T13:35:30.209Z",
-            slug: "jajecznica",
-            meal: "sniadanie",
-          },
-        },
-      ],
-    },
-    original: {
-      data: {
-        id: 1,
-        attributes: {
-          name: "Spaghetti",
-          createdAt: "2022-02-22T13:38:04.474Z",
-          updatedAt: "2022-02-25T13:19:59.333Z",
-          slug: "spaghetti",
-          meal: "obiad",
-        },
-      },
-    },
-  },
-  {
-    id: 3,
-    replacements: {
-      data: [
-        {
-          id: 1,
-          attributes: {
-            name: "Spaghetti",
-            createdAt: "2022-02-22T13:38:04.474Z",
-            updatedAt: "2022-02-25T13:19:59.333Z",
-            slug: "spaghetti",
-            meal: "obiad",
-          },
-        },
-      ],
-    },
-    original: {
-      data: {
-        id: 2,
-        attributes: {
-          name: "Jajecznica",
-          createdAt: "2022-02-22T13:49:30.901Z",
-          updatedAt: "2022-02-25T13:35:30.209Z",
-          slug: "jajecznica",
-          meal: "sniadanie",
-        },
-      },
-    },
-  },
-]

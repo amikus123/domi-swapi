@@ -69,37 +69,6 @@ export const changeDishesIngredients = (
   return dishCopy
 }
 
-const getAllMatching = (
-  names: string[],
-  dishes: Record<string, Dish>
-): Dish[] => {
-  const res: Dish[] = []
-  names.forEach((name) => {
-    if (name in dishes) {
-      res.push(dishes[name])
-    }
-  })
-  return res
-}
-
-const checkIfInside = () => {}
-
-const changeDietDaysBasedOnPreferences = (
-  fullDietDays: FullDietDay[],
-  dishPreferences: DishPreference[]
-): FullDietDay[] => {
-  const copy = cloneDeep(fullDietDays)
-  copy.forEach((day) => {
-    day.dishes.forEach((d) => {
-      const { dish, originalDishName, replacements } = d
-      if (originalDishName) {
-      }
-    })
-  })
-
-  return copy
-}
-
 // * changes abstract dietDay to days filled with Objects
 export const changeDishesInDays = (
   //
@@ -148,7 +117,7 @@ export const changeDishesInDays = (
     }
   }
 
-  dietDays.map((day) => {
+  dietDays.forEach((day) => {
     //* we go through all dishes of day
     // TODO it can be memoized
 
@@ -172,9 +141,26 @@ export const changeDishesInDays = (
         a.push(tmp)
       }
     })
-
-    return { dishes: a }
+    res.push({ dishes: a, kcalCount: getKcal(a) })
   })
 
   return res
+}
+
+export const getKcal = (dishes: FullDish[]) => {
+  let kcalCount = 0
+  dishes.forEach((item) => {
+    // ! ADD EROR HANDLING
+    for (const nut of item.dish.nutrients) {
+      if (nut.name.toLowerCase().trim() === "kalorie") {
+        const kcalString = nut.amount
+        const kcalNumber = Number(kcalString.replace("kcal", ""))
+        if (!isNaN(kcalNumber)) {
+          kcalCount += kcalNumber
+        }
+        break
+      }
+    }
+  })
+  return kcalCount
 }

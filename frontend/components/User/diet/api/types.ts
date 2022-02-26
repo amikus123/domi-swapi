@@ -1,4 +1,3 @@
-export type DishTimeCategory = "Obiad" | "Kolacja" | "Sniadanie"
 
 // * user has array of these, dish name is name of the dish
 // * for which prefered ingredienst should be applied
@@ -66,7 +65,9 @@ export interface Dish {
   slug: string
   nutrients: NameAmount[]
   ingredients: Ingredient[]
-  timeCategory: DishTimeCategory
+  timeCategory: string,
+  recipe:string,
+  description:string
   // * if it exists, create url to page
   dishPage: null | string
   // * image object, idk how to type it
@@ -111,4 +112,6 @@ export interface FullDish {
 }
 export interface FullDietDay {
   dishes: FullDish[]
+  kcalCount:number
+
 }

@@ -10,30 +10,23 @@ import {
   Stack,
 } from "@chakra-ui/react"
 import React, { useState } from "react"
-import {
-  ObjectFrontendIndexes,
-  ReplecableIndegredient,
-} from "../../../../../pages/user/diet"
+import { Ingredient } from "../../../api/types"
+
 import IndigredientChoice from "./IndigredientChoice"
 
 interface IndigredientModalProps {
   isOpen: boolean
   onClose: () => void
-  data: ReplecableIndegredient[]
+  ingredients: Ingredient[]
   initialRef: any
-  indexes: ObjectFrontendIndexes
-  replaceIngredient: (IDs: ObjectFrontendIndexes) => void
 }
 
 const IndigredientModal = ({
   isOpen,
   onClose,
-  data,
+  ingredients,
   initialRef,
-  indexes,
-  replaceIngredient,
 }: IndigredientModalProps) => {
-  const [dataLength, setLength] = useState(Object.keys(data).length)
   return (
     <Modal
       isOpen={isOpen}
@@ -47,12 +40,10 @@ const IndigredientModal = ({
         <ModalCloseButton />
         <ModalBody>
           <Stack spacing={4}>
-            {data.map((item, index) => {
+            {ingredients.map((ingredient, index) => {
               return (
                 <IndigredientChoice
-                  replaceIngredient={replaceIngredient}
-                  indexes={{ ...indexes, indgredientId: index }}
-                data = {item}
+                ingredient={ingredient}
                   key={index}
                 />
               )
@@ -60,12 +51,12 @@ const IndigredientModal = ({
           </Stack>
         </ModalBody>
 
-        <ModalFooter >
-          <Button tabIndex={dataLength + 1} variant="ghost">
+        <ModalFooter>
+          <Button tabIndex={ingredients.length + 1} variant="ghost">
             Domyślny posiłek
           </Button>
-          <Button 
-            tabIndex={dataLength + 2}
+          <Button
+            tabIndex={ingredients.length + 2}
             colorScheme="blue"
             ml={3}
             onClick={onClose}

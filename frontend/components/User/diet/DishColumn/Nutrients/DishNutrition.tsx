@@ -1,15 +1,15 @@
 import { Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
 import { capitalize } from 'lodash'
 import React from 'react'
-import { Ingredient } from '../../../../pages/user/diet'
+import { NameAmount } from '../../api/types'
 
 
 
 interface DishNutritionProps{
-    data: Ingredient[]
+    nutrients: NameAmount[]
   }
 
-const DishNutrition = ({data}:DishNutritionProps) => {
+const DishNutrition = ({nutrients}:DishNutritionProps) => {
   return (
     <Table variant="simple">
         <Thead>
@@ -19,7 +19,7 @@ const DishNutrition = ({data}:DishNutritionProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((item, index) => {
+          {nutrients.map((item, index) => {
             return (
               <Tr key={index}>
                 

@@ -1,18 +1,18 @@
 import { Flex, Box, Text, Avatar, CSSObject } from "@chakra-ui/react"
 import React from "react"
-import { BaseDishData } from "../../../../../pages/user/diet"
 
 const src = "/86400.jpg"
 
 interface DishModalDishProps {
   index: number
   onClose: () => void
-  data: BaseDishData
 }
 const DishModalDish = React.forwardRef(
-  ({ index, onClose, data }: DishModalDishProps, ref: any) => {
+  ({ index, onClose }: DishModalDishProps, ref: any) => {
     // add nice border and add event on focus
-    const { description, image, name } = data
+    const description = "asd"
+    const name = "asd"
+
     const selectReplacement = () => {
       console.log("selected")
       onClose()

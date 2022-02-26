@@ -39,6 +39,9 @@ const handleDish = (dish): Dish => {
     ingredients: handleIngredients(dish.attributes.ingredients),
     nutrients: dish.attributes.nutrients,
     timeCategory: dish.attributes.meal,
+    description:dish.attributes.description,
+    recipe:dish.attributes.recipe,
+
   }
   return res
 }

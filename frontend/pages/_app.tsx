@@ -3,9 +3,12 @@ import "../style/index.css"
 import { createContext } from "react"
 import { fetchAPI } from "../lib/api"
 import { Chakra } from "../style/chakraProvider"
-import Router, { useRouter } from "next/router"
+import Router from "next/router"
 import { parseCookies } from "nookies"
 import Layout from "../components/Single/Layout"
+import {
+  RecoilRoot,
+} from 'recoil';
 
 
 export const GlobalContext = createContext({})
@@ -19,9 +22,13 @@ const MyApp = (props) => {
       {/* <DefaultSEO  {...SEO}/> */}
       <Chakra cookies={pageProps.cookies}>
         <GlobalContext.Provider value={global.attributes}>
+        <RecoilRoot>
+
           <Layout user={user}>
             <Component {...pageProps} />
           </Layout>
+              </RecoilRoot>
+
         </GlobalContext.Provider>
       </Chakra>
     </>

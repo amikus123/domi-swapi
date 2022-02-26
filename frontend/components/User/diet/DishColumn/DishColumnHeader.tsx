@@ -1,13 +1,10 @@
 import { Flex, Text } from "@chakra-ui/react"
 import { formatISO9075, getISODay } from "date-fns"
 import React from "react"
-import { Dish } from "../../../../lib/helpers/jsonToState"
-import { SingleDietDayData } from "../../../../pages/user/diet"
-import { getKcal } from "../functions"
 
 interface DishColumnHeaderProps {
   date: Date
-  dishes: Dish[]
+  kcalCount:number
 }
 
 const daysOfWeek = [
@@ -20,7 +17,7 @@ const daysOfWeek = [
   "Sobota",
   "Niedziela",
 ]
-const DishColumnHeader = ({ date, dishes }: DishColumnHeaderProps) => {
+const DishColumnHeader = ({ date,kcalCount }: DishColumnHeaderProps) => {
   return (
     <Flex
       w="100%"
@@ -33,7 +30,7 @@ const DishColumnHeader = ({ date, dishes }: DishColumnHeaderProps) => {
       <Text w={120}>{daysOfWeek[getISODay(date)]}</Text>
       <Text>{formatISO9075(date, { representation: "date" })}</Text>
       <Text w={40} textAlign="end">
-        {getKcal(dishes)} kcal
+        {kcalCount} kcal
       </Text>
     </Flex>
   )
