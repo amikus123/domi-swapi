@@ -27,6 +27,8 @@ import {
   DateRangeNullable,
   DishColumnData,
   FullDietDay,
+  IngredientPreference,
+  DishPreference,
 } from "../../components/User/diet/api/types"
 
 interface DietProps {
@@ -34,70 +36,106 @@ interface DietProps {
   originalDishes: Record<string, Dish>
 }
 
-const diet = ({ user, originalDishes }: DietProps) => {
+const DietComponent = ({ user, originalDishes }: DietProps) => {
   const { userDiet } = user
-  const { diet, dishPreferences, ingredientPreferences } = userDiet
-
+  const {
+    diet,
+    dishPreferences: originalDishPreferences,
+    ingredientPreferences: originalIngredientPreferences,
+  } = userDiet
+  const { days, dishReplacements, name } = diet
+  // * TIME STATE
+  // * range of selected dates
   const [dates, setDates] = useState<DateRangeNullable>({
     start: startOfToday(),
     end: startOfToday(),
   })
-  //* edge dates
+  // * min and max date
   const [dateRange, setDateRange] = useState<DateRange>(datesFromUser(user))
+  //* single selected Date
   const [singleDate, setSingleDate] = useState<Date>(startOfToday())
+  // * boolean to control wheather the calendar works on single or range of data
   const [showRange, setShowRange] = useState(false)
 
+  // * USER PREFERENCES
+  // * key is name of the dish, value contains array of prefference
+  const [ingredientPreferences, setIngredientPreferences] = useState<
+    Record<string, IngredientPreference>
+  >(originalIngredientPreferences)
+
+  // * key is the name of the dish, value contains  name of prefered dish
+  const [dishPreferences, setDishPreferences] = useState<
+    Record<string, DishPreference>
+  >(originalDishPreferences)
+
+  // * DISH STATE
+  // * CHANGE DISHES STATE ON change of "ingredientPreferences"
   const [dishes, setDishes] = useState(
     changeDishesIngredients(originalDishes, ingredientPreferences)
   )
-
-  const [fullDietDays, setFullDietDays] = useState<FullDietDay[]>(
-    changeDishesInDays(
-      diet.days,
-      diet.dishReplacements,
-      dishPreferences,
-      dishes
-    )
-  )
-
-  const [allDietDays, setAllDietDays] = useState<FullDietDay[]>(
-    getDietArr(dateRange, fullDietDays)
-  )
-
   useEffect(() => {
     setDishes(changeDishesIngredients(originalDishes, ingredientPreferences))
   }, [ingredientPreferences, originalDishes])
 
+  // * DIET DAY FUNCITONS
+  // * array of indexes for each day, index is index of diet day for N-th day
+  // * this is not dependent on state
+  const [indexesOfDays, setIndexesOfDays] = useState<number[]>(
+    getDietArr(dateRange, days)
+  )
+
+  const [fullDietDays, setFullDietDays] = useState<FullDietDay[]>(
+    changeDishesInDays(days, dishReplacements, dishPreferences, dishes)
+  )
   useEffect(() => {
-    console.log(user, originalDishes, "XD")
-  }, [])
+    changeDishesInDays(days, dishReplacements, dishPreferences, dishes)
+  }, [days, dishReplacements, dishPreferences, dishes])
+  const [columnData, setColumData] = useState<DishColumnData[]>([])
+
+  useEffect(() => {
+    const newData = filterHelper(
+      showRange,
+      dates,
+      singleDate,
+      dateRange,
+      indexesOfDays,
+      fullDietDays
+    )
+    setColumData(newData)
+  }, [showRange, dates, singleDate, dateRange, indexesOfDays, fullDietDays])
 
   const filterHelper = (
     fShowRange: boolean,
     fDates: DateRangeNullable,
     fSingleDate: Date,
     fDateRange: DateRange,
-    fFullDierArr: FullDietDay[]
+    fIndexesOfDays: number[],
+    fFullDietDays: FullDietDay[]
   ) => {
-    console.log("XDD")
     if (fShowRange && fDates.end !== null) {
-      return filterRange(fDates.start, fDates.end, fDateRange.end, fFullDierArr)
+      return filterRange(
+        fDates.start,
+        fDates.end,
+        fDateRange.end,
+        fIndexesOfDays,
+        fFullDietDays
+      )
     } else if (fDates.end === null) {
-      return filterSingleDay(fDates.start, fDateRange.end, fFullDierArr)
+      return filterSingleDay(
+        fDates.start,
+        fDateRange.end,
+        fIndexesOfDays,
+        fFullDietDays
+      )
     } else {
-      return filterSingleDay(fSingleDate, fDateRange.end, fFullDierArr)
+      return filterSingleDay(
+        fSingleDate,
+        fDateRange.end,
+        fIndexesOfDays,
+        fFullDietDays
+      )
     }
   }
-
-  const [columnData, setColumnData] = useState<DishColumnData[]>(
-    filterHelper(showRange, dates, singleDate, dateRange, allDietDays)
-  )
-
-  useEffect(() => {
-    setColumnData(
-      filterHelper(showRange, dates, singleDate, dateRange, allDietDays)
-    )
-  }, [singleDate, showRange, dates, dateRange, allDietDays])
 
   return (
     <Stack w="1000px" justify="center" align="center" spacing={20}>
@@ -126,7 +164,7 @@ const diet = ({ user, originalDishes }: DietProps) => {
   )
 }
 
-export default diet
+export default DietComponent
 
 export async function getServerSideProps(ctx) {
   const jwt = parseCookies(ctx).jwt

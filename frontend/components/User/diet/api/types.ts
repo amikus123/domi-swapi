@@ -33,14 +33,14 @@ export interface DateRange {
 }
 // * if possible in diet, we should swap the dish for the preffered one
 export interface DishPreference {
-  id: number
   originalName: string
   preferedName: string
+  id: number
 }
 
 export interface UserDiet {
   ingredientPreferences: Record<string, IngredientPreference>
-  dishPreferences: DishPreference[]
+  dishPreferences: Record<string, DishPreference>
   timeRange: TimeRange
   diet: Diet
   uniqueDishes: Record<string, DishUniqueData>
@@ -105,11 +105,10 @@ export interface DishColumnData {
 
 
 export interface FullDish {
-    dish: Dish
-    replacements: Dish[]
-    originalDishName: string
-  }
-export interface FullDietDay{
-    dishes: FullDish[]
-
+  dish: Dish
+  replacements: string[]
+  originalDishName: string
+}
+export interface FullDietDay {
+  dishes: FullDish[]
 }

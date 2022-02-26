@@ -82,37 +82,99 @@ const getAllMatching = (
   return res
 }
 
+const checkIfInside = () => {}
+
+const changeDietDaysBasedOnPreferences = (
+  fullDietDays: FullDietDay[],
+  dishPreferences: DishPreference[]
+): FullDietDay[] => {
+  const copy = cloneDeep(fullDietDays)
+  copy.forEach((day) => {
+    day.dishes.forEach((d) => {
+      const { dish, originalDishName, replacements } = d
+      if (originalDishName) {
+      }
+    })
+  })
+
+  return copy
+}
+
 // * changes abstract dietDay to days filled with Objects
 export const changeDishesInDays = (
+  //
   dietDays: DietDay[],
   dishReplacements: Record<string, DishReplacement>,
-  dishPreferences: DishPreference[],
+  dishPreferences: Record<string, DishPreference>,
   dishes: Record<string, Dish>
 ): FullDietDay[] => {
-  const res: FullDietDay[] = dietDays.map((day) => {
+  const res: FullDietDay[] = []
+
+  const readySolutions: Record<string, FullDish> = {}
+
+  const handleReplacement = (dishName): FullDish => {
+    if (dishName in readySolutions) {
+      return readySolutions[dishName]
+    } else {
+      // * check if replacement is possible
+      const originalDish = dishes[dishName]
+      const preferenceName = dishPreferences[dishName].preferedName
+      const possibleReplacments = dishReplacements[dishName].replacements
+      const replacementIndex = possibleReplacments.indexOf(preferenceName)
+      if (replacementIndex !== -1) {
+        const newDish = dishes[preferenceName]
+        const newReplacements = cloneDeep(possibleReplacments)
+        newReplacements[replacementIndex] = dishName
+
+        const obj: FullDish = {
+          originalDishName: dishName,
+          dish: newDish,
+          replacements: newReplacements,
+        }
+        readySolutions[dishName] = obj
+        return obj
+      } else {
+        const repl = dishReplacements[dishName]
+          ? dishReplacements[dishName].replacements
+          : []
+        const obj: FullDish = {
+          originalDishName: dishName,
+          dish: originalDish,
+          replacements: repl,
+        }
+        readySolutions[dishName] = obj
+        return obj
+      }
+    }
+  }
+
+  dietDays.map((day) => {
+    //* we go through all dishes of day
+    // TODO it can be memoized
+
     const a: FullDish[] = []
     day.uniqeDishDatas.forEach((item) => {
-      console.log(
-        item,
-        dishReplacements,
-        dishReplacements[item.name],
-        dishes,
-        "XDD"
-      )
-      if (item.name in dishReplacements) {
-        a.push({
-          originalDishName: item.name,
-          dish: dishes[item.name],
-          replacements: getAllMatching(
-            dishReplacements[item.name].replacements,
-            dishes
-          ),
-        })
+      const { name } = item
+      // * check if there are any prefrences for name
+      if (name in dishPreferences) {
+        //* we start changes
+        const tmp: FullDish = handleReplacement(name)
+        a.push(tmp)
+      } else {
+        const repl = dishReplacements[name]
+          ? dishReplacements[name].replacements
+          : []
+        const tmp: FullDish = {
+          originalDishName: name,
+          dish: dishes[name],
+          replacements: repl,
+        }
+        a.push(tmp)
       }
     })
 
     return { dishes: a }
   })
-  console.log(res)
+
   return res
 }

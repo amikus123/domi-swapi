@@ -58,15 +58,19 @@ export const handleUser = (data: any): User => {
     return res
   }
 
-  const handleDishPreferences = (dishPreferences): DishPreference[] => {
-    const preferenceArr = dishPreferences.map((preference) => {
-      return {
+  const handleDishPreferences = (
+    dishPreferences
+  ): Record<string, DishPreference> => {
+    const res: Record<string, DishPreference> = {}
+    dishPreferences.forEach((preference) => {
+      const obj: DishPreference = {
         id: preference.id,
-        originalNmae: preference.original.data.attributes.name,
+        originalName: preference.original.data.attributes.name,
         preferedName: preference.preferred.data.attributes.name,
       }
+      res[preference.original.data.attributes.name] = obj
     })
-    return preferenceArr
+    return res
   }
   const handleTimeRange = (timeRange): TimeRange => {
     return {
@@ -82,7 +86,6 @@ export const handleUser = (data: any): User => {
     dishReplacements.forEach((i) => {
       const { replacements, original } = i
       const originalName = original.data.attributes.name
-      const originalId = original.data.id
       const arr: string[] = []
       replacements.data.forEach((d) => {
         arr.push(d.attributes.name)
@@ -94,7 +97,11 @@ export const handleUser = (data: any): User => {
           }
         }
       })
-      res[originalName] = { original: originalName, replacements: arr ,currrent:originalName}
+      res[originalName] = {
+        original: originalName,
+        replacements: arr,
+        currrent: originalName,
+      }
     })
     return res
   }
