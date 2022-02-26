@@ -29,7 +29,8 @@ const DishColumn = ({ dishColumnData }: DishColumnProps) => {
                   key={index}
                 >
                   <DishRow
-                    dish={dish.dish}
+                    dishData={dish}
+
                   />
                 </Accordion>
               )

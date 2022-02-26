@@ -99,7 +99,7 @@ export async function getServerSideProps(ctx) {
   const temp = await userDiet.json()
 
   const raw = temp.data[0].attributes
-  const user = handleUser(raw)
+  const user = {}
 
   //* getting uniqueDishesId
   const arr = (user: User): number[] => {
@@ -142,4 +142,419 @@ export async function getServerSideProps(ctx) {
   return {
     props: { raw, user, dishData, dishesData },
   }
+}
+
+const xd = {
+  userId: 8,
+  createdAt: "2022-02-22T22:53:29.566Z",
+  updatedAt: "2022-02-23T21:36:13.915Z",
+  userData: {
+    id: 1,
+    age: 18,
+  },
+  userDiet: {
+    id: 1,
+    ingredientPreferences: {
+      data: [
+        {
+          id: 1,
+          attributes: {
+            createdAt: "2022-02-23T00:52:53.610Z",
+            updatedAt: "2022-02-23T21:21:51.140Z",
+            dish: {
+              data: {
+                id: 1,
+                attributes: {
+                  name: "Spaghetti",
+                  createdAt: "2022-02-22T13:38:04.474Z",
+                  updatedAt: "2022-02-26T01:07:19.250Z",
+                  slug: "spaghetti",
+                  meal: "obiad",
+                  recipe:
+                    "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut _aliquam_ purus sit amet luctus venenatis lectus. Leo in <u>vitae</u> turpis massa sed elementum tempus egestas sed. Quam vulputate dignissim _suspendisse_**Bold** in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+                  description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.",
+                },
+              },
+            },
+            preferredIngredients: [
+              {
+                id: 2,
+                originalName: "makaron",
+                preferredName: "pigwa",
+              },
+              {
+                id: 4,
+                originalName: "pog ",
+                preferredName: "champ",
+              },
+            ],
+          },
+        },
+        {
+          id: 2,
+          attributes: {
+            createdAt: "2022-02-23T00:54:08.764Z",
+            updatedAt: "2022-02-23T21:36:28.937Z",
+            dish: {
+              data: {
+                id: 2,
+                attributes: {
+                  name: "Jajecznica",
+                  createdAt: "2022-02-22T13:49:30.901Z",
+                  updatedAt: "2022-02-26T21:11:22.795Z",
+                  slug: "jajecznica",
+                  meal: "sniadanie",
+                  recipe:
+                    "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit _esse_ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+                  description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas accumsan lacus vel facilisis volutpat.",
+                },
+              },
+            },
+            preferredIngredients: [
+              {
+                id: 3,
+                originalName: "cebula",
+                preferredName: "ser",
+              },
+              {
+                id: 5,
+                originalName: "asdads",
+                preferredName: "asdasd",
+              },
+            ],
+          },
+        },
+      ],
+    },
+    dishPreferences: [
+      {
+        id: 1,
+        original: {
+          data: {
+            id: 1,
+            attributes: {
+              name: "Spaghetti",
+              createdAt: "2022-02-22T13:38:04.474Z",
+              updatedAt: "2022-02-26T01:07:19.250Z",
+              slug: "spaghetti",
+              meal: "obiad",
+              recipe:
+                "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut _aliquam_ purus sit amet luctus venenatis lectus. Leo in <u>vitae</u> turpis massa sed elementum tempus egestas sed. Quam vulputate dignissim _suspendisse_**Bold** in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+              description:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.",
+            },
+          },
+        },
+        preferred: {
+          data: {
+            id: 2,
+            attributes: {
+              name: "Jajecznica",
+              createdAt: "2022-02-22T13:49:30.901Z",
+              updatedAt: "2022-02-26T21:11:22.795Z",
+              slug: "jajecznica",
+              meal: "sniadanie",
+              recipe:
+                "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit _esse_ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+              description:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas accumsan lacus vel facilisis volutpat.",
+            },
+          },
+        },
+      },
+      {
+        id: 2,
+        original: {
+          data: {
+            id: 2,
+            attributes: {
+              name: "Jajecznica",
+              createdAt: "2022-02-22T13:49:30.901Z",
+              updatedAt: "2022-02-26T21:11:22.795Z",
+              slug: "jajecznica",
+              meal: "sniadanie",
+              recipe:
+                "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit _esse_ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+              description:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas accumsan lacus vel facilisis volutpat.",
+            },
+          },
+        },
+        preferred: {
+          data: {
+            id: 1,
+            attributes: {
+              name: "Spaghetti",
+              createdAt: "2022-02-22T13:38:04.474Z",
+              updatedAt: "2022-02-26T01:07:19.250Z",
+              slug: "spaghetti",
+              meal: "obiad",
+              recipe:
+                "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut _aliquam_ purus sit amet luctus venenatis lectus. Leo in <u>vitae</u> turpis massa sed elementum tempus egestas sed. Quam vulputate dignissim _suspendisse_**Bold** in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+              description:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.",
+            },
+          },
+        },
+      },
+    ],
+    timeRange: {
+      id: 1,
+      start: "2022-02-08",
+      end: "2022-02-24",
+    },
+    diet: {
+      data: {
+        id: 1,
+        attributes: {
+          createdAt: "2022-02-22T13:59:06.019Z",
+          updatedAt: "2022-02-26T22:32:26.452Z",
+          name: "Dieta testowa",
+          dishReplacements: [
+            {
+              id: 1,
+              replacements: {
+                data: [
+                  {
+                    id: 2,
+                    attributes: {
+                      name: "Jajecznica",
+                      createdAt: "2022-02-22T13:49:30.901Z",
+                      updatedAt: "2022-02-26T21:11:22.795Z",
+                      slug: "jajecznica",
+                      meal: "sniadanie",
+                      recipe:
+                        "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit _esse_ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas accumsan lacus vel facilisis volutpat.",
+                    },
+                  },
+                  {
+                    id: 3,
+                    attributes: {
+                      name: "Salad",
+                      createdAt: "2022-02-25T00:27:57.868Z",
+                      updatedAt: "2022-02-26T01:06:51.785Z",
+                      slug: "sala",
+                      meal: "obiad",
+                      recipe:
+                        "Lorem **ipsum** dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet risus feugiat in ante metus _dictum_. Vivamus at augue eget arcu dictum varius duis. <u>Semper</u> eget duis at tellus. Tristique magna sit amet purus.\n\n",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et malesuada fames ac turpis.",
+                    },
+                  },
+                ],
+              },
+              original: {
+                data: {
+                  id: 5,
+                  attributes: {
+                    name: "Tost",
+                    createdAt: "2022-02-25T00:48:48.107Z",
+                    updatedAt: "2022-02-26T01:07:41.500Z",
+                    slug: "tost",
+                    meal: "sniadanie",
+                    recipe:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut aliquam purus sit **amet** luctus venenatis lectus. Leo_Italic_ in vitae turpis <u>massa</u> sed elementum tempus egestas sed. Quam vulputate dignissim suspendisse in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+                    description:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Integer feugiat scelerisque varius morbi enim nunc faucibus a.",
+                  },
+                },
+              },
+            },
+            {
+              id: 2,
+              replacements: {
+                data: [
+                  {
+                    id: 2,
+                    attributes: {
+                      name: "Jajecznica",
+                      createdAt: "2022-02-22T13:49:30.901Z",
+                      updatedAt: "2022-02-26T21:11:22.795Z",
+                      slug: "jajecznica",
+                      meal: "sniadanie",
+                      recipe:
+                        "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit _esse_ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas accumsan lacus vel facilisis volutpat.",
+                    },
+                  },
+                ],
+              },
+              original: {
+                data: {
+                  id: 1,
+                  attributes: {
+                    name: "Spaghetti",
+                    createdAt: "2022-02-22T13:38:04.474Z",
+                    updatedAt: "2022-02-26T01:07:19.250Z",
+                    slug: "spaghetti",
+                    meal: "obiad",
+                    recipe:
+                      "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut _aliquam_ purus sit amet luctus venenatis lectus. Leo in <u>vitae</u> turpis massa sed elementum tempus egestas sed. Quam vulputate dignissim _suspendisse_**Bold** in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+                    description:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.",
+                  },
+                },
+              },
+            },
+            {
+              id: 3,
+              replacements: {
+                data: [
+                  {
+                    id: 1,
+                    attributes: {
+                      name: "Spaghetti",
+                      createdAt: "2022-02-22T13:38:04.474Z",
+                      updatedAt: "2022-02-26T01:07:19.250Z",
+                      slug: "spaghetti",
+                      meal: "obiad",
+                      recipe:
+                        "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut _aliquam_ purus sit amet luctus venenatis lectus. Leo in <u>vitae</u> turpis massa sed elementum tempus egestas sed. Quam vulputate dignissim _suspendisse_**Bold** in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.",
+                    },
+                  },
+                  {
+                    id: 3,
+                    attributes: {
+                      name: "Salad",
+                      createdAt: "2022-02-25T00:27:57.868Z",
+                      updatedAt: "2022-02-26T01:06:51.785Z",
+                      slug: "sala",
+                      meal: "obiad",
+                      recipe:
+                        "Lorem **ipsum** dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet risus feugiat in ante metus _dictum_. Vivamus at augue eget arcu dictum varius duis. <u>Semper</u> eget duis at tellus. Tristique magna sit amet purus.\n\n",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et malesuada fames ac turpis.",
+                    },
+                  },
+                  {
+                    id: 5,
+                    attributes: {
+                      name: "Tost",
+                      createdAt: "2022-02-25T00:48:48.107Z",
+                      updatedAt: "2022-02-26T01:07:41.500Z",
+                      slug: "tost",
+                      meal: "sniadanie",
+                      recipe:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut aliquam purus sit **amet** luctus venenatis lectus. Leo_Italic_ in vitae turpis <u>massa</u> sed elementum tempus egestas sed. Quam vulputate dignissim suspendisse in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Integer feugiat scelerisque varius morbi enim nunc faucibus a.",
+                    },
+                  },
+                ],
+              },
+              original: {
+                data: {
+                  id: 2,
+                  attributes: {
+                    name: "Jajecznica",
+                    createdAt: "2022-02-22T13:49:30.901Z",
+                    updatedAt: "2022-02-26T21:11:22.795Z",
+                    slug: "jajecznica",
+                    meal: "sniadanie",
+                    recipe:
+                      "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit _esse_ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+                    description:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas accumsan lacus vel facilisis volutpat.",
+                  },
+                },
+              },
+            },
+          ],
+          days: [
+            {
+              id: 3,
+              dishes: {
+                data: [
+                  {
+                    id: 1,
+                    attributes: {
+                      name: "Spaghetti",
+                      createdAt: "2022-02-22T13:38:04.474Z",
+                      updatedAt: "2022-02-26T01:07:19.250Z",
+                      slug: "spaghetti",
+                      meal: "obiad",
+                      recipe:
+                        "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut _aliquam_ purus sit amet luctus venenatis lectus. Leo in <u>vitae</u> turpis massa sed elementum tempus egestas sed. Quam vulputate dignissim _suspendisse_**Bold** in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.",
+                    },
+                  },
+                  {
+                    id: 2,
+                    attributes: {
+                      name: "Jajecznica",
+                      createdAt: "2022-02-22T13:49:30.901Z",
+                      updatedAt: "2022-02-26T21:11:22.795Z",
+                      slug: "jajecznica",
+                      meal: "sniadanie",
+                      recipe:
+                        "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit _esse_ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas accumsan lacus vel facilisis volutpat.",
+                    },
+                  },
+                  {
+                    id: 3,
+                    attributes: {
+                      name: "Salad",
+                      createdAt: "2022-02-25T00:27:57.868Z",
+                      updatedAt: "2022-02-26T01:06:51.785Z",
+                      slug: "sala",
+                      meal: "obiad",
+                      recipe:
+                        "Lorem **ipsum** dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id aliquet risus feugiat in ante metus _dictum_. Vivamus at augue eget arcu dictum varius duis. <u>Semper</u> eget duis at tellus. Tristique magna sit amet purus.\n\n",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et malesuada fames ac turpis.",
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              id: 5,
+              dishes: {
+                data: [
+                  {
+                    id: 1,
+                    attributes: {
+                      name: "Spaghetti",
+                      createdAt: "2022-02-22T13:38:04.474Z",
+                      updatedAt: "2022-02-26T01:07:19.250Z",
+                      slug: "spaghetti",
+                      meal: "obiad",
+                      recipe:
+                        "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit ut _aliquam_ purus sit amet luctus venenatis lectus. Leo in <u>vitae</u> turpis massa sed elementum tempus egestas sed. Quam vulputate dignissim _suspendisse_**Bold** in est ante in nibh. Pretium fusce id velit ut tortor pretium viverra.",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.",
+                    },
+                  },
+                  {
+                    id: 4,
+                    attributes: {
+                      name: "Pancake",
+                      createdAt: "2022-02-25T00:40:50.344Z",
+                      updatedAt: "2022-02-26T01:06:25.417Z",
+                      slug: "pan",
+                      meal: "obiad",
+                      recipe:
+                        "Lorem **ipsum** dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent semper feugiat nibh sed. _Interdum_ varius sit amet mattis. Vestibulum morbi blandit cursus <u>risus</u> at ultrices. Consequat mauris nunc congue nisi.",
+                      description:
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio morbi quis commodo odio aenean.",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    },
+  },
 }

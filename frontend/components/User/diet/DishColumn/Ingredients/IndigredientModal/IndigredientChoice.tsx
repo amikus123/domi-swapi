@@ -59,8 +59,8 @@ const IndigredientChoice = ({
   }
 
   const removePreference = (originalName: string) => {
-    const dishPreferenceData = ingredientPreferences[dishName]
-    const copy = cloneDeep(dishPreferenceData)
+    const ingredientPreference = ingredientPreferences[dishName]
+    const copy = cloneDeep(ingredientPreference)
     // * removing fromm array
     const arr = copy.preferredIngredients.filter((pref) => {
       return pref.originalName !== originalName
@@ -71,8 +71,8 @@ const IndigredientChoice = ({
     setIngredientPreferences({ ...ingredientPreferences, [dishName]: copy })
   }
   const addPreference = (oldName: string, newName: string) => {
-    const dishPreferenceData = ingredientPreferences[dishName]
-    const copy = cloneDeep(dishPreferenceData)
+    const ingredientPreference = ingredientPreferences[dishName]
+    const copy = cloneDeep(ingredientPreference)
     // * removing fromm array
     copy.preferredIngredients.push({
       id: 1,
@@ -84,8 +84,8 @@ const IndigredientChoice = ({
     setIngredientPreferences({ ...ingredientPreferences, [dishName]: copy })
   }
   const modifyPreference = (oldName: string, newName: string) => {
-    const dishPreferenceData = ingredientPreferences[dishName]
-    const copy = cloneDeep(dishPreferenceData)
+    const ingredientPreference = ingredientPreferences[dishName]
+    const copy = cloneDeep(ingredientPreference)
     // * find in arr
     for (const pref of copy.preferredIngredients) {
       console.log("MATCH", oldName, pref.originalName)
@@ -172,33 +172,3 @@ const IndigredientChoice = ({
 //
 
 export default IndigredientChoice
-const dishPreferences = [
-  {
-    id: 3,
-    originalName: "cebula",
-    preferredName: "ser",
-  },
-  {
-    id: 5,
-    originalName: "asdads",
-    preferredName: "asdasd",
-  },
-]
-
-const ingredient = {
-  amount: "10g",
-  name: "ser",
-  originalName: "cebula",
-  replacements: [
-    {
-      id: 30,
-      name: "cebula",
-      amount: "10g",
-    },
-    {
-      id: 31,
-      name: "niw",
-      amount: "10g",
-    },
-  ],
-}

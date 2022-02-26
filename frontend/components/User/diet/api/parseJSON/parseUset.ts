@@ -90,9 +90,10 @@ export const handleUser = (data: any): User => {
       replacements.data.forEach((d) => {
         arr.push(d.attributes.name)
         if (uniqueDishes[d.attributes.name] === undefined) {
+          console.log("ADDDEDD")
           uniqueDishes[d.attributes.name] = {
-            name: d.attribute.name,
-            id: d.attribute.id,
+            name: d.attributes.name,
+            id: d.id,
             originalName: d.attributes.name,
           }
         }
@@ -117,6 +118,7 @@ export const handleUser = (data: any): User => {
   }
 
   const handleUniqueDishes = () => {
+    console.log(uniqueDishes, "ASSSSSSSSSSSSSS")
     return uniqueDishes
   }
 

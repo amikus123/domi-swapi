@@ -49,6 +49,7 @@ const handleDish = (dish): Dish => {
 export const uniqueDishHandler = (dishData: any): Record<string, Dish> => {
   const res: Record<string, Dish> = {}
   dishData.data.forEach((dish) => {
+    
     const formatedDist = handleDish(dish)
     const name = formatedDist.name
     res[name] = formatedDist

@@ -9,13 +9,13 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import { Dish } from "../api/types"
+import { FullDish } from "../api/types"
 
 import DishLeft from "./DishLeft"
 import DishRight from "./DishRight"
 
 interface DishRowProps {
-  dish: Dish
+  dishData: FullDish
 }
 
 const handleTimeCategory = (category: string) => {
@@ -26,7 +26,8 @@ const handleTimeCategory = (category: string) => {
   }
 }
 
-const DishRow = ({ dish }: DishRowProps) => {
+const DishRow = ({ dishData }: DishRowProps) => {
+  const {dish,originalDishName,replacements } = dishData
   const {
     dishPage,
     id,
@@ -53,7 +54,7 @@ const DishRow = ({ dish }: DishRowProps) => {
       <AccordionPanel pb={4}>
         <Flex px={4} align="flex-start">
           <DishLeft image={image} />
-          <DishRight dish={dish} />
+          <DishRight dishData={dishData} />
         </Flex>
       </AccordionPanel>
     </AccordionItem>
