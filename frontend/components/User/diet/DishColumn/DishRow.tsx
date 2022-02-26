@@ -53,11 +53,7 @@ const DishRow = ({ dish }: DishRowProps) => {
       <AccordionPanel pb={4}>
         <Flex px={4} align="flex-start">
           <DishLeft image={image} />
-          <DishRight
-            ingredients={ingredients}
-            nutrients={nutrients}
-            recipe={recipe}
-          />
+          <DishRight dish={dish} />
         </Flex>
       </AccordionPanel>
     </AccordionItem>

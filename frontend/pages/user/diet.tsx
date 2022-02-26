@@ -28,6 +28,11 @@ import {
   IngredientPreference,
   DishPreference,
 } from "../../components/User/diet/api/types"
+import { useRecoilState } from "recoil"
+import { ingredientPreferencesState } from "../../components/User/diet/api/atoms/IngredientPreferences"
+import { dishPreferencesState } from "../../components/User/diet/api/atoms/dishPreferences"
+import { dishesState } from "../../components/User/diet/api/atoms/dishes"
+import DietLoading from "../../components/User/diet/DietLoading"
 
 interface DietProps {
   user: User
@@ -57,22 +62,40 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
 
   // * USER PREFERENCES
   // * key is name of the dish, value contains array of prefference
-  const [ingredientPreferences, setIngredientPreferences] = useState<
-    Record<string, IngredientPreference>
-  >(originalIngredientPreferences)
+  // const [ingredientPreferences, setIngredientPreferences] = useState<
+  //   Record<string, IngredientPreference>
+  // >(originalIngredientPreferences)
+  const [ingredientPreferences, setIngredientPreferences] = useRecoilState(
+    ingredientPreferencesState
+  )
+  useEffect(() => {
+    setIngredientPreferences(originalIngredientPreferences)
+    setDishPreferences(originalDishPreferences)
+  }, [])
 
   // * key is the name of the dish, value contains  name of prefered dish
-  const [dishPreferences, setDishPreferences] = useState<
-    Record<string, DishPreference>
-  >(originalDishPreferences)
+  const [dishPreferences, setDishPreferences] =
+    useRecoilState(dishPreferencesState)
 
   // * DISH STATE
   // * CHANGE DISHES STATE ON change of "ingredientPreferences"
-  const [dishes, setDishes] = useState(
-    changeDishesIngredients(originalDishes, ingredientPreferences)
-  )
+  // const [dishes, setDishes] = useState(
+  //   changeDishesIngredients(originalDishes, ingredientPreferences)
+  // )
+
+  const [dishes, setDishes] = useRecoilState(dishesState)
+  useEffect(() => {
+    setDishes(
+      changeDishesIngredients(originalDishes, originalIngredientPreferences)
+    )
+  }, [])
+
   useEffect(() => {
     setDishes(changeDishesIngredients(originalDishes, ingredientPreferences))
+    console.log(
+      "SET",
+      changeDishesIngredients(originalDishes, ingredientPreferences)
+    )
   }, [ingredientPreferences, originalDishes])
 
   // * DIET DAY FUNCITONS
@@ -85,6 +108,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
   const [fullDietDays, setFullDietDays] = useState<FullDietDay[]>(
     changeDishesInDays(days, dishReplacements, dishPreferences, dishes)
   )
+
   useEffect(() => {
     const res = changeDishesInDays(
       days,
@@ -93,8 +117,11 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
       dishes
     )
     console.log(res, "changeDishesInDays")
-    setFullDietDays(res)
+    if (res[0].kcalCount !== 0) {
+      setFullDietDays(res)
+    }
   }, [days, dishReplacements, dishPreferences, dishes])
+
   const [columnData, setColumData] = useState<DishColumnData[]>([])
 
   useEffect(() => {
@@ -154,9 +181,16 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      <DishColumn dishColumnData={columnData} />
-
-      <Button>Pobierz</Button>
+      {columnData[0] &&
+      columnData[0].fullDietDay &&
+      columnData[0].fullDietDay.kcalCount !== 0 ? (
+        <>
+          <DishColumn dishColumnData={columnData} />
+          <Button>Pobierz</Button>
+        </>
+      ) : (
+        <DietLoading />
+      )}
     </Stack>
   )
 }

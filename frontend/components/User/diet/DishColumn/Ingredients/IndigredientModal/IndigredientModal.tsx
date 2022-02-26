@@ -9,7 +9,10 @@ import {
   Button,
   Stack,
 } from "@chakra-ui/react"
-import React, { useState } from "react"
+import { cloneDeep } from "lodash"
+import React from "react"
+import { useRecoilState } from "recoil"
+import { ingredientPreferencesState } from "../../../api/atoms/IngredientPreferences"
 import { Ingredient } from "../../../api/types"
 
 import IndigredientChoice from "./IndigredientChoice"
@@ -19,6 +22,7 @@ interface IndigredientModalProps {
   onClose: () => void
   ingredients: Ingredient[]
   initialRef: any
+  name: string
 }
 
 const IndigredientModal = ({
@@ -26,7 +30,22 @@ const IndigredientModal = ({
   onClose,
   ingredients,
   initialRef,
+  name,
 }: IndigredientModalProps) => {
+  const [ingredientPreferences, setIngredientPreferences] = useRecoilState(
+    ingredientPreferencesState
+  )
+  // ! ADD UNIVERSAL LOADING TIME
+  const resetToDefault = () => {
+    const dishPreferenceData = ingredientPreferences[name]
+    const copy = cloneDeep(dishPreferenceData)
+
+    copy.preferredIngredients = []
+    console.log("removePreference", copy.preferredIngredients)
+
+    setIngredientPreferences({ ...ingredientPreferences, [name]: copy })
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -43,7 +62,8 @@ const IndigredientModal = ({
             {ingredients.map((ingredient, index) => {
               return (
                 <IndigredientChoice
-                ingredient={ingredient}
+                  ingredient={ingredient}
+                  name={name}
                   key={index}
                 />
               )
@@ -52,7 +72,13 @@ const IndigredientModal = ({
         </ModalBody>
 
         <ModalFooter>
-          <Button tabIndex={ingredients.length + 1} variant="ghost">
+          <Button
+            tabIndex={ingredients.length + 1}
+            variant="ghost"
+            onClick={() => {
+              resetToDefault()
+            }}
+          >
             Domyślny posiłek
           </Button>
           <Button

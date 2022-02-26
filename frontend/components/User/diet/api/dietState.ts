@@ -151,16 +151,18 @@ export const getKcal = (dishes: FullDish[]) => {
   let kcalCount = 0
   dishes.forEach((item) => {
     // ! ADD EROR HANDLING
-    for (const nut of item.dish.nutrients) {
-      if (nut.name.toLowerCase().trim() === "kalorie") {
-        const kcalString = nut.amount
-        const kcalNumber = Number(kcalString.replace("kcal", ""))
-        if (!isNaN(kcalNumber)) {
-          kcalCount += kcalNumber
+    try {
+      for (const nut of item.dish.nutrients) {
+        if (nut.name.toLowerCase().trim() === "kalorie") {
+          const kcalString = nut.amount
+          const kcalNumber = Number(kcalString.replace("kcal", ""))
+          if (!isNaN(kcalNumber)) {
+            kcalCount += kcalNumber
+          }
+          break
         }
-        break
       }
-    }
+    } catch (e) {}
   })
   return kcalCount
 }

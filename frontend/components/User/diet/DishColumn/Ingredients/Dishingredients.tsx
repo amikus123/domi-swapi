@@ -17,6 +17,7 @@ import IndigredientModal from "./IndigredientModal/IndigredientModal"
 
 interface DishRecpipeProps {
   ingredients: Ingredient[]
+  name:string
 }
 
 const checkIfCanReplace = (data: Ingredient[]) => {
@@ -28,7 +29,7 @@ const checkIfCanReplace = (data: Ingredient[]) => {
   return false
 }
 
-const Dishingredients = ({ ingredients }: DishRecpipeProps) => {
+const Dishingredients = ({ ingredients,name }: DishRecpipeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
   //* if there ar no viable options for replacements, we wont show the modal
@@ -59,6 +60,7 @@ const Dishingredients = ({ ingredients }: DishRecpipeProps) => {
           </Button>
 
           <IndigredientModal
+          name={name}
             isOpen={isOpen}
             onClose={onClose}
             initialRef={initialRef}

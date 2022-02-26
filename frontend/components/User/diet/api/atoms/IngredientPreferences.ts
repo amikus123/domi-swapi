@@ -1,6 +1,7 @@
 import { atom } from "recoil";
+import { IngredientPreference } from "../types";
 
 export const ingredientPreferencesState = atom({
     key: 'ingredientPreferencesState',
-    default: [],
+    default: {} as   Record<string, IngredientPreference>,
   });
