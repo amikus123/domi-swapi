@@ -35,6 +35,14 @@ const DishModal = ({
     useRecoilState(dishPreferencesState)
   const dishes = useRecoilValue(dishesState)
 
+  const handleClick = (item: string) => {
+    handleDishChange({
+      originalName: originalDishName,
+      newName: item,
+      dishPreference,
+      setDishPreference,
+    })
+  }
   return (
     <Modal
       isOpen={isOpen}
@@ -52,12 +60,7 @@ const DishModal = ({
               <DishModalDish
                 onClose={onClose}
                 handleClick={() => {
-                  handleDishChange(
-                    originalDishName,
-                    item,
-                    dishPreference,
-                    setDishPreference
-                  )
+                  handleClick(item)
                 }}
                 key={index}
                 index={index}
@@ -69,7 +72,14 @@ const DishModal = ({
         </ModalBody>
 
         <ModalFooter>
-          <Button tabIndex={replacements.length + 1} variant="ghost">
+          <Button tabIndex={replacements.length + 1} variant="ghost" onClick={()=>{
+             handleDishChange({
+              originalName: originalDishName,
+              newName: originalDishName,
+              dishPreference,
+              setDishPreference,
+            })
+          }}>
             Domyślny posiłek
           </Button>
 

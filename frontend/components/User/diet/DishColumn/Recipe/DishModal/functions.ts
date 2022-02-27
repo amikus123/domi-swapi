@@ -2,26 +2,38 @@ import { cloneDeep, omit } from "lodash"
 import { SetterOrUpdater } from "recoil"
 import { DishPreference } from "../../../api/types"
 
-const checkIfOriginal = (originalName: string, newName: string) => {
+interface Full {
+  // * defaul dish
+  originalName: string
+  // * clicked dish
+  newName: string
+  // * global preferences
+  dishPreference: Record<string, DishPreference>
+  setDishPreference: SetterOrUpdater<Record<string, DishPreference>>
+}
+type CheckIfOriginalProps = Omit<Full, "dishPreference" | "setDishPreference">
+type RemovePreferenceProps = Omit<Full, "originalName">
+
+const checkIfOriginal = ({ newName, originalName }: CheckIfOriginalProps) => {
   return originalName === newName
 }
 
-const removePreference = (
-  name: string,
-  dishPreference: Record<string, DishPreference>,
-  setDishPreference: SetterOrUpdater<Record<string, DishPreference>>
-) => {
-  // * by removing the key, we return to default
+const removePreference = ({
+  dishPreference,
+  newName,
+  setDishPreference,
+}: RemovePreferenceProps) => {
   let copy = cloneDeep(dishPreference)
-  copy = omit(copy, name)
+  copy = omit(copy, newName)
   setDishPreference(copy)
 }
-const modifyPreference = (
-  originalName: string,
-  newName: string,
-  dishPreference: Record<string, DishPreference>,
-  setDishPreference: SetterOrUpdater<Record<string, DishPreference>>
-) => {
+
+const modifyPreference = ({
+  dishPreference,
+  newName,
+  originalName,
+  setDishPreference,
+}: Full) => {
   const copy = cloneDeep(dishPreference)
   copy[originalName] = {
     preferedName: newName,
@@ -32,18 +44,13 @@ const modifyPreference = (
   setDishPreference(copy)
 }
 
-export const handleDishChange = (
-  // * name of dish specifed in dietDay
-  originalName: string,
-  //* name of item to which we swap
-  newName: string,
-  dishPreference: Record<string, DishPreference>,
-  setDishPreference: SetterOrUpdater<Record<string, DishPreference>>
-) => {
-  console.log(newName, originalName, dishPreference, "XDDD")
-  if (!checkIfOriginal(originalName, newName)) {
-    modifyPreference(originalName, newName, dishPreference, setDishPreference)
+export const handleDishChange = (data: Full) => {
+    //* it makes no sense for dish to be replaced with itself
+  if (checkIfOriginal(data)) {
+    //* removes preference, shows default
+    removePreference(data)
   } else {
-    removePreference(newName, dishPreference, setDishPreference)
+    //* changes displayed dish
+    modifyPreference(data)
   }
 }
