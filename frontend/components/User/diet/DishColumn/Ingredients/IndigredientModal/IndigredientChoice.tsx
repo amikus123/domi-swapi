@@ -59,7 +59,11 @@ const IndigredientChoice = ({
   }
 
   const removePreference = (originalName: string) => {
-    const ingredientPreference = ingredientPreferences[dishName]
+    const ingredientPreference = ingredientPreferences[dishName] || {
+      dishName,
+      id: 11,
+      preferredIngredients: [],
+    }
     const copy = cloneDeep(ingredientPreference)
     // * removing fromm array
     const arr = copy.preferredIngredients.filter((pref) => {
@@ -71,9 +75,14 @@ const IndigredientChoice = ({
     setIngredientPreferences({ ...ingredientPreferences, [dishName]: copy })
   }
   const addPreference = (oldName: string, newName: string) => {
-    const ingredientPreference = ingredientPreferences[dishName]
-    const copy = cloneDeep(ingredientPreference)
+    const ingredientPreference = ingredientPreferences[dishName] || {
+      dishName,
+      id: 11,
+      preferredIngredients: [],
+    }
+    let copy = cloneDeep(ingredientPreference)
     // * removing fromm array
+
     copy.preferredIngredients.push({
       id: 1,
       originalName: oldName,
@@ -84,7 +93,11 @@ const IndigredientChoice = ({
     setIngredientPreferences({ ...ingredientPreferences, [dishName]: copy })
   }
   const modifyPreference = (oldName: string, newName: string) => {
-    const ingredientPreference = ingredientPreferences[dishName]
+    const ingredientPreference = ingredientPreferences[dishName] || {
+      dishName,
+      id: 11,
+      preferredIngredients: [],
+    }
     const copy = cloneDeep(ingredientPreference)
     // * find in arr
     for (const pref of copy.preferredIngredients) {
@@ -99,16 +112,26 @@ const IndigredientChoice = ({
   }
 
   const checkIfInside = (oldName: string): Boolean => {
-    for (const pref of ingredientPreferences[dishName].preferredIngredients) {
-      if (pref.originalName === oldName) {
-        return true
+    try {
+      for (const pref of ingredientPreferences[dishName].preferredIngredients) {
+        if (pref.originalName === oldName) {
+          return true
+        }
       }
+      return false
+    } catch (e) {
+      return false
     }
-    return false
   }
 
   const handleClick2 = (oldName: string, newName: string) => {
     // check if is not roiginal
+    // if (ingredientPreferences[dishName] === undefined) {
+    //   setIngredientPreferences({
+    //     ...ingredientPreferences,
+    //     [dishName]:,
+    //   })
+    // }
     if (!checkIfOriginal(newName)) {
       //check if is already in
       if (checkIfInside(oldName)) {
