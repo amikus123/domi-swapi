@@ -10,7 +10,7 @@ interface DishRightProps {
 }
 const DishRight = ({ dishData }: DishRightProps) => {
   const { dish } = dishData
-  const { ingredients, nutrients, recipe, name } = dish
+  const { ingredients, nutrients, name } = dish
 
   return (
     <Tabs isFitted variant="enclosed" w="100%" pl={8}>

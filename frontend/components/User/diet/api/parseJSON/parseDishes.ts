@@ -1,14 +1,10 @@
 import { Dish, Ingredient } from "../types"
 import {
-  DishJsonAttributes,
   DishJson,
   DishPageJson,
   DishesJson,
   IngredientJson,
-  IngredientReplacementsJson,
-  NameAmountJson,
-  dishExample,
-} from "./dishExample"
+} from "./dishJsonTypes"
 
 const createUrl = (slug: string) => {
   //* will create link to relevant dish post

@@ -1,5 +1,8 @@
+import axios from "axios"
 import { cloneDeep, omit } from "lodash"
 import { SetterOrUpdater } from "recoil"
+import { getApiUrl } from "../../../../../../lib/api"
+import { DishPreferencesJson } from "../../../api/parseJSON/userJsonTypes.ts"
 import { DishPreference } from "../../../api/types"
 
 interface Full {
@@ -18,14 +21,60 @@ const checkIfOriginal = ({ newName, originalName }: CheckIfOriginalProps) => {
   return originalName === newName
 }
 
-const removePreferenceBack = () => {
+interface IngredientApiProps {
+  userDataId: number
+}
+
+interface RemoveProps {}
+
+export const removePreferenceBack = async ({
+  userDataId,
+}: IngredientApiProps) => {
   //  * get id of user mobined datz
   //  * cre
-  const xd = `http://localhost:1337/api/user-combined-data/1`
-  const example = {
+  const url = `${getApiUrl()}/api/user-combined-datas/${userDataId}`
+  const body = {
     data: {
-      title: "Hello",
+      dishPreferences: [{ base: 1, replacement: 2 }],
     },
+  }
+  try {
+    const res = await axios({
+      method: "PUT",
+      url: url,
+      data: body,
+    })
+
+    return res
+  } catch (e) {
+    console.log(e, "!!!!")
+    return 1
+  }
+}
+
+export const removeIngredientPreferences = async ({
+  userDataId,
+}: IngredientApiProps) => {
+  const url = `${getApiUrl()}/api/user-combined-datas/${userDataId}`
+  const body = {
+    data: {
+      ingredientPreferences: [
+        {
+          dish: 1,
+          preferredReplacements: [{ originalName: "a", preferredName: "V" }],
+        },
+      ],
+    },
+  }
+  try {
+    const res = await axios({
+      method: "PUT",
+      url: url,
+      data: body,
+    })
+  } catch (e) {
+    console.log(e, "!!!!")
+    return 1
   }
 }
 

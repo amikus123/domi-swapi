@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "next.config.js", "lib/join.ts"  ],
+, "next.config.js", "lib/join.ts", "components/User/diet/api/parseJSON/a"  ],
   "exclude": [
     "node_modules"
   ]

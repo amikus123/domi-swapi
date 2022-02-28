@@ -17,16 +17,11 @@ import {
   DishReplacementJson,
   IngredientPreferenceJson,
   StubDishesWrapJson,
-  StubDishJson,
   TimeRangeJson,
   UserDataJson,
   UserDietJson,
   UserJson,
-  DietJson,
-  PreferedIngredientReplacementJson,
-  StubDishWrapJson,
-  exampleJson,
-} from "./exaple"
+} from "./userJsonTypes.ts"
 
 export const handleUser = (data: UserJson): UserFullData => {
   const uniqueDishes: Record<string, DishUniqueData> = {}
