@@ -9,8 +9,14 @@ import {
   Diet,
   UserDiet,
 } from "../types"
+import {example }from "./exaple"
 
-export const handleUser = (data: any): User => {
+
+type JSONDAta = typeof example
+
+
+
+export const handleUser = (data: JSONDAta): User => {
   const uniqueDishes: Record<string, DishUniqueData> = {}
   //* FUNCTIONS
 
@@ -135,6 +141,9 @@ export const handleUser = (data: any): User => {
 
     return res
   }
+
+
+
 
   const res = {
     userId: data.userId,

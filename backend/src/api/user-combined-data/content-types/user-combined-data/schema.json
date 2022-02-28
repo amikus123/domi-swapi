@@ -28,6 +28,17 @@
       "type": "component",
       "repeatable": false,
       "component": "user.user-data"
+    },
+    "dishPreferences": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user.dish-preference"
+    },
+    "ingredientPreferences": {
+      "displayName": "ingredientPreference",
+      "type": "component",
+      "repeatable": true,
+      "component": "user.ingredient-preference"
     }
   }
 }

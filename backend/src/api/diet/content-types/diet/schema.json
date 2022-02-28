@@ -24,10 +24,10 @@
       "component": "diet.days"
     },
     "dishReplacements": {
-      "displayName": "dishReplacements",
+      "displayName": "dishPossibleReplacements",
       "type": "component",
       "repeatable": true,
-      "component": "user-diet.dish-replacements"
+      "component": "diet.dish-possible-replacements"
     }
   }
 }

@@ -1,8 +1,8 @@
 {
-  "collectionName": "components_user_diet_dish_replacements",
+  "collectionName": "components_diet_dish_possible_replacements",
   "info": {
-    "displayName": "dishReplacements",
-    "icon": "arrow-down"
+    "displayName": "dishPossibleReplacements",
+    "icon": "balance-scale-left"
   },
   "options": {},
   "attributes": {
@@ -11,7 +11,7 @@
       "relation": "oneToOne",
       "target": "api::dish.dish"
     },
-    "replacements": {
+    "possibleReplacements": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::dish.dish"

@@ -14,16 +14,6 @@
       "component": "user.time-range",
       "required": true
     },
-    "dishPreferences": {
-      "type": "component",
-      "repeatable": true,
-      "component": "user.dish-preferences"
-    },
-    "ingredientPreferences": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::ingredient-preference.ingredient-preference"
-    },
     "diet": {
       "type": "relation",
       "relation": "oneToOne",

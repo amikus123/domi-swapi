@@ -29,7 +29,7 @@
       "displayName": "nameAmount",
       "type": "component",
       "repeatable": true,
-      "component": "dish.name-amount",
+      "component": "shared.name-amount",
       "required": true
     },
     "ingredients": {
@@ -56,6 +56,16 @@
       ],
       "default": "sniadanie",
       "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": false,
+      "default": "desc"
+    },
+    "recipe": {
+      "type": "richtext",
+      "default": "recipe",
+      "required": false
     }
   }
 }

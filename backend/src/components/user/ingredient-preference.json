@@ -1,9 +1,21 @@
 {
-  "collectionName": "components_user_ingredient_preferences",
+  "collectionName": "components_user_diet_ingredient_preferences",
   "info": {
-    "displayName": "IngredientPreference",
-    "icon": "air-freshener"
+    "displayName": "ingredientPreference",
+    "icon": "arrow-circle-left",
+    "description": ""
   },
   "options": {},
-  "attributes": {}
+  "attributes": {
+    "dish": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::dish.dish"
+    },
+    "preferredReplacements": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.preferred-replacements"
+    }
+  }
 }

@@ -10,7 +10,7 @@
     "replacements": {
       "type": "component",
       "repeatable": true,
-      "component": "dish.name-amount"
+      "component": "shared.name-amount"
     },
     "name": {
       "type": "string",

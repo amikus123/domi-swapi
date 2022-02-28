@@ -18,6 +18,17 @@ const checkIfOriginal = ({ newName, originalName }: CheckIfOriginalProps) => {
   return originalName === newName
 }
 
+const removePreferenceBack = () => {
+  //  * get id of user mobined datz
+  //  * cre
+  const xd = `http://localhost:1337/api/user-combined-data/1`
+  const example = {
+    data: {
+      title: "Hello",
+    },
+  }
+}
+
 const removePreference = ({
   dishPreference,
   newName,
@@ -45,7 +56,7 @@ const modifyPreference = ({
 }
 
 export const handleDishChange = (data: Full) => {
-    //* it makes no sense for dish to be replaced with itself
+  //* it makes no sense for dish to be replaced with itself
   if (checkIfOriginal(data)) {
     //* removes preference, shows default
     removePreference(data)
