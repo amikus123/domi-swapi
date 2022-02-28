@@ -2,7 +2,7 @@ import qs from "qs"
 import { getApiUrl } from "../../../../lib/api"
 import { uniqueDishHandler } from "./parseJSON/parseDishes"
 import { handleUser } from "./parseJSON/parseUset"
-import { User } from "./types"
+import { UserFullData, UserPersonalData } from "./types"
 
 export const fetchMe = async (jwt: string) => {
   const meResponse = await fetch(`${getApiUrl()}/api/users/me`, {
@@ -14,7 +14,7 @@ export const fetchMe = async (jwt: string) => {
   return me
 }
 
-export const getUser = async (jwt: string): Promise<User> => {
+export const getUser = async (jwt: string): Promise<UserFullData> => {
   const me = await fetchMe(jwt)
   const id = me.id
   const query = qs.stringify(
@@ -23,18 +23,17 @@ export const getUser = async (jwt: string): Promise<User> => {
         "userData",
         "userDiet",
         "userDiet.diet",
-        "userDiet.diet.dishReplacements",
+        "userDiet.timeRange",
         "userDiet.diet.dishReplacements.original",
-        "userDiet.diet.dishReplacements.replacements",
+        "userDiet.diet.dishReplacements.possibleReplacements",
         "userDiet.diet.days",
         "userDiet.diet.days.dishes",
-        "userDiet.timeRange",
-        "userDiet.dishPreferences",
-        "userDiet.dishPreferences.original",
-        "userDiet.dishPreferences.preferred",
-        "userDiet.ingredientPreferences",
-        "userDiet.ingredientPreferences.dish",
-        "userDiet.ingredientPreferences.preferredIngredients",
+        "dishPreferences",
+        "dishPreferences.base",
+        "dishPreferences.replacement",
+        "ingredientPreferences",
+        "ingredientPreferences.dish",
+        "ingredientPreferences.preferredReplacements",
       ],
       filters: {
         userId: {
@@ -61,9 +60,9 @@ export const getUser = async (jwt: string): Promise<User> => {
   return handleUser(raw)
 }
 
-export const getDishes = async (user: User, jwt: string) => {
-  const getIds = (user: User): number[] => {
-    return Object.values(user.userDiet.uniqueDishes).map((i) => {
+export const getDishes = async (user: UserFullData, jwt: string) => {
+  const getIds = (user: UserFullData): number[] => {
+    return Object.values(user.uniqueDishes).map((i) => {
       return i.id
     })
   }

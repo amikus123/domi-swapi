@@ -1,4 +1,3 @@
-
 // * user has array of these, dish name is name of the dish
 // * for which prefered ingredienst should be applied
 export interface IngredientPreference {
@@ -15,7 +14,7 @@ export interface PreferedIngredient {
 }
 
 // * user personal information, age height etc
-export interface UserData {
+export interface UserPersonalData {
   age: number
 }
 
@@ -38,16 +37,16 @@ export interface DishPreference {
 }
 
 export interface UserDiet {
-  ingredientPreferences: Record<string, IngredientPreference>
-  dishPreferences: Record<string, DishPreference>
   timeRange: TimeRange
   diet: Diet
-  uniqueDishes: Record<string, DishUniqueData>
 }
-export interface User {
+export interface UserFullData {
   userId: number
-  userData: UserData
+  userPersonalData: UserPersonalData
   userDiet: UserDiet
+  uniqueDishes: Record<string, DishUniqueData>
+  ingredientPreferences: Record<string, IngredientPreference>
+  dishPreferences: Record<string, DishPreference>
 }
 
 export interface Ingredient extends NameAmount {
@@ -65,9 +64,9 @@ export interface Dish {
   slug: string
   nutrients: NameAmount[]
   ingredients: Ingredient[]
-  timeCategory: string,
-  recipe:string,
-  description:string
+  timeCategory: string
+  recipe: string
+  description: string
   // * if it exists, create url to page
   dishPage: null | string
   // * image object, idk how to type it
@@ -104,7 +103,6 @@ export interface DishColumnData {
   date: Date
 }
 
-
 export interface FullDish {
   dish: Dish
   replacements: string[]
@@ -112,6 +110,5 @@ export interface FullDish {
 }
 export interface FullDietDay {
   dishes: FullDish[]
-  kcalCount:number
-
+  kcalCount: number
 }

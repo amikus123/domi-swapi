@@ -69,23 +69,43 @@ export const changeDishesIngredients = (
   return dishCopy
 }
 
-// * changes abstract dietDay to days filled with Objects
+// * go through all days, change dishes with preffered disehs if possible
 export const changeDishesInDays = (
-  //
   dietDays: DietDay[],
   dishReplacements: Record<string, DishReplacement>,
   dishPreferences: Record<string, DishPreference>,
   dishes: Record<string, Dish>
 ): FullDietDay[] => {
   const res: FullDietDay[] = []
-
+  // * memoization
   const readySolutions: Record<string, FullDish> = {}
+  console.log(dietDays, dishReplacements, dishPreferences, dishes)
 
-  const handleReplacement = (dishName): FullDish => {
+  const handleReplacement = (dishName: string): FullDish => {
     if (dishName in readySolutions) {
       return readySolutions[dishName]
     } else {
       // * check if replacement is possible
+      console.log(
+        Object.keys(dishReplacements),
+        dishName,
+        dishReplacements[dishName],
+        "XDD"
+      )
+      //*  if there are no replacments, skip item
+      if (dishReplacements[dishName] === undefined) {
+        const repl = dishReplacements[dishName]
+          ? dishReplacements[dishName].replacements
+          : []
+        const obj: FullDish = {
+          originalDishName: dishName,
+          dish: dishes[dishName],
+          replacements: repl,
+        }
+        readySolutions[dishName] = obj
+        console.log("no repl")
+        return obj
+      }
       const originalDish = dishes[dishName]
       const preferenceName = dishPreferences[dishName].preferedName
       const possibleReplacments = dishReplacements[dishName].replacements
@@ -119,8 +139,6 @@ export const changeDishesInDays = (
 
   dietDays.forEach((day) => {
     //* we go through all dishes of day
-    // TODO it can be memoized
-
     const a: FullDish[] = []
     day.uniqeDishDatas.forEach((item) => {
       const { name } = item
@@ -128,15 +146,17 @@ export const changeDishesInDays = (
       if (name in dishPreferences) {
         //* we start changes
         const tmp: FullDish = handleReplacement(name)
+        console.log(tmp, "RES TMP")
         a.push(tmp)
       } else {
-        const repl = dishReplacements[name]
+        // * if it is not in array, we create empty one
+        const replacements = dishReplacements[name]
           ? dishReplacements[name].replacements
           : []
         const tmp: FullDish = {
           originalDishName: name,
           dish: dishes[name],
-          replacements: repl,
+          replacements: replacements,
         }
         a.push(tmp)
       }

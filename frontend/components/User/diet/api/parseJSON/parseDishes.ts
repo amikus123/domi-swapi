@@ -1,23 +1,35 @@
 import { Dish, Ingredient } from "../types"
+import {
+  DishJsonAttributes,
+  DishJson,
+  DishPageJson,
+  DishesJson,
+  IngredientJson,
+  IngredientReplacementsJson,
+  NameAmountJson,
+  dishExample,
+} from "./dishExample"
 
 const createUrl = (slug: string) => {
   //* will create link to relevant dish post
   return slug
 }
+// ! TAKE CARE OF DIET PAGES
 
-const handleDishPage = (dishPage) => {
+const handleDishPage = (dishPage: DishPageJson): null => {
   console.log(dishPage, "XDD")
   //* if page in not linked, we return null
 
-  if (dishPage && dishPage.data) {
-    const slug: string = dishPage.data.attributes.slug
-    return createUrl(slug)
-  } else {
-    return null
-  }
+  // if (dishPage && dishPage.data) {
+  //   const slug: string = dishPage.data
+  //   return createUrl(slug)
+  // } else {
+  //   return null
+  // }
+  return null
 }
 
-const handleIngredients = (ingredients): Ingredient[] => {
+const handleIngredients = (ingredients: IngredientJson[]): Ingredient[] => {
   return ingredients.map((ingredient) => {
     const res: Ingredient = {
       amount: ingredient.amount,
@@ -29,7 +41,7 @@ const handleIngredients = (ingredients): Ingredient[] => {
   })
 }
 
-const handleDish = (dish): Dish => {
+const handleDish = (dish: DishJson): Dish => {
   const res: Dish = {
     image: dish.attributes.image,
     dishPage: handleDishPage(dish.attributes.dishPage),
@@ -39,17 +51,17 @@ const handleDish = (dish): Dish => {
     ingredients: handleIngredients(dish.attributes.ingredients),
     nutrients: dish.attributes.nutrients,
     timeCategory: dish.attributes.meal,
-    description:dish.attributes.description,
-    recipe:dish.attributes.recipe,
-
+    description: dish.attributes.description,
+    recipe: dish.attributes.recipe,
   }
   return res
 }
 
-export const uniqueDishHandler = (dishData: any): Record<string, Dish> => {
+export const uniqueDishHandler = (
+  dishData: DishesJson
+): Record<string, Dish> => {
   const res: Record<string, Dish> = {}
   dishData.data.forEach((dish) => {
-    
     const formatedDist = handleDish(dish)
     const name = formatedDist.name
     res[name] = formatedDist

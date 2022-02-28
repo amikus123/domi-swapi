@@ -19,7 +19,7 @@ import {
   filterSingleDay,
 } from "../../components/User/diet/api/timeHelpers"
 import {
-  User,
+  UserPersonalData,
   Dish,
   DateRange,
   DateRangeNullable,
@@ -27,6 +27,7 @@ import {
   FullDietDay,
   IngredientPreference,
   DishPreference,
+  UserFullData,
 } from "../../components/User/diet/api/types"
 import { useRecoilState } from "recoil"
 import { ingredientPreferencesState } from "../../components/User/diet/api/atoms/IngredientPreferences"
@@ -35,17 +36,20 @@ import { dishesState } from "../../components/User/diet/api/atoms/dishes"
 import DietLoading from "../../components/User/diet/DietLoading"
 
 interface DietProps {
-  user: User
+  user: UserFullData
   originalDishes: Record<string, Dish>
 }
 
 const DietComponent = ({ user, originalDishes }: DietProps) => {
-  const { userDiet } = user
   const {
-    diet,
+    userDiet,
     dishPreferences: originalDishPreferences,
     ingredientPreferences: originalIngredientPreferences,
-  } = userDiet
+    uniqueDishes,
+    userId,
+    userPersonalData,
+  } = user
+  const { diet } = userDiet
   const { days, dishReplacements, name } = diet
   // * TIME STATE
   // * range of selected dates
@@ -181,6 +185,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
+
       {columnData[0] &&
       columnData[0].fullDietDay &&
       columnData[0].fullDietDay.kcalCount !== 0 ? (
