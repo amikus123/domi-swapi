@@ -7,14 +7,17 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  useToast,
 } from "@chakra-ui/react"
-import React from "react"
+import React, { useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { dishesState } from "../../../api/atoms/dishes"
 import { dishPreferencesState } from "../../../api/atoms/dishPreferences"
+import { userIdsState } from "../../../api/atoms/userIds"
 import { FullDish } from "../../../api/types"
 import DishModalDish from "./DishModalDish"
-import { handleDishChange } from "./functions"
+import { changeDishPreference } from "./functions"
+import { handlDishChange } from "./handleInteraction"
 
 interface DishModalProps {
   isOpen: boolean
@@ -30,17 +33,38 @@ const DishModal = ({
   dishData,
 }: DishModalProps) => {
   const { originalDishName, replacements } = dishData
+  const { userDataId } = useRecoilValue(userIdsState)
 
   const [dishPreference, setDishPreference] =
     useRecoilState(dishPreferencesState)
   const dishes = useRecoilValue(dishesState)
+  const [loading, setLoading] = useState(false)
+  const toast = useToast()
 
-  const handleClick = (item: string) => {
-    handleDishChange({
-      originalName: originalDishName,
-      newName: item,
+  const handleClick = async (newName: string) => {
+
+    handlDishChange({
       dishPreference,
+      dishes,
+      newName,
+      originalName: originalDishName,
       setDishPreference,
+      setLoading,
+      toast,
+      userDataId,
+    })
+  }
+
+  const handleReset = async()=>{
+    handlDishChange({
+      dishPreference,
+      dishes,
+      newName:originalDishName,
+      originalName: originalDishName,
+      setDishPreference,
+      setLoading,
+      toast,
+      userDataId,
     })
   }
   return (
@@ -76,12 +100,7 @@ const DishModal = ({
             tabIndex={replacements.length + 1}
             variant="ghost"
             onClick={() => {
-              handleDishChange({
-                originalName: originalDishName,
-                newName: originalDishName,
-                dishPreference,
-                setDishPreference,
-              })
+              handleReset()
             }}
           >
             Domyślny posiłek
@@ -91,8 +110,7 @@ const DishModal = ({
             tabIndex={replacements.length + 2}
             colorScheme="blue"
             mr={3}
-            onClick={()=>{
-            }}
+            onClick={() => {}}
           >
             Zamknij
           </Button>

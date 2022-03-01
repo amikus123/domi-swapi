@@ -1,8 +1,4 @@
-import axios from "axios"
 import { cloneDeep, omit } from "lodash"
-import { SetterOrUpdater } from "recoil"
-import { getApiUrl } from "../../../../../../lib/api"
-import { DishPreferencesJson } from "../../../api/parseJSON/userJsonTypes.ts"
 import { DishPreference } from "../../../api/types"
 
 interface Full {
@@ -11,37 +7,29 @@ interface Full {
   // * clicked dish
   newName: string
   // * global preferences
-  dishPreference: Record<string, DishPreference>
-  setDishPreference: SetterOrUpdater<Record<string, DishPreference>>
+  dishPreference: Record<string, DishPreference>,
 }
-type CheckIfOriginalProps = Omit<Full, "dishPreference" | "setDishPreference">
+type CheckIfOriginalProps = Omit<Full, "dishPreference" >
 type RemovePreferenceProps = Omit<Full, "originalName">
 
 const checkIfOriginal = ({ newName, originalName }: CheckIfOriginalProps) => {
   return originalName === newName
 }
 
-
-
-
-
-
-
 const removePreference = ({
   dishPreference,
   newName,
-  setDishPreference,
+  
 }: RemovePreferenceProps) => {
   let copy = cloneDeep(dishPreference)
   copy = omit(copy, newName)
-  setDishPreference(copy)
+  return copy
 }
 
 const modifyPreference = ({
   dishPreference,
   newName,
   originalName,
-  setDishPreference,
 }: Full) => {
   const copy = cloneDeep(dishPreference)
   copy[originalName] = {
@@ -50,16 +38,16 @@ const modifyPreference = ({
     originalName: originalName,
   }
 
-  setDishPreference(copy)
+  return copy
 }
 
-export const handleDishChange = (data: Full) => {
+export const changeDishPreference = (data: Full):Record<string, DishPreference> => {
   //* it makes no sense for dish to be replaced with itself
   if (checkIfOriginal(data)) {
     //* removes preference, shows default
-    removePreference(data)
+    return removePreference(data)
   } else {
     //* changes displayed dish
-    modifyPreference(data)
+    return modifyPreference(data)
   }
 }
