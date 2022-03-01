@@ -1,5 +1,4 @@
 import { cloneDeep } from "lodash"
-import { SetterOrUpdater } from "recoil"
 import { Dish, IngredientPreference } from "../../../api/types"
 
 interface FullProps {
@@ -11,7 +10,7 @@ interface FullProps {
   newName: string
   // * global object with preferece
   ingredientPreferences: Record<string, IngredientPreference>
-  //*
+  // * used to look up dish id
   dishes: Record<string, Dish>
 }
 type CheckOriginalProps = Omit<
@@ -50,8 +49,7 @@ const removePreference = ({
     return pref.originalName !== originalName
   })
   copy.preferredIngredients = arr
-  const newState = { ...ingredientPreferences, [dishName]: copy }
-  return newState
+  return { ...ingredientPreferences, [dishName]: copy }
 }
 
 const addPreference = ({
@@ -120,7 +118,8 @@ const checkIfInside = ({
 export const changeIngredients = (
   data: FullProps
 ): Record<string, IngredientPreference> => {
-  data.ingredientPreferences = cloneDeep(data.ingredientPreferences)
+  // * probably not neccessary
+  // data.ingredientPreferences = cloneDeep(data.ingredientPreferences)
   //* it makes no sense for ingredient to be replaced with itself
   if (checkIfOriginal(data)) {
     return removePreference(data)
@@ -131,4 +130,18 @@ export const changeIngredients = (
       return addPreference(data)
     }
   }
+}
+
+export const removeAllPreferences = ({
+  dishName,
+  ingredientPreferences,
+  dishes,
+}: RemovePreferenceProps) => {
+  const ingredientPreference = {
+    dishName,
+    id: dishes[dishName].id,
+    preferredIngredients: [],
+  }
+
+  return { ...ingredientPreferences, [dishName]: ingredientPreference }
 }

@@ -5,73 +5,47 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import { dishesState } from "../../../api/atoms/dishes"
 import { ingredientPreferencesState } from "../../../api/atoms/IngredientPreferences"
 import { userIdsState } from "../../../api/atoms/userIds"
-import { Ingredient } from "../../../api/types"
+import { Dish, Ingredient, IngredientPreference } from "../../../api/types"
 import { updateIngredients } from "./APIRequest"
 import { changeIngredients } from "./functions"
+import {
+  handleIngredientChange,
+  HandleIngredientChangeProps,
+} from "./handleInteraction"
 
 interface IndigredientChoiceProps {
   ingredient: Ingredient
   name: string
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 const IndigredientChoice = ({
   ingredient,
   name: dishName,
+  loading,
+  setLoading,
 }: IndigredientChoiceProps) => {
   const toast = useToast()
   const { userDataId } = useRecoilValue(userIdsState)
-  const [loading, setLoading] = useState(false)
   const { amount, name, replacements, originalName } = ingredient
   const [ingredientPreferences, setIngredientPreferences] = useRecoilState(
     ingredientPreferencesState
   )
   const dishes = useRecoilValue(dishesState)
-  const handleClick22 = async (replaceableIndex: number) => {
-    setLoading(true)
 
-    const myPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("foo")
-      }, 300)
-    })
-    const res = await myPromise.then(
-      () => true,
-      () => false
-    )
-
-    if (res) {
-      toast({
-        title: "Udało się zmienić składnik",
-        description: "",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      })
-      setLoading(false)
-    } else {
-      toast({
-        title: "Nie udało się zmienić składnik",
-        description: "",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      })
-      setLoading(false)
-    }
-  }
-
-  const handleClick = async (newName: string) => {
-    const newIngredients = changeIngredients({
+  const handleClick = async (newName:string) => {
+    handleIngredientChange({
       dishName,
+      dishes,
       ingredientPreferences,
       newName,
       originalName,
-      dishes
+      setIngredientPreferences,
+      setLoading,
+      toast,
+      userDataId,
     })
-    
-    const xd = await updateIngredients({ data: newIngredients, userDataId })
-    console.log(xd,"SSS")
   }
-
   return (
     <>
       {replacements && replacements.length > 0 ? (
@@ -81,6 +55,7 @@ const IndigredientChoice = ({
           </Text>
           <Stack alignSelf="flex-end">
             {replacements.map((item, index) => {
+              const { name: newName } = item
               return (
                 <Button
                   colorScheme="teal"
@@ -88,7 +63,7 @@ const IndigredientChoice = ({
                   key={index}
                   isLoading={loading}
                   onClick={() => {
-                    handleClick(item.name)
+                    handleClick(newName)
                   }}
                 >
                   {capitalize(item.name)} - {capitalize(item.amount)}

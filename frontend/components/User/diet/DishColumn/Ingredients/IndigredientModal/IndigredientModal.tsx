@@ -8,12 +8,18 @@ import {
   ModalFooter,
   Button,
   Stack,
+  useToast,
 } from "@chakra-ui/react"
 import { cloneDeep } from "lodash"
-import React from "react"
-import { useRecoilState } from "recoil"
+import React, { useState } from "react"
+import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil"
+import { dishesState } from "../../../api/atoms/dishes"
 import { ingredientPreferencesState } from "../../../api/atoms/IngredientPreferences"
-import { Ingredient } from "../../../api/types"
+import { userIdsState } from "../../../api/atoms/userIds"
+import { Dish, Ingredient, IngredientPreference } from "../../../api/types"
+import { updateIngredients } from "./APIRequest"
+import { changeIngredients } from "./functions"
+import { handleIngredientChange } from "./handleInteraction"
 
 import IndigredientChoice from "./IndigredientChoice"
 
@@ -35,15 +41,24 @@ const IndigredientModal = ({
   const [ingredientPreferences, setIngredientPreferences] = useRecoilState(
     ingredientPreferencesState
   )
-  // ! ADD UNIVERSAL LOADING TIME
-  const resetToDefault = () => {
-    const dishPreferenceData = ingredientPreferences[name]
-    const copy = cloneDeep(dishPreferenceData)
+  const toast = useToast()
+  const [loading, setLoading] = useState(false)
+  const dishes = useRecoilValue(dishesState)
+  const { userDataId } = useRecoilValue(userIdsState)
 
-    copy.preferredIngredients = []
-    console.log("removePreference", copy.preferredIngredients)
-
-    setIngredientPreferences({ ...ingredientPreferences, [name]: copy })
+  const resetToDefault = async () => {
+    handleIngredientChange({
+      dishName: name,
+      removeAll: true,
+      dishes,
+      ingredientPreferences,
+      newName: "",
+      originalName: "",
+      setIngredientPreferences,
+      setLoading,
+      toast,
+      userDataId,
+    })
   }
 
   return (
@@ -62,6 +77,8 @@ const IndigredientModal = ({
             {ingredients.map((ingredient, index) => {
               return (
                 <IndigredientChoice
+                  loading={loading}
+                  setLoading={setLoading}
                   ingredient={ingredient}
                   name={name}
                   key={index}
@@ -75,6 +92,7 @@ const IndigredientModal = ({
           <Button
             tabIndex={ingredients.length + 1}
             variant="ghost"
+            isLoading={loading}
             onClick={() => {
               resetToDefault()
             }}

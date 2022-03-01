@@ -3,8 +3,11 @@ import {
   PreferedIngredientRequest,
   updateIngredientPreferencesRequest,
 } from "../../../api/dbInteraction/PUT"
-import { IngredientPreference, PreferedIngredient } from "../../../api/types"
-import Dishingredients from "../Dishingredients"
+import {
+  Dish,
+  IngredientPreference,
+  PreferedIngredient,
+} from "../../../api/types"
 
 export const resetIngredients = async (
   userDataId: number
@@ -19,12 +22,15 @@ export const resetIngredients = async (
 interface UpdateIngredientsProps {
   userDataId: number
   data: Record<string, IngredientPreference>
+  dishes: Record<string, Dish>
 }
 export const updateIngredients = async ({
   data,
   userDataId,
+  dishes,
 }: UpdateIngredientsProps): Promise<Boolean> => {
-  const compatibleData = makeDBcompatible(data)
+  const compatibleData = makeDBcompatible(data, dishes)
+  console.log(compatibleData, userDataId, "XDD")
   const request = await updateIngredientPreferencesRequest({
     userDataId,
     data: compatibleData,
@@ -34,17 +40,22 @@ export const updateIngredients = async ({
 }
 
 export const makeDBcompatible = (
-  data: Record<string, IngredientPreference>
+  preferenceData: Record<string, IngredientPreference>,
+  dishes: Record<string, Dish>
 ): IngredientPreferencesData[] => {
   const res: IngredientPreferencesData[] = []
-  Object.keys(data).forEach((dishName) => {
-    const dish = data[dishName]
-    console.log(dish,"XDD")
+  Object.keys(preferenceData).forEach((dishName) => {
+    const dishPreferenceData = preferenceData[dishName]
+    const dish = dishes[dishName]
     const a: IngredientPreferencesData = {
       dish: dish.id,
-      preferredReplacements: getPreferedReplacements(dish.preferredIngredients),
+      preferredReplacements: getPreferedReplacements(
+        dishPreferenceData.preferredIngredients
+      ),
     }
-    res.push(a)
+    if (a.preferredReplacements.length !== 0) {
+      res.push(a)
+    }
     // const a:IngredientPreferencesData ={dish:}
   })
   return res

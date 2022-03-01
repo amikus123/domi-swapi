@@ -48,7 +48,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
     userDataId,
   } = user
   const { diet } = userDiet
-  const { days, dishReplacements,name } = diet
+  const { days, dishReplacements, name } = diet
   // * USE GLOBAL DATA
   const [userIds, setUserIds] = useRecoilState(userIdsState)
 
@@ -101,7 +101,6 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
 
   useEffect(() => {
     setDishes(changeDishesIngredients(originalDishes, ingredientPreferences))
- 
   }, [ingredientPreferences, originalDishes])
 
   // * DIET DAY FUNCITONS
@@ -190,6 +189,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
       columnData[0].fullDietDay &&
       columnData[0].fullDietDay.kcalCount !== 0 ? (
         <>
+          {/* <pre>{JSON.stringify(dishes, null, 2)}</pre> */}
           <DishColumn dishColumnData={columnData} />
           <Button>Pobierz</Button>
         </>
