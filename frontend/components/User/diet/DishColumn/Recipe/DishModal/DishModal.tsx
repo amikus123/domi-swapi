@@ -14,7 +14,7 @@ import { dishesState } from "../../../api/atoms/dishes"
 import { dishPreferencesState } from "../../../api/atoms/dishPreferences"
 import { FullDish } from "../../../api/types"
 import DishModalDish from "./DishModalDish"
-import { handleDishChange, removeIngredientPreferences, removePreferenceBack } from "./functions"
+import { handleDishChange } from "./functions"
 
 interface DishModalProps {
   isOpen: boolean
@@ -82,7 +82,6 @@ const DishModal = ({
                 dishPreference,
                 setDishPreference,
               })
-              removePreferenceBack({ userDataId: 1 })
             }}
           >
             Domyślny posiłek
@@ -93,7 +92,6 @@ const DishModal = ({
             colorScheme="blue"
             mr={3}
             onClick={()=>{
-              removeIngredientPreferences({userDataId:1})
             }}
           >
             Zamknij

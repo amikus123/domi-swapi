@@ -56,7 +56,7 @@ export const getUser = async (jwt: string): Promise<UserFullData> => {
   )
   const temp = await userDiet.json()
 
-  const raw = temp.data[0].attributes
+  const raw = temp.data[0]
   return handleUser(raw)
 }
 

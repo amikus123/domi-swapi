@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash"
 import { SetterOrUpdater } from "recoil"
-import { IngredientPreference } from "../../../api/types"
+import { Dish, IngredientPreference } from "../../../api/types"
 
 interface FullProps {
   //* name of default ingredient
@@ -11,9 +11,8 @@ interface FullProps {
   newName: string
   // * global object with preferece
   ingredientPreferences: Record<string, IngredientPreference>
-  setIngredientPreferences: SetterOrUpdater<
-    Record<string, IngredientPreference>
-  >
+  //*
+  dishes: Record<string, Dish>
 }
 type CheckOriginalProps = Omit<
   FullProps,
@@ -31,7 +30,7 @@ type CheckInsideProps = Omit<
 export const checkIfOriginal = ({
   newName,
   originalName,
-}: CheckOriginalProps) => {
+}: CheckOriginalProps): Boolean => {
   return originalName === newName
 }
 
@@ -39,11 +38,11 @@ const removePreference = ({
   dishName,
   ingredientPreferences,
   originalName,
-  setIngredientPreferences,
+  dishes,
 }: RemovePreferenceProps) => {
   const ingredientPreference = ingredientPreferences[dishName] || {
     dishName,
-    id: 11,
+    id: dishes[dishName].id,
     preferredIngredients: [],
   }
   const copy = cloneDeep(ingredientPreference)
@@ -51,8 +50,8 @@ const removePreference = ({
     return pref.originalName !== originalName
   })
   copy.preferredIngredients = arr
-
-  setIngredientPreferences({ ...ingredientPreferences, [dishName]: copy })
+  const newState = { ...ingredientPreferences, [dishName]: copy }
+  return newState
 }
 
 const addPreference = ({
@@ -60,11 +59,11 @@ const addPreference = ({
   ingredientPreferences,
   newName,
   originalName,
-  setIngredientPreferences,
+  dishes,
 }: AddPreferenceProps) => {
   const ingredientPreference = ingredientPreferences[dishName] || {
     dishName,
-    id: 11,
+    id: dishes[dishName].id,
     preferredIngredients: [],
   }
   let copy = cloneDeep(ingredientPreference)
@@ -75,18 +74,18 @@ const addPreference = ({
     originalName: originalName,
     preferredName: newName,
   })
-
-  setIngredientPreferences({ ...ingredientPreferences, [dishName]: copy })
+  const newState = { ...ingredientPreferences, [dishName]: copy }
+  return newState
 }
 const modifyPreference = ({
   dishName,
   ingredientPreferences,
-  setIngredientPreferences,
   newName,
+  dishes,
 }: ModifyPreferenceProps) => {
   const ingredientPreference = ingredientPreferences[dishName] || {
     dishName,
-    id: 11,
+    id: dishes[dishName].id,
     preferredIngredients: [],
   }
   const copy = cloneDeep(ingredientPreference)
@@ -96,7 +95,9 @@ const modifyPreference = ({
       break
     }
   }
-  setIngredientPreferences({ ...ingredientPreferences, [dishName]: copy })
+
+  const newState = { ...ingredientPreferences, [dishName]: copy }
+  return newState
 }
 
 const checkIfInside = ({
@@ -116,15 +117,18 @@ const checkIfInside = ({
   }
 }
 
-export const changeIngredients = (data: FullProps) => {
+export const changeIngredients = (
+  data: FullProps
+): Record<string, IngredientPreference> => {
+  data.ingredientPreferences = cloneDeep(data.ingredientPreferences)
   //* it makes no sense for ingredient to be replaced with itself
   if (checkIfOriginal(data)) {
-    removePreference(data)
+    return removePreference(data)
   } else {
     if (checkIfInside(data)) {
-      modifyPreference(data)
+      return modifyPreference(data)
     } else {
-      addPreference(data)
+      return addPreference(data)
     }
   }
 }

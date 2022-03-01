@@ -6,6 +6,7 @@ import MyCalendar from "../../components/User/diet/MyCalendar"
 // perchance move to difftent file so it does not always load
 import "react-datepicker/dist/react-datepicker.css"
 import { parseCookies } from "nookies"
+import qs from "qs"
 
 import { datesFromUser } from "../../components/User/diet/functions"
 import { getUser, getDishes } from "../../components/User/diet/api/serverSide"
@@ -19,14 +20,11 @@ import {
   filterSingleDay,
 } from "../../components/User/diet/api/timeHelpers"
 import {
-  UserPersonalData,
   Dish,
   DateRange,
   DateRangeNullable,
   DishColumnData,
   FullDietDay,
-  IngredientPreference,
-  DishPreference,
   UserFullData,
 } from "../../components/User/diet/api/types"
 import { useRecoilState } from "recoil"
@@ -34,6 +32,7 @@ import { ingredientPreferencesState } from "../../components/User/diet/api/atoms
 import { dishPreferencesState } from "../../components/User/diet/api/atoms/dishPreferences"
 import { dishesState } from "../../components/User/diet/api/atoms/dishes"
 import DietLoading from "../../components/User/diet/DietLoading"
+import { userIdsState } from "../../components/User/diet/api/atoms/userIds"
 
 interface DietProps {
   user: UserFullData
@@ -45,12 +44,18 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
     userDiet,
     dishPreferences: originalDishPreferences,
     ingredientPreferences: originalIngredientPreferences,
-    uniqueDishes,
     userId,
-    userPersonalData,
+    userDataId,
   } = user
   const { diet } = userDiet
-  const { days, dishReplacements, name } = diet
+  const { days, dishReplacements,name } = diet
+  // * USE GLOBAL DATA
+  const [userIds, setUserIds] = useRecoilState(userIdsState)
+
+  useEffect(() => {
+    setUserIds({ userDataId, userId })
+  }, [])
+
   // * TIME STATE
   // * range of selected dates
   const [dates, setDates] = useState<DateRangeNullable>({
@@ -96,10 +101,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
 
   useEffect(() => {
     setDishes(changeDishesIngredients(originalDishes, ingredientPreferences))
-    console.log(
-      "SET",
-      changeDishesIngredients(originalDishes, ingredientPreferences)
-    )
+ 
   }, [ingredientPreferences, originalDishes])
 
   // * DIET DAY FUNCITONS
@@ -120,7 +122,6 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
       dishPreferences,
       dishes
     )
-    console.log(res, "changeDishesInDays")
     if (res[0].kcalCount !== 0) {
       setFullDietDays(res)
     }
@@ -138,7 +139,6 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
       fullDietDays
     )
     setColumData(newData)
-    console.log(newData)
   }, [showRange, dates, singleDate, dateRange, indexesOfDays, fullDietDays])
 
   const filterHelper = (

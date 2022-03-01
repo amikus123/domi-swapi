@@ -79,19 +79,13 @@ export const changeDishesInDays = (
   const res: FullDietDay[] = []
   // * memoization
   const readySolutions: Record<string, FullDish> = {}
-  console.log(dietDays, dishReplacements, dishPreferences, dishes)
 
   const handleReplacement = (dishName: string): FullDish => {
     if (dishName in readySolutions) {
       return readySolutions[dishName]
     } else {
       // * check if replacement is possible
-      console.log(
-        Object.keys(dishReplacements),
-        dishName,
-        dishReplacements[dishName],
-        "XDD"
-      )
+
       //*  if there are no replacments, skip item
       if (dishReplacements[dishName] === undefined) {
         const repl = dishReplacements[dishName]
@@ -103,7 +97,6 @@ export const changeDishesInDays = (
           replacements: repl,
         }
         readySolutions[dishName] = obj
-        console.log("no repl")
         return obj
       }
       const originalDish = dishes[dishName]
@@ -146,7 +139,6 @@ export const changeDishesInDays = (
       if (name in dishPreferences) {
         //* we start changes
         const tmp: FullDish = handleReplacement(name)
-        console.log(tmp, "RES TMP")
         a.push(tmp)
       } else {
         // * if it is not in array, we create empty one
@@ -170,7 +162,7 @@ export const changeDishesInDays = (
 export const getKcal = (dishes: FullDish[]) => {
   let kcalCount = 0
   dishes.forEach((item) => {
-    // ! ADD EROR HANDLING
+    // * if item has no calories for some reason, it does not break
     try {
       for (const nut of item.dish.nutrients) {
         if (nut.name.toLowerCase().trim() === "kalorie") {

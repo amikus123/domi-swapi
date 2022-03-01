@@ -21,62 +21,11 @@ const checkIfOriginal = ({ newName, originalName }: CheckIfOriginalProps) => {
   return originalName === newName
 }
 
-interface IngredientApiProps {
-  userDataId: number
-}
 
-interface RemoveProps {}
 
-export const removePreferenceBack = async ({
-  userDataId,
-}: IngredientApiProps) => {
-  //  * get id of user mobined datz
-  //  * cre
-  const url = `${getApiUrl()}/api/user-combined-datas/${userDataId}`
-  const body = {
-    data: {
-      dishPreferences: [{ base: 1, replacement: 2 }],
-    },
-  }
-  try {
-    const res = await axios({
-      method: "PUT",
-      url: url,
-      data: body,
-    })
 
-    return res
-  } catch (e) {
-    console.log(e, "!!!!")
-    return 1
-  }
-}
 
-export const removeIngredientPreferences = async ({
-  userDataId,
-}: IngredientApiProps) => {
-  const url = `${getApiUrl()}/api/user-combined-datas/${userDataId}`
-  const body = {
-    data: {
-      ingredientPreferences: [
-        {
-          dish: 1,
-          preferredReplacements: [{ originalName: "a", preferredName: "V" }],
-        },
-      ],
-    },
-  }
-  try {
-    const res = await axios({
-      method: "PUT",
-      url: url,
-      data: body,
-    })
-  } catch (e) {
-    console.log(e, "!!!!")
-    return 1
-  }
-}
+
 
 const removePreference = ({
   dishPreference,

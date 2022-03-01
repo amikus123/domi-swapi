@@ -21,9 +21,10 @@ import {
   UserDataJson,
   UserDietJson,
   UserJson,
+  UserRequestDataJson,
 } from "./userJsonTypes.ts"
 
-export const handleUser = (data: UserJson): UserFullData => {
+export const handleUser = (data: UserRequestDataJson): UserFullData => {
   const uniqueDishes: Record<string, DishUniqueData> = {}
   //* FUNCTIONS
 
@@ -152,15 +153,23 @@ export const handleUser = (data: UserJson): UserFullData => {
       age,
     }
   }
+
+  const { attributes, id } = data
+  const {
+    dishPreferences,
+    ingredientPreferences,
+    userData,
+    userDiet,
+    userId,
+  } = attributes
   const res: UserFullData = {
-    userId: data.userId,
-    userPersonalData: handlePersonalData(data.userData),
-    userDiet: handleUserDiet(data.userDiet),
-    dishPreferences: handleDishPreferences(data.dishPreferences),
-    ingredientPreferences: handleIngredientPreferences(
-      data.ingredientPreferences
-    ),
+    userId: userId,
+    userPersonalData: handlePersonalData(userData),
+    userDiet: handleUserDiet(userDiet),
+    dishPreferences: handleDishPreferences(dishPreferences),
+    ingredientPreferences: handleIngredientPreferences(ingredientPreferences),
     uniqueDishes: {},
+    userDataId:id,
   }
 
   res.uniqueDishes = handleUniqueDishes()

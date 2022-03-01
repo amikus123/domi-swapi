@@ -1,3 +1,8 @@
+
+export interface UserRequestDataJson{
+  attributes:UserJson
+  id:number
+}
 export interface UserJson {
   userId: number
   createdAt: string

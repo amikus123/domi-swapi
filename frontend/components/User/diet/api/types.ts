@@ -47,6 +47,7 @@ export interface UserFullData {
   uniqueDishes: Record<string, DishUniqueData>
   ingredientPreferences: Record<string, IngredientPreference>
   dishPreferences: Record<string, DishPreference>
+  userDataId:number
 }
 
 export interface Ingredient extends NameAmount {
@@ -111,4 +112,9 @@ export interface FullDish {
 export interface FullDietDay {
   dishes: FullDish[]
   kcalCount: number
+}
+
+export interface UserIds{
+  userId:number,
+  userDataId:number
 }
