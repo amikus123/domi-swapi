@@ -58,6 +58,7 @@ const IndigredientModal = ({
       setLoading,
       toast,
       userDataId,
+      loading,
     })
   }
 
@@ -96,13 +97,14 @@ const IndigredientModal = ({
             onClick={() => {
               resetToDefault()
             }}
+            
           >
             Domyślny posiłek
           </Button>
           <Button
             tabIndex={ingredients.length + 2}
             colorScheme="blue"
-            ml={3}
+            ml={4}
             onClick={onClose}
           >
             Zamknij

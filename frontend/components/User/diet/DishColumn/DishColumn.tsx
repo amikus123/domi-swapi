@@ -1,6 +1,5 @@
 import { Accordion, Divider, Stack } from "@chakra-ui/react"
 import React from "react"
-import diet from "../../../../pages/user/diet"
 import { DishColumnData } from "../api/types"
 
 import DishColumnHeader from "./DishColumnHeader"
@@ -13,14 +12,13 @@ interface DishColumnProps {
 // * if we show more than one day, we hide all of them expect the fisrt
 const DishColumn = ({ dishColumnData }: DishColumnProps) => {
   return (
-    <>
+    <Stack spacing={12} w="100%">
       {dishColumnData.map((item, key) => {
         const { date, fullDietDay } = item
         const { dishes, kcalCount } = fullDietDay
         return (
-          <Stack w="100%" key={key}>
+          <Stack w="100%" key={key} spacing={4}>
             <DishColumnHeader date={date} kcalCount={kcalCount} />
-
             {dishes.map((dish, index) => {
               return (
                 <Accordion
@@ -28,18 +26,14 @@ const DishColumn = ({ dishColumnData }: DishColumnProps) => {
                   allowMultiple
                   key={index}
                 >
-                  <DishRow
-                    dishData={dish}
-
-                  />
+                  <DishRow dishData={dish} />
                 </Accordion>
               )
             })}
-            {key !== diet.length - 1 ? <Divider py={2} /> : null}
           </Stack>
         )
       })}
-    </>
+    </Stack>
   )
 }
 

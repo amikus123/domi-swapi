@@ -34,7 +34,7 @@ export default function DatePicker({
   const { start: minDate, end: maxDate } = minMaxDate
   // * for some reason this works, one "if" statmentg causes graphical bugs
   return (
-    <Flex className={"light-theme"} w="300px" pt={12} pb={2} direction="column">
+    <Flex className={"light-theme"} w="300px" direction="column">
       {showRange ? null : (
         <ReactDatePicker
           locale="pl"

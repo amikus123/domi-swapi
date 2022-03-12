@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Avatar, CSSObject } from "@chakra-ui/react"
+import { Flex, Box, Text, Avatar, CSSObject, Spinner } from "@chakra-ui/react"
 import React from "react"
 import { Dish } from "../../../api/types"
 import NextImage from "next/image"
@@ -8,7 +8,8 @@ interface DishModalDishProps {
   onClose: () => void
   dish: Dish
   index: number
-  handleClick: (  newName: string) => void
+  handleClick: (newName: string) => void
+  loading: boolean
 }
 
 interface ImgProps {
@@ -35,12 +36,14 @@ const Img = ({ image }: ImgProps) => {
   )
 }
 const DishModalDish = React.forwardRef(
-  ({ dish, onClose, index,handleClick }: DishModalDishProps, ref: any) => {
+  (
+    { dish, onClose, index, handleClick, loading }: DishModalDishProps,
+    ref: any
+  ) => {
     let { description, name, image } = dish
     // add nice border and add event on focus
     description =
       "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-
 
     const selectedStle: CSSObject = { borderColor: "red", outlineWidth: 0 }
     const hoverStyle: CSSObject = {
@@ -65,9 +68,29 @@ const DishModalDish = React.forwardRef(
             handleClick(name)
           }
         }}
-        onClick={()=>{handleClick(name)}}
-        cursor="pointer"
+        onClick={() => {
+          handleClick(name)
+        }}
+        cursor={loading ? "not-allowed" : "pointer"}
+        overflow="hidden"
+        position="relative"
+        opacity={loading ? "0.4" : 1}
+        // pointerEvents={loading ? "none" : "initial"}
       >
+        <Flex
+          w="100%"
+          h="100%"
+          position="absolute"
+          bg="#fff"
+          left="0"
+          zIndex={20}
+          display={loading ? "flex" : "none"}
+          direction="column"
+          justify="center"
+          align="center"
+        >
+          <Spinner />
+        </Flex>
         <Flex w="150px">
           <Img image={image} />
         </Flex>

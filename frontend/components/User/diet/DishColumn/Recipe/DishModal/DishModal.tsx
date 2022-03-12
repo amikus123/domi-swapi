@@ -42,7 +42,6 @@ const DishModal = ({
   const toast = useToast()
 
   const handleClick = async (newName: string) => {
-
     handlDishChange({
       dishPreference,
       dishes,
@@ -52,14 +51,16 @@ const DishModal = ({
       setLoading,
       toast,
       userDataId,
+      loading,
     })
   }
 
-  const handleReset = async()=>{
+  const handleReset = async () => {
     handlDishChange({
       dishPreference,
+      loading,
       dishes,
-      newName:originalDishName,
+      newName: originalDishName,
       originalName: originalDishName,
       setDishPreference,
       setLoading,
@@ -90,6 +91,7 @@ const DishModal = ({
                 index={index}
                 dish={dishes[item]}
                 ref={index === 0 ? initialRef : null}
+                loading={loading}
               />
             )
           })}
@@ -99,6 +101,8 @@ const DishModal = ({
           <Button
             tabIndex={replacements.length + 1}
             variant="ghost"
+            isLoading={loading}
+            mr={4}
             onClick={() => {
               handleReset()
             }}
@@ -110,7 +114,7 @@ const DishModal = ({
             tabIndex={replacements.length + 2}
             colorScheme="blue"
             mr={3}
-            onClick={() => {}}
+            onClick={onClose}
           >
             Zamknij
           </Button>

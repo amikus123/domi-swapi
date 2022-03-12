@@ -10,6 +10,7 @@ export interface HandleIngredientChangeProps {
   originalName: string
   dishes: Record<string, Dish>
   userDataId: number
+  loading:boolean
   // * object from use toast hook
   toast: any
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,12 +34,14 @@ export const handleIngredientChange = async (
     originalName,
     userDataId,
     toast,
+    loading,
     setIngredientPreferences,
     setLoading,
     toastSuccessTitle = "Udało się zmienić składnik",
     toastFailTitle = "Nie udało się zmienić składnik",
     removeAll = false,
   } = data
+  if(!loading){
 
   const newIngredients = removeAll
     ? removeAllPreferences({
@@ -81,4 +84,6 @@ export const handleIngredientChange = async (
     })
   }
   setLoading(false)
+}
+
 }

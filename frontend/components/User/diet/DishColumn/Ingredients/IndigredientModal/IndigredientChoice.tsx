@@ -44,6 +44,7 @@ const IndigredientChoice = ({
       setLoading,
       toast,
       userDataId,
+      loading
     })
   }
   return (

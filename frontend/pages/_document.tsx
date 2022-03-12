@@ -5,10 +5,10 @@ class MyDocument extends Document {
       <Html>
         <Head>
           {/* eslint-disable-next-line */}
-          <link
+          {/* <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Staatliches"
-          />
+          /> */}
           {/* <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css"
@@ -25,7 +25,7 @@ class MyDocument extends Document {
             async
             src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/js/uikit.js"
           /> */}
-             {/* <link
+          {/* <link
           rel="shortcut icon"
           href={getStrapiMedia(global.attributes.favicon)}
         /> */}

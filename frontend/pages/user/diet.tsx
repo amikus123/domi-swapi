@@ -1,4 +1,4 @@
-import { Stack, Button } from "@chakra-ui/react"
+import { Stack, Button, Heading, Text } from "@chakra-ui/react"
 import { startOfToday } from "date-fns"
 import React, { useEffect, useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
@@ -33,6 +33,8 @@ import { dishPreferencesState } from "../../components/User/diet/api/atoms/dishP
 import { dishesState } from "../../components/User/diet/api/atoms/dishes"
 import DietLoading from "../../components/User/diet/DietLoading"
 import { userIdsState } from "../../components/User/diet/api/atoms/userIds"
+import MyPdf from "../../components/User/diet/Pdf/MyPdf"
+import Test from "../../components/User/diet/Pdf/Test"
 
 interface DietProps {
   user: UserFullData
@@ -48,7 +50,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
     userDataId,
   } = user
   const { diet } = userDiet
-  const { days, dishReplacements, name } = diet
+  const { days, dishReplacements, name: dietName } = diet
   // * USE GLOBAL DATA
   const [userIds, setUserIds] = useRecoilState(userIdsState)
 
@@ -174,7 +176,8 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
   }
 
   return (
-    <Stack w="1000px" justify="center" align="center" spacing={20}>
+    <Stack w="1000px" justify="center" align="center" spacing={16}>
+      <Heading mt={8}>Wybrana dieta: {dietName}</Heading>
       <MyCalendar
         singleDate={singleDate}
         setSingleDate={setSingleDate}
@@ -184,14 +187,12 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-
       {columnData[0] &&
       columnData[0].fullDietDay &&
       columnData[0].fullDietDay.kcalCount !== 0 ? (
         <>
-          {/* <pre>{JSON.stringify(dishes, null, 2)}</pre> */}
           <DishColumn dishColumnData={columnData} />
-          <Button>Pobierz</Button>
+          <Test dishColumnData={columnData} />
         </>
       ) : (
         <DietLoading />

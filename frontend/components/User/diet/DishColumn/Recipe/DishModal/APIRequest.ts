@@ -34,6 +34,8 @@ export const updateDishes = async ({
   return request
 }
 
+// ! use callback use memo
+
 export const makeDBcompatible = (
   preferenceData: Record<string, DishPreference>,
   dishes: Record<string, Dish>
