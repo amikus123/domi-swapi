@@ -67,17 +67,3 @@ const PdfButton = ({ dishColumnData }: MyPdfProps) => {
 }
 export default PdfButton
 
-// const Test = ({ dishColumnData }: MyPdfProps) => {
-//   return (
-//     <>
-//       <PDFDownloadLink
-//         document={<MyDocument dishColumnData={dishColumnData} />}
-//         fileName="dietka.pdf"
-//       >
-//         {({ blob, url, loading, error }) =>
-//           loading ? "Loading document..." : "Download now!"
-//         }
-//       </PDFDownloadLink>
-//     </>
-//   )
-// }

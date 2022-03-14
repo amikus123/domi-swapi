@@ -54,6 +54,7 @@ const DishModalDish = React.forwardRef(
       <Flex
         mb={4}
         align="center"
+        direction={["column","column","row"]}
         tabIndex={index}
         border="1px"
         borderRadius="lg"
@@ -91,13 +92,16 @@ const DishModalDish = React.forwardRef(
         >
           <Spinner />
         </Flex>
-        <Flex w="150px">
+
+        <Flex w={[300,300,150]} justify="center" align="center" pb={[4,4,0]}>
           <Img image={image} />
         </Flex>
+
         <Flex direction="column" px={4}>
           <Text fontWeight={500} fontSize={20} pb={2}>
             {name}
           </Text>
+
           <Text>{description}</Text>
         </Flex>
       </Flex>

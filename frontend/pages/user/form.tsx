@@ -19,7 +19,7 @@ const form = () => {
     <>
     <FirstTimeModal/>
     <Stack spacing={8} w={800}>
-      if user has never saved his data, modal will be shown
+      {/* if user has never saved his data, modal will be shown */}
       <Text fontSize="40" variant="h2">
         Edytuj twoje dane
       </Text>

@@ -13,13 +13,19 @@ const fixHeight = (w: number, h: number) => {
   return { h: 200, w: 200 * ratio }
 }
 const DishLeft = ({ image }: DishLeftProps) => {
-  
   const attributes = image.data.attributes
   const { alternativeText, formats } = attributes
   const { height, width, url } = formats.thumbnail
   const { w, h } = fixHeight(width, height)
   return (
-    <Flex w="300px" direction="column" justify="center" pt={12}>
+    <Flex
+      w={["100%", "100%", "300px"]}
+      direction="column"
+      justify="center"
+      align="center"
+      pt={[0, 0, 12]}
+      py={[6, 6, 0]}
+    >
       <Box w={w} h={h} overflow="hidden">
         <NextImage
           width={w}
@@ -33,7 +39,7 @@ const DishLeft = ({ image }: DishLeftProps) => {
 }
 
 export default DishLeft
-// * example of image 
+// * example of image
 // {
 //   "data": {
 //     "id": 18,

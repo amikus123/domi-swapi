@@ -84,7 +84,6 @@ const DayPdf = ({ item }: GenerateHtmlProps) => {
               </View>
             </View>
             <View style={styles.recipe}>
-              {/* przepis */}
               <Text>
                 {recipe} Lorem ipsum dolor sit, amet consectetur adipisicing
                 elit. Sit soluta facilis officia, recusandae, exercitationem

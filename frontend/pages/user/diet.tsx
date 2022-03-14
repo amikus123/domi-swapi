@@ -1,4 +1,4 @@
-import { Stack, Button, Heading, Text } from "@chakra-ui/react"
+import { Stack,  Heading } from "@chakra-ui/react"
 import { startOfToday } from "date-fns"
 import React, { useEffect, useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
@@ -6,7 +6,6 @@ import MyCalendar from "../../components/User/diet/MyCalendar"
 // perchance move to difftent file so it does not always load
 import "react-datepicker/dist/react-datepicker.css"
 import { parseCookies } from "nookies"
-import qs from "qs"
 
 import { datesFromUser } from "../../components/User/diet/functions"
 import { getUser, getDishes } from "../../components/User/diet/api/serverSide"
@@ -33,8 +32,8 @@ import { dishPreferencesState } from "../../components/User/diet/api/atoms/dishP
 import { dishesState } from "../../components/User/diet/api/atoms/dishes"
 import DietLoading from "../../components/User/diet/DietLoading"
 import { userIdsState } from "../../components/User/diet/api/atoms/userIds"
-import MyPdf from "../../components/User/diet/Pdf/MyPdf"
-import Test from "../../components/User/diet/Pdf/Test"
+import PdfButton from "../../components/User/diet/Pdf/PdfButton"
+import Test from "../../components/User/diet/Pdf/PdfButton"
 
 interface DietProps {
   user: UserFullData
@@ -176,8 +175,8 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
   }
 
   return (
-    <Stack w="1000px" justify="center" align="center" spacing={16}>
-      <Heading mt={8}>Wybrana dieta: {dietName}</Heading>
+    <Stack maxW="1000px" justify="center" align="center" spacing={16} pb={20}>
+      <Heading mt={8} textAlign={["center","center","start"]}> Wybrana dieta: {dietName}</Heading>
       <MyCalendar
         singleDate={singleDate}
         setSingleDate={setSingleDate}
@@ -192,7 +191,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
       columnData[0].fullDietDay.kcalCount !== 0 ? (
         <>
           <DishColumn dishColumnData={columnData} />
-          <Test dishColumnData={columnData} />
+          <PdfButton dishColumnData={columnData} />
         </>
       ) : (
         <DietLoading />

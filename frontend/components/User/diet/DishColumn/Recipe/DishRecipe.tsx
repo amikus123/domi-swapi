@@ -6,29 +6,29 @@ import { useRecoilState } from "recoil"
 import { FullDish } from "../../api/types"
 
 interface DishRecpipeProps {
-
-  dishData:FullDish
+  dishData: FullDish
 }
-const DishRecipe = ({
-
-
-  dishData
-}: DishRecpipeProps) => {
+const DishRecipe = ({ dishData }: DishRecpipeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
-  const {dish,replacements} = dishData
-  const {recipe} = dish 
+  const { dish, replacements } = dishData
+  const { recipe } = dish
   // TODO handle markdown
   return (
     <Flex direction="column" align="center">
-      <Text>{recipe}</Text>
+      <Text>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque fugit
+        aliquid provident eius inventore totam architecto eveniet deleniti
+        dolore.
+        {/* {recipe} */}
+      </Text>
       {replacements && replacements.length > 0 && (
         <>
           <Button mt={10} w={60} onClick={onOpen}>
             Wymień danie
           </Button>
-          <DishModal 
-          dishData={dishData}
+          <DishModal
+            dishData={dishData}
             isOpen={isOpen}
             onClose={onClose}
             initialRef={initialRef}

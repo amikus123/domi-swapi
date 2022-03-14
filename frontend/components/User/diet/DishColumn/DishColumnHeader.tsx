@@ -29,7 +29,9 @@ const DishColumnHeader = ({ date,kcalCount }: DishColumnHeaderProps) => {
     >
       <Text w={120}>{daysOfWeek[getISODay(date)]}</Text>
       <Text>{formatISO9075(date, { representation: "date" })}</Text>
-      <Text w={40} textAlign="end">
+      <Text w={[ "unset","unset",40]}
+      display={["none","inline-block"]}
+      textAlign="end" >
         {kcalCount} kcal
       </Text>
     </Flex>

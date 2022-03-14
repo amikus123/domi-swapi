@@ -12,8 +12,10 @@ const DishRight = ({ dishData }: DishRightProps) => {
   const { dish } = dishData
   const { ingredients, nutrients, name } = dish
 
+
+  // ! CONSIDER MAKING SPACES UNBREAKABLE
   return (
-    <Tabs isFitted variant="enclosed" w="100%" pl={8}>
+    <Tabs isFitted variant="enclosed" w="100%" pl={[0,0,8]}>
       <TabList mb="1em">
         <Tab>Przepis</Tab>
         <Tab>Składniki</Tab>

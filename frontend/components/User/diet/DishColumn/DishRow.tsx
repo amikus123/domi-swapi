@@ -27,7 +27,7 @@ const handleTimeCategory = (category: string) => {
 }
 
 const DishRow = ({ dishData }: DishRowProps) => {
-  const {dish,originalDishName,replacements } = dishData
+  const { dish, originalDishName, replacements } = dishData
   const {
     dishPage,
     id,
@@ -52,7 +52,7 @@ const DishRow = ({ dishData }: DishRowProps) => {
       </AccordionButton>
 
       <AccordionPanel pb={4}>
-        <Flex px={4} align="flex-start">
+        <Flex px={[0,0,4]} align="flex-start" direction={["column", "column", "row"]}>
           <DishLeft image={image} />
           <DishRight dishData={dishData} />
         </Flex>

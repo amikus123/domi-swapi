@@ -70,7 +70,9 @@ const IndigredientModal = ({
       scrollBehavior="inside"
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent
+      mx={16}
+      >
         <ModalHeader>Zamień składniki</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
