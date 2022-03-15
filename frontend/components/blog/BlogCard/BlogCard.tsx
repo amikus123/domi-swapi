@@ -1,19 +1,16 @@
-import Image from "next/image"
 import {
   Box,
   Center,
   Heading,
   Text,
   Stack,
-  Avatar,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react"
 import BlogTags from "../BlogTags"
 import BlogDescriptionImage from "../content/BlogDescriptionImage"
 import { BlogPost } from "../Blog"
 import { getStrapiMedia } from "../../../lib/media"
-import { StrapiImage } from "../../general/Images"
+import { MyImage, } from "../../general/Images"
 import NextLink from "next/link"
 interface BlogCardProps {
   data: any
@@ -65,7 +62,7 @@ export default function BlogCard({ data }: BlogCardProps) {
             mb={6}
             pos={"relative"}
           >
-            <StrapiImage image={cardData.image} />
+            <MyImage variant="full" image={cardData.image} />
           </Box>
           <Stack spacing={3}>
             <Heading
@@ -77,14 +74,12 @@ export default function BlogCard({ data }: BlogCardProps) {
             </Heading>
             <BlogTags blogCategories={blogCategories} pt={0} />
 
-            <Text color={"gray.500"} maxH="100px" noOfLines={[3,3]}  >
+            <Text color={"gray.500"} maxH="100px" noOfLines={[3, 3]}>
               {cardData.description} {cardData.description}
             </Text>
             <Text color={"gray.600"}>Feb 08, 2021 · 6min read</Text>
 
-            <Box pt={2}>
-
-            </Box>
+            <Box pt={2}></Box>
           </Stack>
 
           {/* <Stack mt={6} direction={"row"} spacing={4} align={"center"}>

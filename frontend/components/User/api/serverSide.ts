@@ -3,7 +3,7 @@ import { getApiUrl } from "../../../lib/api"
 import { handleDiets } from "./parseJSON/parseDiets"
 import { uniqueDishHandler } from "./parseJSON/parseDishes"
 import { handleUser } from "./parseJSON/parseUset"
-import { UserFullData, UserPersonalData } from "./types"
+import { UserFullData } from "./types"
 
 export const fetchMe = async (jwt: string) => {
   const meResponse = await fetch(`${getApiUrl()}/api/users/me`, {

@@ -1,20 +1,15 @@
-import Image from "next/image"
 import {
   Box,
-  Center,
   Heading,
   Text,
   Stack,
   Avatar,
   useColorModeValue,
-  Link,
   Flex,
 } from "@chakra-ui/react"
 import BlogTags from "../BlogTags"
 import {
-  FullHeightImage,
-  FullWidthImage,
-  StrapiImage,
+  MyImage,
 } from "../../general/Images"
 import NextLink from "next/link"
 interface BlogCardProps {
@@ -75,7 +70,7 @@ export default function BlogCardWide({ data }: BlogCardProps) {
         </Flex>
 
         <Box w="33%" h="100%" py={8}>
-          <FullHeightImage image={mainImage.image} margin={0} />
+          <MyImage variant="fullH" image={mainImage.image}  />
         </Box>
       </Flex>
     </NextLink>

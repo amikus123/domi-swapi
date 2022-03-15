@@ -1,20 +1,11 @@
-import Image from "next/image"
 import {
   Box,
-  Center,
   Heading,
-  Text,
-  Stack,
-  Avatar,
   useColorModeValue,
-  Link,
   Flex,
 } from "@chakra-ui/react"
-import BlogTags from "../BlogTags"
 import {
-  FullHeightImage,
-  FullWidthImage,
-  StrapiImage,
+  MyImage,
 } from "../../general/Images"
 import NextLink from "next/link"
 interface TextCardProps {
@@ -64,7 +55,7 @@ export default function TextCard({ data }: TextCardProps) {
           {title}
         </Heading>
         <Box h="100%" w={100}>
-          <FullHeightImage image={mainImage.image} margin={0} />
+          <MyImage image={mainImage.image} variant="fullH" />
         </Box>
       </Flex>
     </NextLink>

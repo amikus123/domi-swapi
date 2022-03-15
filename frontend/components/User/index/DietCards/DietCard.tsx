@@ -1,5 +1,5 @@
 import { Flex, Box, Image, Badge, useColorModeValue } from "@chakra-ui/react"
-import { FullWidthImage, StrapiImage } from "../../../general/Images"
+import {  MyImage } from "../../../general/Images"
 import { ParsedDiet } from "../../api/parseJSON/parseDiets"
 
 const data = {
@@ -30,12 +30,12 @@ export default function DietCard({ diet }: DietCardProps) {
         position="relative"
         roundedTop="lg"
       >
-        <FullWidthImage
+        <MyImage
+          variant="fullW"
           image={dietImage}
           idealWidth={300}
           roundedTop="lg"
-          margin={0}
-          overflow="hidden"
+          // overflow="hidden"
         />
         <Box>
           <Flex justifyContent="space-between" alignContent="center">
