@@ -1,5 +1,5 @@
 import { cloneDeep, omit } from "lodash"
-import { DishPreference } from "../../../api/types"
+import { DishPreference } from "../../../../api/types"
 
 interface Full {
   // * defaul dish

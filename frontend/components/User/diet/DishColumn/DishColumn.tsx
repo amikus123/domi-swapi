@@ -1,6 +1,6 @@
 import { Accordion,  Stack } from "@chakra-ui/react"
 import React from "react"
-import { DishColumnData } from "../api/types"
+import { DishColumnData } from "../../api/types"
 
 import DishColumnHeader from "./DishColumnHeader"
 import DishRow from "./DishRow"

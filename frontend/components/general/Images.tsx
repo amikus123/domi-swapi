@@ -1,10 +1,12 @@
 import { getStrapiMedia } from "../../lib/media"
 import NextImage from "next/image"
+import { Box } from "@chakra-ui/react"
 
 interface FullWidthImageProps {
   image: any
   idealWidth?: number
   margin?: any
+  roundedTop?: string
 }
 // image is item data from alyouts
 
@@ -17,8 +19,8 @@ export const getImageWithBestWidth = (
   let smallestSize = formats[sizeNames[0]]
   sizeNames.forEach((sizeName) => {
     const item = formats[sizeName]
-    const offset = Math.abs(item.width - idealWidth)
-    if (offset < smallestDifference) {
+    const offset = item.width - idealWidth
+    if (offset > 0 && offset < smallestDifference) {
       smallestDifference = offset
       smallestSize = item
     }
@@ -57,11 +59,12 @@ export const FullWidthImage = ({
   image,
   idealWidth = 1000,
   margin = "1.5rem 0",
+  ...rest
 }: FullWidthImageProps) => {
   const { alternativeText, formats } = image.data.attributes
 
   return (
-    <div className="unset-img" style={{ margin: margin }}>
+    <Box className="unset-img" style={{ margin: margin }} {...rest}>
       <NextImage
         src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
         objectFit="contain"
@@ -70,7 +73,7 @@ export const FullWidthImage = ({
         className="custom-img"
         aria-label={alternativeText || ""}
       />
-    </div>
+    </Box>
   )
 }
 

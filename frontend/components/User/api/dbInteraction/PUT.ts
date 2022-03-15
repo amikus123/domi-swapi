@@ -1,5 +1,5 @@
 import axios from "axios"
-import { getApiUrl } from "../../../../../lib/api"
+import { getApiUrl } from "../../../../lib/api"
 
 
 export interface PreferedIngredientRequest{

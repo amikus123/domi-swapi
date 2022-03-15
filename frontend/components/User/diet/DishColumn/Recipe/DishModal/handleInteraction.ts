@@ -1,5 +1,5 @@
 import { SetterOrUpdater } from "recoil"
-import { IngredientPreference, Dish, DishPreference } from "../../../api/types"
+import { IngredientPreference, Dish, DishPreference } from "../../../../api/types"
 import { updateDishes } from "./APIRequest"
 import { changeDishPreference } from "./functions"
 

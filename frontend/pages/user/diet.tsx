@@ -8,16 +8,16 @@ import "react-datepicker/dist/react-datepicker.css"
 import { parseCookies } from "nookies"
 
 import { datesFromUser } from "../../components/User/diet/functions"
-import { getUser, getDishes } from "../../components/User/diet/api/serverSide"
+import { getUser, getDishes } from "../../components/User/api/serverSide"
 import {
   changeDishesInDays,
   changeDishesIngredients,
-} from "../../components/User/diet/api/dietState"
+} from "../../components/User/api/dietState"
 import {
   getDietArr,
   filterRange,
   filterSingleDay,
-} from "../../components/User/diet/api/timeHelpers"
+} from "../../components/User/api/timeHelpers"
 import {
   Dish,
   DateRange,
@@ -25,13 +25,13 @@ import {
   DishColumnData,
   FullDietDay,
   UserFullData,
-} from "../../components/User/diet/api/types"
+} from "../../components/User/api/types"
 import { useRecoilState } from "recoil"
-import { ingredientPreferencesState } from "../../components/User/diet/api/atoms/IngredientPreferences"
-import { dishPreferencesState } from "../../components/User/diet/api/atoms/dishPreferences"
-import { dishesState } from "../../components/User/diet/api/atoms/dishes"
+import { ingredientPreferencesState } from "../../components/User/api/atoms/IngredientPreferences"
+import { dishPreferencesState } from "../../components/User/api/atoms/dishPreferences"
+import { dishesState } from "../../components/User/api/atoms/dishes"
 import DietLoading from "../../components/User/diet/DietLoading"
-import { userIdsState } from "../../components/User/diet/api/atoms/userIds"
+import { userIdsState } from "../../components/User/api/atoms/userIds"
 import PdfButton from "../../components/User/diet/Pdf/PdfButton"
 import Test from "../../components/User/diet/Pdf/PdfButton"
 

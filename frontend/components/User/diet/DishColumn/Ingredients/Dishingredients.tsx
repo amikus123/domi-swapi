@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import { Ingredient } from "../../api/types"
+import { Ingredient } from "../../../api/types"
 
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
 

@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash"
-import { Dish, IngredientPreference } from "../../../api/types"
+import { Dish, IngredientPreference } from "../../../../api/types"
 
 interface FullProps {
   //* name of default ingredient

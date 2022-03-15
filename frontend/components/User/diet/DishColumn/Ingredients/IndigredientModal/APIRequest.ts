@@ -2,12 +2,12 @@ import {
   IngredientPreferencesData,
   PreferedIngredientRequest,
   updateIngredientPreferencesRequest,
-} from "../../../api/dbInteraction/PUT"
+} from "../../../../api/dbInteraction/PUT"
 import {
   Dish,
   IngredientPreference,
   PreferedIngredient,
-} from "../../../api/types"
+} from "../../../../api/types"
 
 export const resetIngredients = async (
   userDataId: number

@@ -1,11 +1,18 @@
-import React from 'react'
-import DietCard from './DietCard'
+import { Flex } from "@chakra-ui/react"
+import React from "react"
+import { ParsedDiet } from "../../api/parseJSON/parseDiets"
+import DietCard from "./DietCard"
 
-const DietCards = () => {
+interface DietCardsProps {
+  diets: ParsedDiet[]
+}
+const DietCards = ({ diets }: DietCardsProps) => {
   return (
-    <div>
-        <DietCard/>
-    </div>
+    <Flex justify="start">
+      {diets.map((item, index) => {
+        return <DietCard diet={item} key={index} />
+      })}
+    </Flex>
   )
 }
 

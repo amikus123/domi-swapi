@@ -6,7 +6,7 @@ import {
   PDFDownloadLink,
   Font,
 } from "@react-pdf/renderer"
-import { DishColumnData } from "../api/types"
+import { DishColumnData } from "../../api/types"
 import DayPdf from "./DayPdf"
 import { Button } from "@chakra-ui/react"
 Font.register({

@@ -1,8 +1,8 @@
 import {
   updateDishPreferencesRequest,
   PreferenceDishIds,
-} from "../../../api/dbInteraction/PUT"
-import { DishPreference, Dish } from "../../../api/types"
+} from "../../../../api/dbInteraction/PUT"
+import { DishPreference, Dish } from "../../../../api/types"
 
 export const resetDishPreferences = async (
   userDataId: number

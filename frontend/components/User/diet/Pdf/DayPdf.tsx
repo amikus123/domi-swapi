@@ -1,6 +1,6 @@
 import { formatISO9075, getISODay } from "date-fns"
 import React from "react"
-import { DishColumnData } from "../api/types"
+import { DishColumnData } from "../../api/types"
 import { Text, View, StyleSheet } from "@react-pdf/renderer"
 import { capitalize } from "lodash"
 interface GenerateHtmlProps {

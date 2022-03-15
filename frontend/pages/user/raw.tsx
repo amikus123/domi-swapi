@@ -5,10 +5,10 @@ import "react-datepicker/dist/react-datepicker.css"
 import qs from "qs"
 import { fetchAPI, getApiUrl } from "../../lib/api"
 import { parseCookies } from "nookies"
-import { getUser, getDishes } from "../../components/User/diet/api/serverSide"
+import { getUser, getDishes } from "../../components/User/api/serverSide"
 import { useRecoilState } from "recoil"
-import { dishPreferencesState } from "../../components/User/diet/api/atoms/dishPreferences"
-import { ingredientPreferencesState } from "../../components/User/diet/api/atoms/IngredientPreferences"
+import { dishPreferencesState } from "../../components/User/api/atoms/dishPreferences"
+import { ingredientPreferencesState } from "../../components/User/api/atoms/IngredientPreferences"
 import {
   DateRange,
   DateRangeNullable,
@@ -18,11 +18,11 @@ import {
   IngredientPreference,
   NameAmount,
   UserFullData,
-} from "../../components/User/diet/api/types"
-import { changeDishesInDays, changeDishesIngredients } from "../../components/User/diet/api/dietState"
+} from "../../components/User/api/types"
+import { changeDishesInDays, changeDishesIngredients } from "../../components/User/api/dietState"
 import { startOfToday } from "date-fns"
 import { datesFromUser } from "../../components/User/diet/functions"
-import { getDietArr } from "../../components/User/diet/api/timeHelpers"
+import { getDietArr } from "../../components/User/api/timeHelpers"
 
 interface DietProps {
   raw: any

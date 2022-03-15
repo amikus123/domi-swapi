@@ -1,5 +1,6 @@
 import qs from "qs"
-import { getApiUrl } from "../../../../lib/api"
+import { getApiUrl } from "../../../lib/api"
+import { handleDiets } from "./parseJSON/parseDiets"
 import { uniqueDishHandler } from "./parseJSON/parseDishes"
 import { handleUser } from "./parseJSON/parseUset"
 import { UserFullData, UserPersonalData } from "./types"
@@ -95,4 +96,23 @@ export const getDishes = async (user: UserFullData, jwt: string) => {
   })
   const dishData = await dishRequest.json()
   return uniqueDishHandler(dishData)
+}
+
+export const getDiets = async () => {
+  const dishQuery = qs.stringify(
+    {
+      populate: [
+        "dietImage"
+      ],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+  const dietRequest = await fetch(`${getApiUrl()}/api/diets?${dishQuery}`, {})
+  const dietDataRaw = await dietRequest.json()
+  const dietData = handleDiets(dietDataRaw)
+
+  return dietData
 }

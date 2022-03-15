@@ -1,5 +1,5 @@
-import { stringToDate } from "./api/timeHelpers"
-import {  UserFullData, DateRange } from "./api/types"
+import { stringToDate } from "../api/timeHelpers"
+import {  UserFullData, DateRange } from "../api/types"
 
 
 export const datesFromUser = (user: UserFullData): DateRange => {

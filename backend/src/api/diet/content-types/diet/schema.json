@@ -28,6 +28,15 @@
       "type": "component",
       "repeatable": true,
       "component": "diet.dish-possible-replacements"
+    },
+    "dietImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

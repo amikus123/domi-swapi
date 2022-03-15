@@ -1,6 +1,6 @@
 import { Flex, Box, Text, Avatar, CSSObject, Spinner } from "@chakra-ui/react"
 import React from "react"
-import { Dish } from "../../../api/types"
+import { Dish } from "../../../../api/types"
 import NextImage from "next/image"
 import { getStrapiMedia } from "../../../../../../lib/media"
 

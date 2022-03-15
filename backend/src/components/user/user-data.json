@@ -2,13 +2,39 @@
   "collectionName": "components_user_user_data",
   "info": {
     "displayName": "userData",
-    "icon": "arrow-circle-right"
+    "icon": "arrow-circle-right",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "age": {
       "type": "integer",
       "default": 18
+    },
+    "weight": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "height": {
+      "unique": false,
+      "required": true,
+      "min": 0,
+      "type": "integer"
+    },
+    "pal": {
+      "type": "string",
+      "default": "none",
+      "required": true
+    },
+    "gender": {
+      "type": "string",
+      "required": true,
+      "default": "male"
+    },
+    "hasEditedData": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
