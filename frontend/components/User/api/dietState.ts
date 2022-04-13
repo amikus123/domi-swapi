@@ -80,7 +80,7 @@ export const changeDishesInDays = (
   // * memoization
   const readySolutions: Record<string, FullDish> = {}
 
-  const handleReplacement = (dishName: string):  FullDish => {
+  const handleReplacement = (dishName: string): FullDish => {
     if (dishName in readySolutions) {
       return readySolutions[dishName]
     } else {
@@ -174,7 +174,9 @@ export const getKcal = (dishes: FullDish[]) => {
           break
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error(e,"getKcal")
+    }
   })
   return kcalCount
 }

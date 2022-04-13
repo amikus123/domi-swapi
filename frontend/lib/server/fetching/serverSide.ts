@@ -1,10 +1,14 @@
 import qs from "qs"
-import { getApiUrl } from "../../../lib/api"
-import { handleDiets } from "./parseJSON/parseDiets"
-import { uniqueDishHandler } from "./parseJSON/parseDishes"
-import { handleUser } from "./parseJSON/parseUset"
-import { UserFullData } from "./types"
+import { getApiUrl } from "../../api"
 
+import { uniqueDishHandler } from "../jsonParsers/parseDishes"
+import { UserFullData } from "../../../components/User/api/types"
+import { ParsedDiet, handleDiets } from "../jsonParsers/parseDiets"
+import { handleUser } from "../jsonParsers/parseUset"
+import { handleBlogCategories } from "../jsonParsers/parseDietCategories"
+import { BlogCategory } from "../exampleData/blogCategories"
+
+// * fetches user Id from cookie
 export const fetchMe = async (jwt: string) => {
   const meResponse = await fetch(`${getApiUrl()}/api/users/me`, {
     headers: {
@@ -14,6 +18,8 @@ export const fetchMe = async (jwt: string) => {
   const me = await meResponse.json()
   return me
 }
+
+// * fetches user Data, including date
 
 export const getUser = async (jwt: string): Promise<UserFullData> => {
   const me = await fetchMe(jwt)
@@ -61,6 +67,7 @@ export const getUser = async (jwt: string): Promise<UserFullData> => {
   return handleUser(raw)
 }
 
+// * gets user dishes from user object
 export const getDishes = async (user: UserFullData, jwt: string) => {
   const getIds = (user: UserFullData): number[] => {
     return Object.values(user.uniqueDishes).map((i) => {
@@ -98,12 +105,11 @@ export const getDishes = async (user: UserFullData, jwt: string) => {
   return uniqueDishHandler(dishData)
 }
 
-export const getDiets = async () => {
+// * Fetches all diets
+export const getDiets = async (): Promise<Record<string, ParsedDiet>> => {
   const dishQuery = qs.stringify(
     {
-      populate: [
-        "dietImage"
-      ],
+      populate: ["dietImage"],
     },
     {
       encodeValuesOnly: true,
@@ -115,4 +121,23 @@ export const getDiets = async () => {
   const dietData = handleDiets(dietDataRaw)
 
   return dietData
+}
+
+export const getBlogCategories = async (): Promise< Record<string, BlogCategory>> => {
+  const dishQuery = qs.stringify(
+    {
+      populate: ["image"],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+  const blogCategoriesRequest = await fetch(
+    `${getApiUrl()}/api/blog-categories?${dishQuery}`,
+    {}
+  )
+  const blogCategoriesRaw = await blogCategoriesRequest.json()
+  const blogCategories = handleBlogCategories(blogCategoriesRaw)
+  return  blogCategories 
 }

@@ -7,9 +7,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react"
 import BlogTags from "../BlogTags"
-import BlogDescriptionImage from "../content/BlogDescriptionImage"
-import { BlogPost } from "../Blog"
-import { getStrapiMedia } from "../../../lib/media"
 import { MyImage, } from "../../general/Images"
 import NextLink from "next/link"
 interface BlogCardProps {
@@ -27,18 +24,7 @@ export default function BlogCard({ data }: BlogCardProps) {
     slug,
   } = data
 
-  const x = [
-    "createdAt",
-    "updatedAt",
-    "title",
-    "description",
-    "date",
-    "slug",
-    "mainImage",
-    "cardData",
-    "blogCategories",
-    "content",
-  ]
+
   const href = `/blogs/${slug}`
   return (
     <Center py={6}>

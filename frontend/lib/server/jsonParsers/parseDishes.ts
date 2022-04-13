@@ -1,10 +1,6 @@
-import { Dish, Ingredient } from "../types"
-import {
-  DishJson,
-  DishPageJson,
-  DishesJson,
-  IngredientJson,
-} from "./dishJsonTypes"
+import { Dish, Ingredient } from "../../../components/User/api/types"
+import { DishPageJson, IngredientJson, DishJson, DishesJson } from "../JsonTypes/dishJsonTypes"
+
 
 const createUrl = (slug: string) => {
   //* will create link to relevant dish post

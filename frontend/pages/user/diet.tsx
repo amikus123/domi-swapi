@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import { parseCookies } from "nookies"
 
 import { datesFromUser } from "../../components/User/diet/functions"
-import { getUser, getDishes } from "../../components/User/api/serverSide"
+import { getUser, getDishes } from "../../lib/server/fetching/serverSide"
 import {
   changeDishesInDays,
   changeDishesIngredients,

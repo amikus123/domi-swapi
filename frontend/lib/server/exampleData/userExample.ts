@@ -1,4 +1,4 @@
-import { UserJson } from "./userJsonTypes.ts";
+import { UserJson } from "../JsonTypes/userJsonTypes.ts";
 
 export const exampleJson: UserJson = {
     userId: 8,

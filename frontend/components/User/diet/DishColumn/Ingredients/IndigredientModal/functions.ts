@@ -24,7 +24,6 @@ type CheckInsideProps = Omit<
   FullProps,
   "originalName" | "setIngredientPreferences" | "newName"
 >
-// ! id of preference is not important
 
 export const checkIfOriginal = ({
   newName,

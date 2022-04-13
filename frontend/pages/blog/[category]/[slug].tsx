@@ -1,9 +1,9 @@
-import React from "react"
-import Blog from "../../components/blog/Blog"
-import { fetchAPI } from "../../lib/api"
 import { Flex } from "@chakra-ui/react"
+import React from "react"
+import Blog from "../../../components/blog/Blog"
+import { fetchAPI } from "../../../lib/api"
 
-const blog = ({ blogData }) => {
+const article = ({ blogData }) => {
   return (
     <Flex width="100%" mx="20" my={4}>
       <Blog data={blogData.attributes} />
@@ -11,20 +11,37 @@ const blog = ({ blogData }) => {
   )
 }
 
-export default blog
-
-// sets whcih pages should be statucly rendered
 export async function getStaticPaths() {
   const articlesRes = await fetchAPI("/blogs", {
-    urlParamsObject: { fields: ["slug"] },
+    urlParamsObject: {
+      fields: ["slug"],
+      populate: {
+        blogCategories: {
+          populate: "",
+        },
+      },
+      encodeValuesOnly: true,
+    },
   })
 
+  const fin = []
+  // * to each blog post we generate paths based on categories
+  // * for example if post has two categories, it generates 2 paths.
+  articlesRes.data.forEach((article) => {
+    const { slug, blogCategories } = article.attributes
+    const listOfCategories = blogCategories.data
+    listOfCategories.forEach((list) => {
+      const { slug: category } = list.attributes
+      fin.push({
+        params: {
+          slug,
+          category,
+        },
+      })
+    })
+  })
   return {
-    paths: articlesRes.data.map((article) => ({
-      params: {
-        slug: article.attributes.slug,
-      },
-    })),
+    paths: fin,
     fallback: false,
   }
 }
@@ -36,7 +53,6 @@ export async function getStaticProps({ params }) {
       filters: {
         slug: params.slug,
       },
-
       populate: {
         populate: "*",
         mainImage: {
@@ -63,3 +79,5 @@ export async function getStaticProps({ params }) {
     revalidate: 1,
   }
 }
+
+export default article

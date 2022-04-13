@@ -1,7 +1,8 @@
-export const handleDiets = (initial: DietJsonInitial): ParsedDiet[] => {
+export const handleDiets = (initial: DietJsonInitial): Record<string,ParsedDiet> => {
   const { data } = initial
 
-  const res: ParsedDiet[] = data.map((item, index) => {
+  const  res : Record<string,ParsedDiet> ={}
+  data.map((item, index) => {
     const { attributes, id } = item
     const { dietImage, name } = attributes
     const diet: ParsedDiet = {
@@ -9,7 +10,7 @@ export const handleDiets = (initial: DietJsonInitial): ParsedDiet[] => {
       id,
       name,
     }
-    return diet
+    res[name] = diet
   })
   return res
 }

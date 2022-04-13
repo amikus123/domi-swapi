@@ -1,5 +1,5 @@
 import {
-  UserPersonalData,
+  UserFullData,
   DishUniqueData,
   DietDay,
   IngredientPreference,
@@ -8,21 +8,20 @@ import {
   DishReplacement,
   Diet,
   UserDiet,
-  UserFullData,
-} from "../types"
+  UserPersonalData,
+} from "../../../components/User/api/types"
 import {
-  DayJson,
-  DietJsonWrap,
-  DishPreferencesJson,
-  DishReplacementJson,
-  IngredientPreferenceJson,
-  StubDishesWrapJson,
-  TimeRangeJson,
-  UserDataJson,
-  UserDietJson,
-  UserJson,
   UserRequestDataJson,
-} from "./userJsonTypes.ts"
+  StubDishesWrapJson,
+  DayJson,
+  IngredientPreferenceJson,
+  DishPreferencesJson,
+  TimeRangeJson,
+  DishReplacementJson,
+  DietJsonWrap,
+  UserDietJson,
+  UserDataJson,
+} from "../JsonTypes/userJsonTypes.ts"
 
 export const handleUser = (data: UserRequestDataJson): UserFullData => {
   const uniqueDishes: Record<string, DishUniqueData> = {}
@@ -155,13 +154,8 @@ export const handleUser = (data: UserRequestDataJson): UserFullData => {
   }
 
   const { attributes, id } = data
-  const {
-    dishPreferences,
-    ingredientPreferences,
-    userData,
-    userDiet,
-    userId,
-  } = attributes
+  const { dishPreferences, ingredientPreferences, userData, userDiet, userId } =
+    attributes
   const res: UserFullData = {
     userId: userId,
     userPersonalData: handlePersonalData(userData),
@@ -169,7 +163,7 @@ export const handleUser = (data: UserRequestDataJson): UserFullData => {
     dishPreferences: handleDishPreferences(dishPreferences),
     ingredientPreferences: handleIngredientPreferences(ingredientPreferences),
     uniqueDishes: {},
-    userDataId:id,
+    userDataId: id,
   }
 
   res.uniqueDishes = handleUniqueDishes()

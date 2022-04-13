@@ -1,4 +1,4 @@
-import { DishesJson } from "./dishJsonTypes"
+import { DishesJson } from "../JsonTypes/dishJsonTypes";
 
 export const dishExample: DishesJson = {
   data: [
