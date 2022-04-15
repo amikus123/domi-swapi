@@ -38,27 +38,3 @@ const BlogTags = ({ blogCategories ,pt=4}: BlogTagsProps) => {
 
 export default BlogTags
 
-const s = {
-  data: [
-    {
-      id: 2,
-      attributes: {
-        name: "Ćwiczenia",
-        slug: "cwiczenia",
-        description: "opis kategorii",
-        createdAt: "2022-02-03T15:57:13.957Z",
-        updatedAt: "2022-02-03T15:57:13.957Z",
-      },
-    },
-    {
-      id: 3,
-      attributes: {
-        name: "Zdrowie psychiczne",
-        slug: "zdrowie-psychiczne",
-        description: "adsadsad",
-        createdAt: "2022-02-03T19:15:11.422Z",
-        updatedAt: "2022-02-03T19:15:11.422Z",
-      },
-    },
-  ],
-}

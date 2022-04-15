@@ -12,48 +12,36 @@ import {
   MyImage,
 } from "../../general/Images"
 import NextLink from "next/link"
+import { BlogPost } from "../Blog"
 interface BlogCardProps {
-  data: any
+  data: BlogPost
 }
+
+
+const createLink = (blogCategories:any[],slug:string) =>{
+  
+}
+
 export default function BlogCardWide({ data }: BlogCardProps) {
   const {
     content,
     date,
     description,
+    readingTime,
     mainImage,
     title,
     blogCategories,
-    cardData,
-    slug,
+    slug
   } = data
 
-  const x = [
-    "createdAt",
-    "updatedAt",
-    "title",
-    "description",
-    "date",
-    "slug",
-    "mainImage",
-    "cardData",
-    "blogCategories",
-    "content",
-  ]
-  const href = `/blogs/${slug}`
+
+
+
+
   return (
     <NextLink href="#">
       <Flex h={"260px"} cursor="pointer" justify="space-between">
-        <Flex w="60%" direction="column" justify="space-between">
-          <Stack direction={"row"} spacing={4} align={"center"}>
-            <Avatar
-              src={"https://avatars0.githubusercontent.com/u/1164541?v=4"}
-              // alt={"Author"}
-            />
-            <Stack direction={"column"} spacing={0} fontSize={"sm"}>
-              <Text fontWeight={600}>Achim Rolle</Text>
-              <Text color={"gray.500"}>Feb 08, 2021 · 6min read</Text>
-            </Stack>
-          </Stack>
+        <Stack w="60%" direction="column" spacing={2}>
           <Heading
             color={useColorModeValue("gray.700", "white")}
             fontSize={"2xl"}
@@ -61,16 +49,18 @@ export default function BlogCardWide({ data }: BlogCardProps) {
           >
             {title}
           </Heading>
+          <Text color={"gray.500"}>Feb 08, 2021· {readingTime} min read</Text>
 
           <Text noOfLines={[3, 3]}>
-            {cardData.description} {cardData.description}
+            {description}
           </Text>
 
-          <BlogTags blogCategories={blogCategories} pt={0} />
-        </Flex>
+          {/* <BlogTags blogCategories={blogCategories} pt={0} /> */}
+        </Stack>
 
         <Box w="33%" h="100%" py={8}>
-          <MyImage variant="fullH" image={mainImage.image}  />
+
+          {/* <MyImage variant="fullH" image={mainImage.image}  /> */}
         </Box>
       </Flex>
     </NextLink>

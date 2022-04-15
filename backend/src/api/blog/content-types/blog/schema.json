@@ -53,6 +53,11 @@
       "type": "component",
       "repeatable": false,
       "component": "blog.description-image"
+    },
+    "readingTime": {
+      "type": "integer",
+      "default": 6,
+      "min": 0
     }
   }
 }

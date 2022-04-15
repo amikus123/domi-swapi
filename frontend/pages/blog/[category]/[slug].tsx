@@ -3,10 +3,11 @@ import React from "react"
 import Blog from "../../../components/blog/Blog"
 import { fetchAPI } from "../../../lib/api"
 
-const article = ({ blogData }) => {
+const article = ({ blogData,category }) => {
   return (
     <Flex width="100%" mx="20" my={4}>
-      <Blog data={blogData.attributes} />
+      {/* <p>{JSON.stringify(Object.keys(blogData.attributes))}</p> */}
+      <Blog data={blogData.attributes} category={category} />
     </Flex>
   )
 }
@@ -60,6 +61,7 @@ export async function getStaticProps({ params }) {
         },
         cardData: {
           populate: "*",
+          image:"*"
         },
         blogCategories: {
           populate: "",
@@ -75,7 +77,7 @@ export async function getStaticProps({ params }) {
   })
 
   return {
-    props: { blogData: blogData.data[0] },
+    props: { blogData: blogData.data[0],category:params.category },
     revalidate: 1,
   }
 }
