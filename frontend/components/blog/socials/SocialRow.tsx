@@ -25,11 +25,16 @@ const CustomIcon = ({ as, onClick }: CustomIconProps) => {
   return <Icon as={as} onClick={onClick} w={size} h={size} cursor="pointer" />
 }
 
-const SocialRow = () => {
-  const toast = useToast()
 
+interface SocialRowProps{
+  category:string
+  slug:string
+}
+const SocialRow = ({category,slug}:SocialRowProps) => {
+  const toast = useToast()
+  // ! DODAJ DOMENE
   const text = "Przeczytałem/am bardzo ciekawy artykuł: "
-  const url = "https://github.com/next-share"
+  const url = `/blog/${category}/${slug}`
 
   const shareNative = async () => {
     const shareData = {

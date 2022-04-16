@@ -3,7 +3,6 @@ import {
   Heading,
   Text,
   Stack,
-  Avatar,
   useColorModeValue,
   Flex,
   LinkOverlay,
@@ -39,8 +38,9 @@ export default function BlogCardWide({
   } = data
 
   return (
-    <LinkBox as={Flex} h={"260px"} cursor="pointer" justify="space-between">
-      <Stack w="60%" direction="column" spacing={4}>
+    // h={"260px"}
+    <LinkBox as={Flex} h={["unset","unset","300px"]} cursor="pointer" justify="space-between">
+      <Stack w={["100%", "100%", "50%"]} direction="column" spacing={4}>
         <Heading
           color={useColorModeValue("gray.700", "white")}
           fontSize={"2xl"}
@@ -55,12 +55,16 @@ export default function BlogCardWide({
         </Text>
 
         <Text noOfLines={[3, 3]}>{description}</Text>
+        <Box display={["flex", "flex", "none"]} justifyContent="center">
+          <MyImage variant="fullW" image={mainImage.image} idealHeight={150} />
+        </Box>
 
         <BlogTags blogCategories={blogCategories} pt={0} />
+        {/* w="100%" h={200} */}
       </Stack>
 
-      <Box w="50%" h="100%">
-        <MyImage variant="fullH" image={mainImage.image} />
+      <Box display={["none", "none", "block"]} w="50%" h="100%">
+        <MyImage variant="fullH" image={mainImage.image}  />
       </Box>
     </LinkBox>
   )

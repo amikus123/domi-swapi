@@ -15,14 +15,22 @@ const contentTypes = {
   "blog.description-image": "blog.description-image",
 }
 // based on  propetrt "__copmonents we returt deifferent element
-{/*  */}
+{
+  /*  */
+}
 const BlogContent = ({ data }: BlogContentProps) => {
   const getElement = (obj: any) => {
     const property = obj["__component"]
     if (property === contentTypes["blog.description-image"]) {
-      return <BlogDescriptionImage image={obj.image} text={obj.description} />
+      return (
+        <BlogDescriptionImage
+          image={obj.image}
+          text={obj.description}
+          height={400}
+        />
+      )
     } else if (property === contentTypes["blog.image"]) {
-      return <BlogDescriptionImage image={obj.image} text={""}  />
+      return <BlogDescriptionImage image={obj.image} text={""} height={400} />
     } else if (property === contentTypes["blog.text"]) {
       return <BlogText text={obj.text} />
     } else {
@@ -32,11 +40,7 @@ const BlogContent = ({ data }: BlogContentProps) => {
   return (
     <Stack>
       {data.map((item, index) => {
-        return (
-          <React.Fragment key={index}>
-            {getElement(item)}
-          </React.Fragment>
-        )
+        return <React.Fragment key={index}>{getElement(item)}</React.Fragment>
       })}
     </Stack>
   )

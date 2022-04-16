@@ -9,8 +9,8 @@ import BMParagraph from "../../Markdown/Blog/BMParagraph"
 import BMQuote from "../../Markdown/Blog/BMQuote"
 interface BlogDescriptionImageProps {
   image: any
-  text: any
-  margin?: any
+  text: string
+  height:number
 }
 
 const ImageDesctiption = ({ text }) => {
@@ -35,18 +35,19 @@ const ImageDesctiption = ({ text }) => {
   )
 }
 
+
+
 const BlogDescriptionImage = ({
   image,
   text,
-  margin,
+  height
 }: BlogDescriptionImageProps) => {
   return (
-    <Stack w="100%" justify="center" align="center" py="1.5rem" >
+    <Stack  justify="center" align="center" py="1.5rem"  >
       <MyImage
         variant="fullW"
         image={image}
-        margin={margin}
-        idealHeight={1200}
+        idealHeight={height}
       />
       <ImageDesctiption text={text} />
     </Stack>

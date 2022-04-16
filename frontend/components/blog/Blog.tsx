@@ -6,10 +6,9 @@ import BlogContent from "./content/BlogContent"
 import BlogDescriptionImage from "./content/BlogDescriptionImage"
 import BlogTags from "./BlogTags"
 import SocialRow from "./socials/SocialRow"
-import CardStack from "./BlogCard/CardStack"
-import BlogBreadcrumbs from "./BlogBreadcrumbs"
 import { BlogPost } from "../../lib/server/jsonParsers/parseBlog"
 import CategoryBreadcrumbs from "./Categories/CategoryBreadcrumbs"
+import RelatedBlogPosts from "./RelatedBlogPosts/RelatedBlogPosts"
 
 interface BlogProps {
   data: BlogPost
@@ -40,8 +39,9 @@ const Blog = ({ data, category }: BlogProps) => {
         textAlign="left"
         spacing={0}
         px={[4, 12, 20]}
+        maxW="1000px"
       >
-        <Flex w="100%" alignContent="left" pb={4}>
+        <Flex w="100%" alignContent="left" pb={4} maxW="100%">
           <CategoryBreadcrumbs
             links={[
               { href: "/blog/", name: "Kategorie" },
@@ -58,23 +58,18 @@ const Blog = ({ data, category }: BlogProps) => {
         </Text>
         <BlogTags blogCategories={blogCategories} />
         <BlogDescriptionImage
-          margin={0}
           image={mainImage.image}
           text={mainImage.description}
-          
+          height={800}
+      
         />
         <BlogContent data={content} />
         <Divider py={4} />
         <Flex w="100%" justify="flex-end" pt={4}>
-          <SocialRow />
-        </Flex>
-        <Flex py={4} pb={8}>
-          <Button colorScheme="teal" size="lg">
-            Więcej artykułów
-          </Button>
+          <SocialRow category={category} slug={slug} />
         </Flex>
 
-        {/* <CardStack cards={[data, data, data, data]} category={category} /> */}
+        <RelatedBlogPosts />
       </Stack>
     </>
   )

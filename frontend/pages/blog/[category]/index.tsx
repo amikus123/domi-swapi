@@ -14,7 +14,7 @@ interface BlogCategoryPostsProps {
 
 const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
   return (
-    <Stack width="100%" mx="20" my={4} spacing={8}>
+    <Stack width="100%" mx="20" maxW={1000} my={4} spacing={8}>~
       <CategoryBreadcrumbs
         links={[
           { href: "/blog/", name: "Kategorie" },

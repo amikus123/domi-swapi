@@ -1,6 +1,7 @@
 import { getStrapiMedia } from "../../lib/media"
 import NextImage from "next/image"
-import { Box } from "@chakra-ui/react"
+import { Box, chakra, Image } from "@chakra-ui/react"
+import { useEffect } from "react"
 
 export const getImageWithBestWidth = (
   formats: any,
@@ -33,6 +34,11 @@ interface ImageProps {
   [key: string]: any
 }
 
+const BlogImg = chakra(Image, {
+  shouldForwardProp: (prop) =>
+    ["height", "width", "quality", "src", "alt"].includes(prop),
+})
+
 export const MyImage = ({
   image,
   idealWidth = 1000,
@@ -40,8 +46,13 @@ export const MyImage = ({
   variant,
   ...rest
 }: ImageProps) => {
-  let { alternativeText, formats } = image.data.attributes
+  let { alternativeText, formats, height, width } = image.data.attributes
   alternativeText = alternativeText || ""
+
+  const ratioWH = width / height
+  useEffect(() => {
+    console.log(image)
+  })
   return (
     <>
       {variant === "full" ? (
@@ -69,16 +80,36 @@ export const MyImage = ({
           />
         </Box>
       ) : (
-        <Box className="unset-img" {...rest}>
-          <NextImage
-            src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
+
+        <BlogImg   
+        
             objectFit="contain"
+            src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
             alt={alternativeText}
             layout="fill"
-            className="custom-img"
+            className=""
             aria-label={alternativeText}
-          />
-        </Box>
+        
+        
+        />
+        // <Box
+        //   className=""
+        //   {...rest}
+        //   maxH={"40vh"}
+        //   height={idealHeight}
+        //   width={idealHeight * ratioWH}
+        //   position="relative"
+        //   maxW="80vw"
+        // >
+        //   <NextImage
+        //     objectFit="contain"
+        //     src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
+        //     alt={alternativeText}
+        //     layout="fill"
+        //     className=""
+        //     aria-label={alternativeText}
+        //   />
+        // </Box>
       )}
     </>
   )
