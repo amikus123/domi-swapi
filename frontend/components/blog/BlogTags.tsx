@@ -29,7 +29,7 @@ const BlogTags = ({ blogCategories, pt = 4 }: BlogTagsProps) => {
             my={1}
             mr={1}
           >
-            <NextLink href="#">{item.name}</NextLink>
+            <NextLink href={`/blog/${item.slug}`}>{item.name}</NextLink>
           </Tag>
         )
       })}

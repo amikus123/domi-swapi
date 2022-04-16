@@ -5,6 +5,7 @@ import CategoryBreadcrumbs from "../../../components/blog/Categories/CategoryBre
 import BlogCardWide from "../../../components/blog/BlogCard/BlogCardWide"
 import { getBlogFromCategory } from "../../../lib/server/fetching/serverSide"
 import { CategoryBlogPost } from "../../../lib/server/jsonParsers/parseBlogCategoryPosts"
+import { capitalize } from "lodash"
 
 interface BlogCategoryPostsProps {
   relatedBlogs: CategoryBlogPost[]
@@ -13,7 +14,7 @@ interface BlogCategoryPostsProps {
 
 const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
   return (
-    <Stack width="100%" mx="20" my={4}>
+    <Stack width="100%" mx="20" my={4} spacing={8}>
       <CategoryBreadcrumbs
         links={[
           { href: "/blog/", name: "Kategorie" },
@@ -21,14 +22,14 @@ const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
         ]}
       />
 
-      <Heading> {category}</Heading>
+      <Heading textAlign="center"> {capitalize(category)}</Heading>
 
       {relatedBlogs.map((item, index) => {
         return (
           <React.Fragment key={index}>
             <BlogCardWide data={item} category={category} />
 
-            {index === relatedBlogs.length ? null : <Divider />}
+            {index === relatedBlogs.length-1 ? null : <Divider />}
           </React.Fragment>
         )
       })}

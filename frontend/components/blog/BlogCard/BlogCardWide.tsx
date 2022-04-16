@@ -6,6 +6,8 @@ import {
   Avatar,
   useColorModeValue,
   Flex,
+  LinkOverlay,
+  LinkBox,
 } from "@chakra-ui/react"
 import BlogTags from "../BlogTags"
 import { MyImage } from "../../general/Images"
@@ -37,29 +39,29 @@ export default function BlogCardWide({
   } = data
 
   return (
-    <NextLink href={createLink(slug, category)} passHref>
-      <Flex h={"260px"} cursor="pointer" justify="space-between">
-        <Stack w="60%" direction="column" spacing={2}>
-          <Heading
-            color={useColorModeValue("gray.700", "white")}
-            fontSize={"2xl"}
-            fontFamily={"body"}
-          >
-            {title}
-          </Heading>
-          <Text color={"gray.500"}>
-            {date}, {readingTime} min read
-          </Text>
+    <LinkBox as={Flex} h={"260px"} cursor="pointer" justify="space-between">
+      <Stack w="60%" direction="column" spacing={4}>
+        <Heading
+          color={useColorModeValue("gray.700", "white")}
+          fontSize={"2xl"}
+          fontFamily={"body"}
+        >
+          <NextLink href={createLink(slug, category)} passHref>
+            <LinkOverlay>{title}</LinkOverlay>
+          </NextLink>
+        </Heading>
+        <Text color={"gray.500"}>
+          {date} - {readingTime} min
+        </Text>
 
-          <Text noOfLines={[3, 3]}>{description}</Text>
+        <Text noOfLines={[3, 3]}>{description}</Text>
 
-          <BlogTags blogCategories={blogCategories} pt={0} />
-        </Stack>
+        <BlogTags blogCategories={blogCategories} pt={0} />
+      </Stack>
 
-        <Box w="33%" h="100%" py={8}>
-          <MyImage variant="fullH" image={mainImage.image} />
-        </Box>
-      </Flex>
-    </NextLink>
+      <Box w="50%" h="100%">
+        <MyImage variant="fullH" image={mainImage.image} />
+      </Box>
+    </LinkBox>
   )
 }

@@ -1,10 +1,9 @@
-import React from 'react';
-import {
-  Box, Heading, Text, Button,
-} from '@chakra-ui/react';
+import React from "react"
+import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react"
+import NextLink from "next/link"
 
 const errorPage = () => (
-  <Box h="100%" direction="column" align="center" justify="center">
+  <Flex grow={1} h="100%" direction="column" align="center" justify="center">
     <Box textAlign="center" py={10} px={6}>
       <Heading
         display="inline-block"
@@ -28,10 +27,10 @@ const errorPage = () => (
         color="white"
         variant="solid"
       >
-        Strona
+        <NextLink href="/">Strona</NextLink>
       </Button>
     </Box>
-  </Box>
-);
+  </Flex>
+)
 
-export default errorPage;
+export default errorPage

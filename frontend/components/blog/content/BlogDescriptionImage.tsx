@@ -2,7 +2,7 @@ import { Stack, Text } from "@chakra-ui/react"
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
-import {  MyImage } from "../../general/Images"
+import { MyImage } from "../../general/Images"
 import BMHeading from "../../Markdown/Blog/BMHeading"
 import BMLink from "../../Markdown/Blog/BMLink"
 import BMParagraph from "../../Markdown/Blog/BMParagraph"
@@ -41,8 +41,13 @@ const BlogDescriptionImage = ({
   margin,
 }: BlogDescriptionImageProps) => {
   return (
-    <Stack w="100%" justify="center" align="center" py="1.5rem">
-      <MyImage variant="fullW" image={image} margin={margin} />
+    <Stack w="100%" justify="center" align="center" py="1.5rem" >
+      <MyImage
+        variant="fullW"
+        image={image}
+        margin={margin}
+        idealHeight={1200}
+      />
       <ImageDesctiption text={text} />
     </Stack>
   )

@@ -39,8 +39,9 @@ const Blog = ({ data, category }: BlogProps) => {
         w="100%"
         textAlign="left"
         spacing={0}
+        px={[4, 12, 20]}
       >
-        <Flex w="100%" alignContent="left">
+        <Flex w="100%" alignContent="left" pb={4}>
           <CategoryBreadcrumbs
             links={[
               { href: "/blog/", name: "Kategorie" },
@@ -60,6 +61,7 @@ const Blog = ({ data, category }: BlogProps) => {
           margin={0}
           image={mainImage.image}
           text={mainImage.description}
+          
         />
         <BlogContent data={content} />
         <Divider py={4} />
