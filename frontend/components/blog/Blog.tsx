@@ -9,6 +9,7 @@ import SocialRow from "./socials/SocialRow"
 import CardStack from "./BlogCard/CardStack"
 import BlogBreadcrumbs from "./BlogBreadcrumbs"
 import { BlogPost } from "../../lib/server/jsonParsers/parseBlog"
+import CategoryBreadcrumbs from "./Categories/CategoryBreadcrumbs"
 
 interface BlogProps {
   data: BlogPost
@@ -40,7 +41,13 @@ const Blog = ({ data, category }: BlogProps) => {
         spacing={0}
       >
         <Flex w="100%" alignContent="left">
-          <BlogBreadcrumbs category={category} />
+          <CategoryBreadcrumbs
+            links={[
+              { href: "/blog/", name: "Kategorie" },
+              { href: `/blog/${category}`, name: category },
+              { href: `/blog/${category}/${slug}`, name: "Artykuł" },
+            ]}
+          />{" "}
         </Flex>
         <Heading w="100%">{title}</Heading>
         <Text as="span" w="100%" fontSize="2xl" color="gray.600" pt={4}>

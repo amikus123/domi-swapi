@@ -14,7 +14,7 @@ export interface BlogPost {
   blogCategories: Category[]
   readingTime: number
   slug: string
-  cardData:BlogCard
+  cardData: BlogCard
 }
 
 export interface Category {
@@ -22,12 +22,32 @@ export interface Category {
   slug: string
   name: string
 }
-export interface BlogCard{
-    description:string,
-    image:any
+export interface BlogCard {
+  description: string
+  image: any
+}
+
+export const handleCardData = (data: CardDataJson): BlogCard => {
+  const { description, image } = data
+  return {
+    description,
+    image,
+  }
+}
+
+export const handleCategories = (data: BlogCategoriesWrapJson): Category[] => {
+  const res: Category[] = data.data.map((item) => {
+    const { description, name, slug } = item.attributes
+    return {
+      name,
+      description,
+      slug,
+    }
+  })
+  return res
 }
 export const handleBlogPost = (initial: BlogWrapJson): BlogPost => {
-  const { data, meta } = initial
+  const { data } = initial
   const { attributes } = data[0]
   const {
     blogCategories,
@@ -42,23 +62,6 @@ export const handleBlogPost = (initial: BlogWrapJson): BlogPost => {
     title,
   } = attributes
 
-  const handleCardData = (data:CardDataJson) :BlogCard=>{
-    const {description, image} = data 
-    return {
-        description,image
-    }
-  }
-  const handleCategories = (data: BlogCategoriesWrapJson): Category[] => {
-    const res: Category[] = data.data.map((item) => {
-      const { description, name, slug } = item.attributes
-      return {
-        name,
-        description,
-        slug,
-      }
-    })
-    return res
-  }
   const res: BlogPost = {
     date,
     slug,
@@ -67,7 +70,7 @@ export const handleBlogPost = (initial: BlogWrapJson): BlogPost => {
     description,
     readingTime,
     blogCategories: handleCategories(blogCategories),
-    cardData:handleCardData(cardData),
+    cardData: handleCardData(cardData),
     content,
   }
 

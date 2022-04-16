@@ -8,6 +8,7 @@ import { handleUser } from "../jsonParsers/parseUset"
 import { handleBlogCategories } from "../jsonParsers/parseDietCategories"
 import { BlogCategory } from "../exampleData/blogCategories"
 import { BlogPost, handleBlogPost } from "../jsonParsers/parseBlog"
+import { handleBlogCategoryPosts } from "../jsonParsers/parseBlogCategoryPosts"
 
 // * fetches user Id from cookie
 export const fetchMe = async (jwt: string) => {
@@ -177,8 +178,8 @@ export const getBlogFromCategory = async (category: string): Promise<any> => {
   )
 
   const blogCategoriesRaw = await blogCategoriesRequest.json()
-  // const blogCategories = handleBlogCategories(blogCategoriesRaw)
-  return blogCategoriesRaw
+  const blogCategories = handleBlogCategoryPosts(blogCategoriesRaw)
+  return blogCategories
 }
 
 export const getBlogPost = async (slug: string): Promise<BlogPost> => {

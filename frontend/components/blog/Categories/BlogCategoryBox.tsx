@@ -1,7 +1,7 @@
-import { Flex } from "@chakra-ui/react"
+import { Wrap, WrapItem } from "@chakra-ui/react"
 import React from "react"
 import { BlogCategory } from "../../../lib/server/exampleData/blogCategories"
-import ImageCard from "../../general/ImageCards/ImageCard"
+import DietCard from "../DietCard/DietCard"
 
 interface BlogCategoryBoxProps {
   categories: Record<string, BlogCategory>
@@ -9,19 +9,21 @@ interface BlogCategoryBoxProps {
 
 const BlogCategoryBox = ({ categories }: BlogCategoryBoxProps) => {
   return (
-    <Flex>
+    <Wrap spacing="30px" py="20px" justify="center" height="fit-content">
       {Object.values(categories).map((item, index) => {
-        const { image, name, slug } = item
+        const { image, name, slug, description } = item
         return (
-          <ImageCard
-            name={name}
-            image={image}
-            key={index}
-            href={`/blog/${slug}`}
-          />
+          <WrapItem key={index} >
+            <DietCard
+              image={image}
+              name={name}
+              slug={slug}
+              description={description}
+            />
+          </WrapItem>
         )
       })}
-    </Flex>
+    </Wrap>
   )
 }
 

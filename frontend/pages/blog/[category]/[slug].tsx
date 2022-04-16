@@ -12,7 +12,7 @@ interface BlogPostProps{
 }
 const article = ({ blogData, category}:BlogPostProps) => {
   return (
-    <Flex width="100%" mx="20" my={4}>
+    <Flex>
       <Blog data={blogData} category={category} />
     </Flex>
   )

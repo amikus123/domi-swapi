@@ -1,29 +1,44 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Link,
+} from "@chakra-ui/react"
 import { upperFirst } from "lodash"
 import NextLink from "next/link"
-import React from "react"
+import React, { useEffect } from "react"
 
-interface CategoryBreadcrumbsProps{
-    category:string
+interface CategoryBreadcrumbsProps {
+  links: NameAndLink[]
 }
 
+interface NameAndLink {
+  name: string
+  href: string
+}
 
-const CategoryBreadcrumbs = ({category}:CategoryBreadcrumbsProps) => {
+const CategoryBreadcrumbs = ({ links }: CategoryBreadcrumbsProps) => {
+  useEffect(() => {
+    console.log(links)
+  })
   return (
     <Breadcrumb>
       <BreadcrumbItem>
         <BreadcrumbLink as={NextLink} href="/">
-          Strona główna
+          <Link>Strona główna</Link>
         </BreadcrumbLink>
       </BreadcrumbItem>
-      <BreadcrumbItem>
-        <BreadcrumbLink as={NextLink} href="/categories">
-          Kategorie
-        </BreadcrumbLink>
-      </BreadcrumbItem>
-      <BreadcrumbItem  isCurrentPage>
-        <BreadcrumbLink>{upperFirst(category)}</BreadcrumbLink>
-      </BreadcrumbItem>
+
+      {links.map((item, index) => {
+        const { href, name } = item
+        return (
+          <BreadcrumbItem key={index}>
+            <BreadcrumbLink as={NextLink} href={href}>
+              <Link>{upperFirst(name)}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        )
+      })}
     </Breadcrumb>
   )
 }
