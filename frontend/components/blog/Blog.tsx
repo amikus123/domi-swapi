@@ -1,11 +1,4 @@
-import {
-  Stack,
-  Heading,
-  Text,
-  Flex,
-  Button,
-  Divider,
-} from "@chakra-ui/react"
+import { Stack, Heading, Text, Flex, Button, Divider } from "@chakra-ui/react"
 import React, { useEffect } from "react"
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"
@@ -15,26 +8,26 @@ import BlogTags from "./BlogTags"
 import SocialRow from "./socials/SocialRow"
 import CardStack from "./BlogCard/CardStack"
 import BlogBreadcrumbs from "./BlogBreadcrumbs"
-export interface BlogPost {
-  title: string
-  description: string
-  date: string
-  content: any[]
-  mainImage: any
-  blogCategories: any[]
-  readingTime:number;
-  slug:string
-}
+import { BlogPost } from "../../lib/server/jsonParsers/parseBlog"
 
 interface BlogProps {
   data: BlogPost
   category: string
-  
 }
 
 const Blog = ({ data, category }: BlogProps) => {
-  const { content, date, description, mainImage, title, blogCategories } = data
-  useEffect(()=>{
+  const {
+    content,
+    date,
+    description,
+    mainImage,
+    title,
+    blogCategories,
+    cardData,
+    readingTime,
+    slug,
+  } = data
+  useEffect(() => {
     console.log(data)
   })
   return (
@@ -72,7 +65,7 @@ const Blog = ({ data, category }: BlogProps) => {
           </Button>
         </Flex>
 
-        <CardStack cards={[data, data, data, data]} category={category}  />
+        {/* <CardStack cards={[data, data, data, data]} category={category} /> */}
       </Stack>
     </>
   )

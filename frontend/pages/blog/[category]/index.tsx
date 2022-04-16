@@ -13,7 +13,8 @@ import { fetchAPI } from "../../../lib/api"
 import CategoryBreadcrumbs from "../../../components/blog/Categories/CategoryBreadcrumbs"
 import CardStack from "../../../components/blog/BlogCard/CardStack"
 import BlogCardWide from "../../../components/blog/BlogCard/BlogCardWide"
-import { BlogPost } from "../../../components/blog/Blog"
+import { BlogPost } from "../../../lib/server/jsonParsers/parseBlog"
+import { getBlogFromCategory } from "../../../lib/server/fetching/serverSide"
 
 interface C {
   id: number
@@ -31,16 +32,22 @@ interface A {
 
 interface BlogProps {
   catgoryData: A
+  xd: any
 }
-const blog = ({ catgoryData }: BlogProps) => {
+const blog = ({ catgoryData, xd }: BlogProps) => {
   useEffect(() => {
     console.log(catgoryData)
   }, [catgoryData])
   const { name, blogs, slug } = catgoryData
   const data = blogs.data
+  useEffect(() => {
+    console.log(xd)
+  }, [xd])
   return (
     <Stack width="100%" mx="20" my={4}>
-      <CategoryBreadcrumbs category={name} />
+      <p>{JSON.stringify(xd)}</p>
+
+      {/* <CategoryBreadcrumbs category={name} />
 
       <Heading> {name}</Heading>
 
@@ -60,7 +67,7 @@ const blog = ({ catgoryData }: BlogProps) => {
             </React.Fragment>
           )
         })}
-      </p>
+      </p> */}
       {/* <Blog data={blogData.attributes} /> */}
     </Stack>
   )
@@ -97,20 +104,18 @@ export async function getStaticProps({ params }) {
 
       populate: {
         populate: "*",
-        mainImage:{
-          image:{
-            populate:"*"
+        mainImage: {
+          image: {
+            populate: "*",
           },
-          populate:"*"
-
+          populate: "*",
         },
         blogs: {
-          mainImage:{
-            image:{
-              populate:"*"
+          mainImage: {
+            image: {
+              populate: "*",
             },
-            populate:"*"
-
+            populate: "*",
           },
           populate: "*",
         },
@@ -128,37 +133,43 @@ export async function getStaticProps({ params }) {
     },
   })
 
-  const blogData = await fetchAPI(`/blogs/`, {
-    urlParamsObject: {
-      filters: {
-        slug: params.slug,
-        
-      },
-      populate: {
-        populate: "*",
-        mainImage: {
+  try {
+    const blogData = await fetchAPI(`/blogs/`, {
+      urlParamsObject: {
+        filters: {
+          // slug: params.slug,
+          blogCategories: ["zdrowie"],
+        },
+        populate: {
           populate: "*",
-        },
-        cardData: {
-          populate: "*",
-          image:"*"
-        },
-        blogCategories: {
-          populate: "",
-        },
-        content: {
-          populate: {
+          mainImage: {
+            populate: "*",
+          },
+          cardData: {
+            populate: "*",
             image: "*",
           },
+          blogCategories: {
+            populate: "",
+          },
+          content: {
+            populate: {
+              image: "*",
+            },
+          },
         },
+        encodeValuesOnly: true,
       },
-      encodeValuesOnly: true,
-    },
-  })
+    })
 
-  console.log(articlesRes, "aaaa ", params)
+    console.log(blogData, "PIG")
+  } catch (e) {
+    console.error("jeblo")
+  }
+
+  const xd = await getBlogFromCategory(params.category)
   return {
-    props: { catgoryData: articlesRes.data[0].attributes },
+    props: { catgoryData: articlesRes.data[0].attributes, xd },
     revalidate: 1,
   }
 }

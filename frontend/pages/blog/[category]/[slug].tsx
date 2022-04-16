@@ -2,12 +2,18 @@ import { Flex } from "@chakra-ui/react"
 import React from "react"
 import Blog from "../../../components/blog/Blog"
 import { fetchAPI } from "../../../lib/api"
+import { getBlogPost } from "../../../lib/server/fetching/serverSide"
+import { BlogPost } from "../../../lib/server/jsonParsers/parseBlog"
 
-const article = ({ blogData,category }) => {
+
+interface BlogPostProps{
+  category:string,
+  blogData: BlogPost
+}
+const article = ({ blogData, category}:BlogPostProps) => {
   return (
     <Flex width="100%" mx="20" my={4}>
-      {/* <p>{JSON.stringify(Object.keys(blogData.attributes))}</p> */}
-      <Blog data={blogData.attributes} category={category} />
+      <Blog data={blogData} category={category} />
     </Flex>
   )
 }
@@ -24,7 +30,6 @@ export async function getStaticPaths() {
       encodeValuesOnly: true,
     },
   })
-
   const fin = []
   // * to each blog post we generate paths based on categories
   // * for example if post has two categories, it generates 2 paths.
@@ -49,35 +54,35 @@ export async function getStaticPaths() {
 
 // gets data for selected page
 export async function getStaticProps({ params }) {
-  const blogData = await fetchAPI(`/blogs/`, {
-    urlParamsObject: {
-      filters: {
-        slug: params.slug,
-      },
-      populate: {
-        populate: "*",
-        mainImage: {
-          populate: "*",
-        },
-        cardData: {
-          populate: "*",
-          image:"*"
-        },
-        blogCategories: {
-          populate: "",
-        },
-        content: {
-          populate: {
-            image: "*",
-          },
-        },
-      },
-      encodeValuesOnly: true,
-    },
-  })
-
+  // const blogData = await fetchAPI(`/blogs/`, {
+  //   urlParamsObject: {
+  //     filters: {
+  //       slug: params.slug,
+  //     },
+  //     populate: {
+  //       populate: "*",
+  //       mainImage: {
+  //         populate: "*",
+  //       },
+  //       cardData: {
+  //         populate: "*",
+  //         image: "*",
+  //       },
+  //       blogCategories: {
+  //         populate: "",
+  //       },
+  //       content: {
+  //         populate: {
+  //           image: "*",
+  //         },
+  //       },
+  //     },
+  //     encodeValuesOnly: true,
+  //   },
+  // })
+  const blogData = await getBlogPost(params.slug)
   return {
-    props: { blogData: blogData.data[0],category:params.category },
+    props: { blogData, category: params.category},
     revalidate: 1,
   }
 }

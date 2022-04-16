@@ -12,10 +12,15 @@ import {
   MyImage,
 } from "../../general/Images"
 import NextLink from "next/link"
-import { BlogPost } from "../Blog"
 interface BlogCardProps {
-  data: BlogPost
+  data: Temp
 }
+
+interface Temp {
+  readingTime:number,
+  description:string,
+  title:string
+} 
 
 
 const createLink = (blogCategories:any[],slug:string) =>{
@@ -24,14 +29,9 @@ const createLink = (blogCategories:any[],slug:string) =>{
 
 export default function BlogCardWide({ data }: BlogCardProps) {
   const {
-    content,
-    date,
     description,
     readingTime,
-    mainImage,
     title,
-    blogCategories,
-    slug
   } = data
 
 

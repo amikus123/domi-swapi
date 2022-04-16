@@ -7,6 +7,7 @@ import { ParsedDiet, handleDiets } from "../jsonParsers/parseDiets"
 import { handleUser } from "../jsonParsers/parseUset"
 import { handleBlogCategories } from "../jsonParsers/parseDietCategories"
 import { BlogCategory } from "../exampleData/blogCategories"
+import { BlogPost, handleBlogPost } from "../jsonParsers/parseBlog"
 
 // * fetches user Id from cookie
 export const fetchMe = async (jwt: string) => {
@@ -123,7 +124,9 @@ export const getDiets = async (): Promise<Record<string, ParsedDiet>> => {
   return dietData
 }
 
-export const getBlogCategories = async (): Promise< Record<string, BlogCategory>> => {
+export const getBlogCategories = async (): Promise<
+  Record<string, BlogCategory>
+> => {
   const dishQuery = qs.stringify(
     {
       populate: ["image"],
@@ -139,5 +142,70 @@ export const getBlogCategories = async (): Promise< Record<string, BlogCategory>
   )
   const blogCategoriesRaw = await blogCategoriesRequest.json()
   const blogCategories = handleBlogCategories(blogCategoriesRaw)
-  return  blogCategories 
+  return blogCategories
+}
+
+
+
+
+export const getBlogFromCategory = async (category: string): Promise<any> => {
+  const dishQuery = qs.stringify(
+    {
+      populate: [
+        "blogs",
+        "blogs.mainImage",
+        "blogs.mainImage.image",
+        "blogs.blogCategories",
+        "blogs.cardData",
+        "blogs.cardData.image",
+      ],
+      filters: {
+        slug: {
+          $eq: category,
+        },
+      },
+    },
+
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+  const blogCategoriesRequest = await fetch(
+    `${getApiUrl()}/api/blog-categories?${dishQuery}`,
+    {}
+  )
+
+  const blogCategoriesRaw = await blogCategoriesRequest.json()
+  // const blogCategories = handleBlogCategories(blogCategoriesRaw)
+  return blogCategoriesRaw
+}
+
+export const getBlogPost = async (slug: string): Promise<BlogPost> => {
+  const a = {
+    populate: [
+      "content",
+      "content.image",
+      "mainImage",
+      "mainImage.image",
+      "blogCategories",
+      "cardData",
+      "cardData.image",
+    ],
+    filters: {
+      slug: {
+        $eq: slug,
+      },
+    },
+  }
+
+  const postQuery = qs.stringify(a, {
+    encodeValuesOnly: true,
+  })
+
+  const dishRequest = await fetch(`${getApiUrl()}/api/blogs?${postQuery}`, {})
+  const dishData = await dishRequest.json()
+  const res = handleBlogPost(dishData)
+
+  return res
 }
