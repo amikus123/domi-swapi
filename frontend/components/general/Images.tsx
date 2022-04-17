@@ -50,9 +50,7 @@ export const MyImage = ({
   alternativeText = alternativeText || ""
 
   const ratioWH = width / height
-  useEffect(() => {
-    console.log(image)
-  })
+
   return (
     <>
       {variant === "full" ? (
@@ -92,24 +90,6 @@ export const MyImage = ({
         
         
         />
-        // <Box
-        //   className=""
-        //   {...rest}
-        //   maxH={"40vh"}
-        //   height={idealHeight}
-        //   width={idealHeight * ratioWH}
-        //   position="relative"
-        //   maxW="80vw"
-        // >
-        //   <NextImage
-        //     objectFit="contain"
-        //     src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
-        //     alt={alternativeText}
-        //     layout="fill"
-        //     className=""
-        //     aria-label={alternativeText}
-        //   />
-        // </Box>
       )}
     </>
   )

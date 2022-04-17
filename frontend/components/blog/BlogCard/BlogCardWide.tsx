@@ -13,11 +13,12 @@ import { MyImage } from "../../general/Images"
 import NextLink from "next/link"
 import { BlogPost } from "../../../lib/server/jsonParsers/parseBlog"
 interface BlogCardProps {
-  data: Temp
+  data: BlogCardData
   category?: string
+  fullW?:boolean
 }
 
-type Temp = Omit<BlogPost, "cardData" | "content">
+export type BlogCardData = Omit<BlogPost,  "content">
 
 const createLink = (slug: string, category: string) => {
   return `/blog/${category}/${slug}`
@@ -26,6 +27,7 @@ const createLink = (slug: string, category: string) => {
 export default function BlogCardWide({
   data,
   category = data.blogCategories[0].slug,
+  fullW=false
 }: BlogCardProps) {
   const {
     description,
@@ -38,9 +40,8 @@ export default function BlogCardWide({
   } = data
 
   return (
-    // h={"260px"}
-    <LinkBox as={Flex} h={["unset","unset","300px"]} cursor="pointer" justify="space-between">
-      <Stack w={["100%", "100%", "50%"]} direction="column" spacing={4}>
+    <LinkBox as={Flex} h={["unset","unset","300px"]} w={["unset","unset",fullW?"unset":"675px"]} cursor="pointer" justify="space-between">
+      <Stack w={["100%", "100%", "50%"]}  direction="column" spacing={4}>
         <Heading
           color={useColorModeValue("gray.700", "white")}
           fontSize={"2xl"}
@@ -60,7 +61,6 @@ export default function BlogCardWide({
         </Box>
 
         <BlogTags blogCategories={blogCategories} pt={0} />
-        {/* w="100%" h={200} */}
       </Stack>
 
       <Box display={["none", "none", "block"]} w="50%" h="100%">

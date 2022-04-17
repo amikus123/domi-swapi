@@ -8,7 +8,8 @@ import { handleUser } from "../jsonParsers/parseUset"
 import { handleBlogCategories } from "../jsonParsers/parseDietCategories"
 import { BlogCategory } from "../exampleData/blogCategories"
 import { BlogPost, handleBlogPost } from "../jsonParsers/parseBlog"
-import { handleBlogCategoryPosts } from "../jsonParsers/parseBlogCategoryPosts"
+import { handleBlogCategoryPosts, handleBlogsById } from "../jsonParsers/parseBlogCategoryPosts"
+import { handleBlogIds } from "../jsonParsers/parseBlogIds"
 
 // * fetches user Id from cookie
 export const fetchMe = async (jwt: string) => {
@@ -146,9 +147,6 @@ export const getBlogCategories = async (): Promise<
   return blogCategories
 }
 
-
-
-
 export const getBlogFromCategory = async (category: string): Promise<any> => {
   const dishQuery = qs.stringify(
     {
@@ -209,4 +207,51 @@ export const getBlogPost = async (slug: string): Promise<BlogPost> => {
   const res = handleBlogPost(dishData)
 
   return res
+}
+
+export const getIdsOfBlogs = async (): Promise<Record<number, boolean>> => {
+  const a = {}
+
+  const postQuery = qs.stringify(a, {
+    encodeValuesOnly: true,
+  })
+
+  const dishRequest = await fetch(`${getApiUrl()}/api/blogs?${postQuery}`, {})
+  const dishData = await dishRequest.json()
+  console.log(dishData)
+  const data = handleBlogIds(dishData)
+  return data
+}
+
+export const getBlogsByIds = async (ids:string[]): Promise<any> => {
+  const dishQuery = qs.stringify(
+    {
+      populate: [
+        "mainImage",
+        "mainImage.image",
+        "blogCategories",
+        "cardData",
+        "cardData.image",
+      ],
+      filters: {
+        ID: {
+          $in: ids,
+        },
+      },
+    },
+
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+  const blogCategoriesRequest = await fetch(
+    `${getApiUrl()}/api/blogs?${dishQuery}`,
+    {}
+  )
+
+  const blogCategoriesRaw = await blogCategoriesRequest.json()
+  console.log(blogCategoriesRaw)
+  const blogCategories = handleBlogsById(blogCategoriesRaw)
+  return blogCategories
 }

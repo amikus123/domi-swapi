@@ -32,6 +32,38 @@ export const handleBlogCategoryPosts = (
 
   return res
 }
+export const handleBlogsById = (
+  initial:any
+): CategoryBlogPost[] => {
+  const blogs = initial.data
+  const res: CategoryBlogPost[] = blogs.map((item) => {
+    const {
+      blogCategories,
+      cardData,
+      date,
+      description,
+      mainImage,
+      readingTime,
+      slug,
+      title,
+    } = item.attributes
+    return {
+      slug,
+      title,
+      readingTime,
+      description,
+      date,
+      cardData: handleCardData(cardData),
+      mainImage,
+      blogCategories: handleCategories(blogCategories),
+    }
+  })
+
+  return res
+}
+
+
+
 
 export type BlogCategoryPostData = Omit<BlogDataJson, "content">
 
@@ -52,7 +84,7 @@ interface BlogCategoryPostDataJson {
   id: number
   attributes: BlogCategoryPostAttributesJson
 }
-interface BlogCategoryPostWrapJson {
+export interface BlogCategoryPostWrapJson {
   data: BlogCategoryPostDataJson[]
   meta: any
 }

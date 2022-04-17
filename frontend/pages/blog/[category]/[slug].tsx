@@ -2,18 +2,18 @@ import { Flex } from "@chakra-ui/react"
 import React from "react"
 import Blog from "../../../components/blog/Blog"
 import { fetchAPI } from "../../../lib/api"
-import { getBlogPost } from "../../../lib/server/fetching/serverSide"
+import { getBlogPost, getIdsOfBlogs } from "../../../lib/server/fetching/serverSide"
 import { BlogPost } from "../../../lib/server/jsonParsers/parseBlog"
 
-
-interface BlogPostProps{
-  category:string,
+interface BlogPostProps {
+  category: string
   blogData: BlogPost
+  blogIds:Record<number,boolean>
 }
-const article = ({ blogData, category}:BlogPostProps) => {
+const article = ({ blogData, category ,blogIds}: BlogPostProps) => {
   return (
     <Flex>
-      <Blog data={blogData} category={category} />
+      <Blog data={blogData} category={category} blogIds={blogIds} />
     </Flex>
   )
 }
@@ -52,37 +52,14 @@ export async function getStaticPaths() {
   }
 }
 
-// gets data for selected page
 export async function getStaticProps({ params }) {
-  // const blogData = await fetchAPI(`/blogs/`, {
-  //   urlParamsObject: {
-  //     filters: {
-  //       slug: params.slug,
-  //     },
-  //     populate: {
-  //       populate: "*",
-  //       mainImage: {
-  //         populate: "*",
-  //       },
-  //       cardData: {
-  //         populate: "*",
-  //         image: "*",
-  //       },
-  //       blogCategories: {
-  //         populate: "",
-  //       },
-  //       content: {
-  //         populate: {
-  //           image: "*",
-  //         },
-  //       },
-  //     },
-  //     encodeValuesOnly: true,
-  //   },
-  // })
   const blogData = await getBlogPost(params.slug)
+  
+  const blogIds = await getIdsOfBlogs()
+
+  
   return {
-    props: { blogData, category: params.category},
+    props: { blogData, category: params.category,blogIds },
     revalidate: 1,
   }
 }

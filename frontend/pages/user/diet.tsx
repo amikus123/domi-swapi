@@ -33,7 +33,6 @@ import { dishesState } from "../../components/User/api/atoms/dishes"
 import DietLoading from "../../components/User/diet/DietLoading"
 import { userIdsState } from "../../components/User/api/atoms/userIds"
 import PdfButton from "../../components/User/diet/Pdf/PdfButton"
-import Test from "../../components/User/diet/Pdf/PdfButton"
 
 interface DietProps {
   user: UserFullData

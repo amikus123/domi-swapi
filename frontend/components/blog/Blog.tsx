@@ -1,5 +1,5 @@
 import { Stack, Heading, Text, Flex, Button, Divider } from "@chakra-ui/react"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"
 import BlogContent from "./content/BlogContent"
@@ -13,23 +13,23 @@ import RelatedBlogPosts from "./RelatedBlogPosts/RelatedBlogPosts"
 interface BlogProps {
   data: BlogPost
   category: string
+  blogIds: Record<number, boolean>
 }
 
-const Blog = ({ data, category }: BlogProps) => {
+const Blog = ({ data, category, blogIds }: BlogProps) => {
   const {
     content,
-    date,
     description,
     mainImage,
     title,
     blogCategories,
-    cardData,
-    readingTime,
     slug,
+    id = -1,
   } = data
   useEffect(() => {
-    console.log(data)
+    console.log(id)
   })
+
   return (
     <>
       <Stack
@@ -40,6 +40,7 @@ const Blog = ({ data, category }: BlogProps) => {
         spacing={0}
         px={[4, 12, 20]}
         maxW="1000px"
+        minW={["unset","unset","675px"]}
       >
         <Flex w="100%" alignContent="left" pb={4} maxW="100%">
           <CategoryBreadcrumbs
@@ -48,7 +49,7 @@ const Blog = ({ data, category }: BlogProps) => {
               { href: `/blog/${category}`, name: category },
               { href: `/blog/${category}/${slug}`, name: "Artykuł" },
             ]}
-          />{" "}
+          />
         </Flex>
         <Heading w="100%">{title}</Heading>
         <Text as="span" w="100%" fontSize="2xl" color="gray.600" pt={4}>
@@ -61,7 +62,6 @@ const Blog = ({ data, category }: BlogProps) => {
           image={mainImage.image}
           text={mainImage.description}
           height={800}
-      
         />
         <BlogContent data={content} />
         <Divider py={4} />
@@ -69,7 +69,11 @@ const Blog = ({ data, category }: BlogProps) => {
           <SocialRow category={category} slug={slug} />
         </Flex>
 
-        <RelatedBlogPosts />
+        <RelatedBlogPosts
+          currentBlogId={id}
+          blogIds={blogIds}
+          category={category}
+        />
       </Stack>
     </>
   )

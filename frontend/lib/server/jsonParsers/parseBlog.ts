@@ -15,6 +15,7 @@ export interface BlogPost {
   readingTime: number
   slug: string
   cardData: BlogCard
+  id?:number
 }
 
 export interface Category {
@@ -28,6 +29,13 @@ export interface BlogCard {
 }
 
 export const handleCardData = (data: CardDataJson): BlogCard => {
+
+  if(data===null){
+    return{
+      description:"",
+      image:{}
+    }
+  }
   const { description, image } = data
   return {
     description,
@@ -48,7 +56,7 @@ export const handleCategories = (data: BlogCategoriesWrapJson): Category[] => {
 }
 export const handleBlogPost = (initial: BlogWrapJson): BlogPost => {
   const { data } = initial
-  const { attributes } = data[0]
+  const { attributes,id } = data[0]
   const {
     blogCategories,
     cardData,
@@ -72,6 +80,7 @@ export const handleBlogPost = (initial: BlogWrapJson): BlogPost => {
     blogCategories: handleCategories(blogCategories),
     cardData: handleCardData(cardData),
     content,
+    id,
   }
 
   return res
