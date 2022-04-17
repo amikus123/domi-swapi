@@ -8,8 +8,12 @@ import { handleUser } from "../jsonParsers/parseUset"
 import { handleBlogCategories } from "../jsonParsers/parseDietCategories"
 import { BlogCategory } from "../exampleData/blogCategories"
 import { BlogPost, handleBlogPost } from "../jsonParsers/parseBlog"
-import { handleBlogCategoryPosts, handleBlogsById } from "../jsonParsers/parseBlogCategoryPosts"
+import {
+  handleBlogCategoryPosts,
+  handleBlogsById,
+} from "../jsonParsers/parseBlogCategoryPosts"
 import { handleBlogIds } from "../jsonParsers/parseBlogIds"
+import { handleFullDiets } from "../jsonParsers/parseFullDiets"
 
 // * fetches user Id from cookie
 export const fetchMe = async (jwt: string) => {
@@ -109,10 +113,26 @@ export const getDishes = async (user: UserFullData, jwt: string) => {
 }
 
 // * Fetches all diets
-export const getDiets = async (): Promise<Record<string, ParsedDiet>> => {
+
+interface DietsFetchConfig {
+  full?: boolean
+}
+export const getDiets = async (
+  config: DietsFetchConfig
+): Promise<Record<string, ParsedDiet>> => {
+  const { full = false } = config
+  const populateArr = ["dietImage"]
+  if (full) {
+    populateArr.push(
+      "dishReplacements.original",
+      "dishReplacements.possibleReplacements",
+      "days",
+      "days.dishes"
+    )
+  }
   const dishQuery = qs.stringify(
     {
-      populate: ["dietImage"],
+      populate: populateArr,
     },
     {
       encodeValuesOnly: true,
@@ -121,7 +141,15 @@ export const getDiets = async (): Promise<Record<string, ParsedDiet>> => {
 
   const dietRequest = await fetch(`${getApiUrl()}/api/diets?${dishQuery}`, {})
   const dietDataRaw = await dietRequest.json()
-  const dietData = handleDiets(dietDataRaw)
+
+  let dietData
+  if (full) {
+    dietData = handleFullDiets(dietDataRaw)
+
+    // parseFullDiets
+  } else {
+    dietData = handleDiets(dietDataRaw)
+  }
 
   return dietData
 }
@@ -223,7 +251,7 @@ export const getIdsOfBlogs = async (): Promise<Record<number, boolean>> => {
   return data
 }
 
-export const getBlogsByIds = async (ids:string[]): Promise<any> => {
+export const getBlogsByIds = async (ids: string[]): Promise<any> => {
   const dishQuery = qs.stringify(
     {
       populate: [

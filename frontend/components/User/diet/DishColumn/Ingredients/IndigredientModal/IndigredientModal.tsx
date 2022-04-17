@@ -15,6 +15,7 @@ import React, { useState } from "react"
 import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil"
 import { dishesState } from "../../../../api/atoms/dishes"
 import { ingredientPreferencesState } from "../../../../api/atoms/IngredientPreferences"
+import { isPublicState } from "../../../../api/atoms/isPublic"
 import { userIdsState } from "../../../../api/atoms/userIds"
 import { Dish, Ingredient, IngredientPreference } from "../../../../api/types"
 import { updateIngredients } from "./APIRequest"
@@ -45,7 +46,7 @@ const IndigredientModal = ({
   const [loading, setLoading] = useState(false)
   const dishes = useRecoilValue(dishesState)
   const { userDataId } = useRecoilValue(userIdsState)
-
+  const isPublic = useRecoilValue(isPublicState)
   const resetToDefault = async () => {
     handleIngredientChange({
       dishName: name,
@@ -59,6 +60,7 @@ const IndigredientModal = ({
       toast,
       userDataId,
       loading,
+      isPublic
     })
   }
 
@@ -70,9 +72,7 @@ const IndigredientModal = ({
       scrollBehavior="inside"
     >
       <ModalOverlay />
-      <ModalContent
-      mx={16}
-      >
+      <ModalContent mx={16}>
         <ModalHeader>Zamień składniki</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -99,7 +99,6 @@ const IndigredientModal = ({
             onClick={() => {
               resetToDefault()
             }}
-            
           >
             Domyślny posiłek
           </Button>

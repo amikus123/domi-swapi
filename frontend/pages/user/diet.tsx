@@ -1,4 +1,4 @@
-import { Stack,  Heading } from "@chakra-ui/react"
+import { Stack, Heading } from "@chakra-ui/react"
 import { startOfToday } from "date-fns"
 import React, { useEffect, useState } from "react"
 import DishColumn from "../../components/User/diet/DishColumn/DishColumn"
@@ -25,6 +25,7 @@ import {
   DishColumnData,
   FullDietDay,
   UserFullData,
+  Diet,
 } from "../../components/User/api/types"
 import { useRecoilState } from "recoil"
 import { ingredientPreferencesState } from "../../components/User/api/atoms/IngredientPreferences"
@@ -33,28 +34,40 @@ import { dishesState } from "../../components/User/api/atoms/dishes"
 import DietLoading from "../../components/User/diet/DietLoading"
 import { userIdsState } from "../../components/User/api/atoms/userIds"
 import PdfButton from "../../components/User/diet/Pdf/PdfButton"
+import { isPublicState } from "../../components/User/api/atoms/isPublic"
 
 interface DietProps {
   user: UserFullData
   originalDishes: Record<string, Dish>
+  isPagePublic?: boolean
+  diet: Diet
 }
 
-const DietComponent = ({ user, originalDishes }: DietProps) => {
+const DietComponent = ({
+  user,
+  originalDishes,
+  isPagePublic = false,
+  diet,
+}: DietProps) => {
   const {
-    userDiet,
     dishPreferences: originalDishPreferences,
     ingredientPreferences: originalIngredientPreferences,
     userId,
     userDataId,
   } = user
-  const { diet } = userDiet
   const { days, dishReplacements, name: dietName } = diet
   // * USE GLOBAL DATA
   const [userIds, setUserIds] = useRecoilState(userIdsState)
+  const [isPublic, setIsPublic] = useRecoilState(isPublicState)
+
+  useEffect(() => {
+    console.log("STATE", user, originalDishes)
+    setIsPublic(isPagePublic)
+  }, [isPagePublic])
 
   useEffect(() => {
     setUserIds({ userDataId, userId })
-  }, [])
+  }, [userDataId, userId])
 
   // * TIME STATE
   // * range of selected dates
@@ -173,9 +186,14 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
     }
   }
 
+  useEffect(() => {
+    console.log(columnData, "XDDDD")
+  })
   return (
     <Stack maxW="1000px" justify="center" align="center" spacing={16} pb={20}>
-      <Heading mt={8} textAlign={["center","center","start"]}> Wybrana dieta: {dietName}</Heading>
+      <Heading mt={8} textAlign={["center", "center", "start"]}>
+        Wybrana dieta: {dietName}
+      </Heading>
       <MyCalendar
         singleDate={singleDate}
         setSingleDate={setSingleDate}
@@ -185,9 +203,7 @@ const DietComponent = ({ user, originalDishes }: DietProps) => {
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      {columnData[0] &&
-      columnData[0].fullDietDay &&
-      columnData[0].fullDietDay.kcalCount !== 0 ? (
+      {columnData.length > 0 && Object.keys(columnData[0]).length > 0 ? (
         <>
           <DishColumn dishColumnData={columnData} />
           <PdfButton dishColumnData={columnData} />
@@ -205,8 +221,8 @@ export async function getServerSideProps(ctx) {
   const jwt = parseCookies(ctx).jwt
   const user = await getUser(jwt)
   const dishes = await getDishes(user, jwt)
-
+  const diet = user.userDiet.diet
   return {
-    props: { user, originalDishes: dishes },
+    props: { user, originalDishes: dishes, diet },
   }
 }

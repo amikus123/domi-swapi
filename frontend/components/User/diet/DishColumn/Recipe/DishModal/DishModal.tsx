@@ -13,6 +13,7 @@ import React, { useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { dishesState } from "../../../../api/atoms/dishes"
 import { dishPreferencesState } from "../../../../api/atoms/dishPreferences"
+import { isPublicState } from "../../../../api/atoms/isPublic"
 import { userIdsState } from "../../../../api/atoms/userIds"
 import { FullDish } from "../../../../api/types"
 import DishModalDish from "./DishModalDish"
@@ -40,6 +41,7 @@ const DishModal = ({
   const dishes = useRecoilValue(dishesState)
   const [loading, setLoading] = useState(false)
   const toast = useToast()
+  const isPublic = useRecoilValue(isPublicState)
 
   const handleClick = async (newName: string) => {
     handlDishChange({
@@ -52,6 +54,7 @@ const DishModal = ({
       toast,
       userDataId,
       loading,
+      isPublic
     })
   }
 
@@ -66,6 +69,7 @@ const DishModal = ({
       setLoading,
       toast,
       userDataId,
+      isPublic
     })
   }
   return (

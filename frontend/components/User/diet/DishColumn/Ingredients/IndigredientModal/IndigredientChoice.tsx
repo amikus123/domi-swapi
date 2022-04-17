@@ -1,16 +1,14 @@
 import { Button, Flex, Stack, Text, useToast } from "@chakra-ui/react"
 import { capitalize } from "lodash"
-import React, { useState } from "react"
+import React from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { dishesState } from "../../../../api/atoms/dishes"
 import { ingredientPreferencesState } from "../../../../api/atoms/IngredientPreferences"
+import { isPublicState } from "../../../../api/atoms/isPublic"
 import { userIdsState } from "../../../../api/atoms/userIds"
-import { Dish, Ingredient, IngredientPreference } from "../../../../api/types"
-import { updateIngredients } from "./APIRequest"
-import { changeIngredients } from "./functions"
+import {  Ingredient } from "../../../../api/types"
 import {
   handleIngredientChange,
-  HandleIngredientChangeProps,
 } from "./handleInteraction"
 
 interface IndigredientChoiceProps {
@@ -32,8 +30,9 @@ const IndigredientChoice = ({
     ingredientPreferencesState
   )
   const dishes = useRecoilValue(dishesState)
+  const isPublic = useRecoilValue(isPublicState)
 
-  const handleClick = async (newName:string) => {
+  const handleClick = async (newName: string) => {
     handleIngredientChange({
       dishName,
       dishes,
@@ -44,7 +43,8 @@ const IndigredientChoice = ({
       setLoading,
       toast,
       userDataId,
-      loading
+      loading,
+      isPublic,
     })
   }
   return (

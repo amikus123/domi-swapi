@@ -43,7 +43,7 @@ const BlogDescriptionImage = ({
   height
 }: BlogDescriptionImageProps) => {
   return (
-    <Stack  justify="center" align="center" py="1.5rem"  >
+    <Stack  justify="center" align="center"   >
       <MyImage
         variant="fullW"
         image={image}

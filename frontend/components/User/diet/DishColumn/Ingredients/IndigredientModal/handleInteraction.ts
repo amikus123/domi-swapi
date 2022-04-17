@@ -10,7 +10,7 @@ export interface HandleIngredientChangeProps {
   originalName: string
   dishes: Record<string, Dish>
   userDataId: number
-  loading:boolean
+  loading: boolean
   // * object from use toast hook
   toast: any
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
@@ -21,6 +21,7 @@ export interface HandleIngredientChangeProps {
     Record<string, IngredientPreference>
   >
   removeAll?: boolean
+  isPublic?: boolean
 }
 
 export const handleIngredientChange = async (
@@ -40,50 +41,60 @@ export const handleIngredientChange = async (
     toastSuccessTitle = "Udało się zmienić składnik",
     toastFailTitle = "Nie udało się zmienić składnik",
     removeAll = false,
+    isPublic = false,
   } = data
-  if(!loading){
+  if (!loading) {
+    const newIngredients = removeAll
+      ? removeAllPreferences({
+          dishName,
+          dishes,
+          ingredientPreferences,
+          originalName,
+        })
+      : changeIngredients({
+          dishName,
+          ingredientPreferences,
+          newName,
+          originalName,
+          dishes,
+        })
 
-  const newIngredients = removeAll
-    ? removeAllPreferences({
-        dishName,
-        dishes,
-        ingredientPreferences,
-        originalName,
+    if (isPublic) {
+      toast({
+        title: toastSuccessTitle,
+        description: "",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       })
-    : changeIngredients({
-        dishName,
-        ingredientPreferences,
-        newName,
-        originalName,
+      setIngredientPreferences(newIngredients)
+    } else {
+      setLoading(true)
+
+      const wasRequestSuccessful = await updateIngredients({
+        data: newIngredients,
+        userDataId,
         dishes,
       })
-
-  setLoading(true)
-
-  const wasRequestSuccessful = await updateIngredients({
-    data: newIngredients,
-    userDataId,
-    dishes,
-  })
-  if (wasRequestSuccessful) {
-    toast({
-      title: toastSuccessTitle,
-      description: "",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    })
-    setIngredientPreferences(newIngredients)
-  } else {
-    toast({
-      title: toastFailTitle,
-      description: "",
-      status: "error",
-      duration: 3000,
-      isClosable: true,
-    })
+      if (wasRequestSuccessful) {
+        toast({
+          title: toastSuccessTitle,
+          description: "",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+        setIngredientPreferences(newIngredients)
+      } else {
+        toast({
+          title: toastFailTitle,
+          description: "",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+      }
+      setLoading(false)
+    }
   }
-  setLoading(false)
-}
-
 }

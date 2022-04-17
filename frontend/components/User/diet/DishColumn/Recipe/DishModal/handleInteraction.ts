@@ -1,5 +1,5 @@
 import { SetterOrUpdater } from "recoil"
-import { IngredientPreference, Dish, DishPreference } from "../../../../api/types"
+import { Dish, DishPreference } from "../../../../api/types"
 import { updateDishes } from "./APIRequest"
 import { changeDishPreference } from "./functions"
 
@@ -14,10 +14,9 @@ export interface HandleDishChangeProps {
   toastSuccessTitle?: string
   toastFailTitle?: string
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
-
   dishPreference: Record<string, DishPreference>
-
   setDishPreference: SetterOrUpdater<Record<string, DishPreference>>
+  isPublic?: boolean
 }
 
 export const handlDishChange = async (data: HandleDishChangeProps) => {
@@ -33,6 +32,7 @@ export const handlDishChange = async (data: HandleDishChangeProps) => {
     loading,
     toastSuccessTitle = "Udało się zmienić danie",
     toastFailTitle = "Nie udało się zmienić dania",
+    isPublic = false,
   } = data
   if (!loading) {
     const newDishPreferences = changeDishPreference({
@@ -41,14 +41,7 @@ export const handlDishChange = async (data: HandleDishChangeProps) => {
       dishPreference,
     })
 
-    setLoading(true)
-
-    const wasRequestSuccessful = await updateDishes({
-      data: newDishPreferences,
-      userDataId,
-      dishes,
-    })
-    if (wasRequestSuccessful) {
+    if (isPublic) {
       toast({
         title: toastSuccessTitle,
         description: "",
@@ -58,14 +51,33 @@ export const handlDishChange = async (data: HandleDishChangeProps) => {
       })
       setDishPreference(newDishPreferences)
     } else {
-      toast({
-        title: toastFailTitle,
-        description: "",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
+      //  * default behaviour
+      setLoading(true)
+
+      const wasRequestSuccessful = await updateDishes({
+        data: newDishPreferences,
+        userDataId,
+        dishes,
       })
+      if (wasRequestSuccessful) {
+        toast({
+          title: toastSuccessTitle,
+          description: "",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+        setDishPreference(newDishPreferences)
+      } else {
+        toast({
+          title: toastFailTitle,
+          description: "",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+      }
+      setLoading(false)
     }
-    setLoading(false)
   }
 }

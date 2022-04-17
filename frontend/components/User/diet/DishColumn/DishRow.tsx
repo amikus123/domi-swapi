@@ -27,17 +27,10 @@ const handleTimeCategory = (category: string) => {
 }
 
 const DishRow = ({ dishData }: DishRowProps) => {
-  const { dish, originalDishName, replacements } = dishData
+  const { dish } = dishData
   const {
-    dishPage,
-    id,
     image,
-    ingredients,
     name,
-    nutrients,
-    slug,
-    description,
-    recipe,
     timeCategory,
   } = dish
   return (

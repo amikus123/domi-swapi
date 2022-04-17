@@ -15,7 +15,7 @@ const fixHeight = (w: number, h: number) => {
 const DishLeft = ({ image }: DishLeftProps) => {
   const attributes = image.data.attributes
   const { alternativeText, formats } = attributes
-  const { height, width, url } = formats.thumbnail
+  const { height, width, url } = formats.small
   const { w, h } = fixHeight(width, height)
   return (
     <Flex

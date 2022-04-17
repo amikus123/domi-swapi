@@ -30,13 +30,18 @@
       "component": "diet.dish-possible-replacements"
     },
     "dietImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "dietDescription": {
+      "type": "string",
+      "default": "test"
     }
   }
 }

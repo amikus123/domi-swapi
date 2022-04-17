@@ -1,14 +1,17 @@
-export const handleDiets = (initial: DietJsonInitial): Record<string,ParsedDiet> => {
+export const handleDiets = (
+  initial: DietJsonInitial,
+): Record<string, ParsedDiet> => {
   const { data } = initial
 
-  const  res : Record<string,ParsedDiet> ={}
+  const res: Record<string, ParsedDiet> = {}
   data.map((item) => {
     const { attributes, id } = item
-    const { dietImage, name } = attributes
+    const { dietImage, name, dietDescription } = attributes
     const diet: ParsedDiet = {
       dietImage,
       id,
       name,
+      dietDescription,
     }
     res[name] = diet
   })
@@ -23,12 +26,14 @@ export interface DietJson {
   attributes: {
     name: string
     dietImage: any
+    dietDescription: string
   }
 }
 export interface ParsedDiet {
   id: number
   name: string
   dietImage: any
+  dietDescription: string
 }
 const rawExample = {
   data: [

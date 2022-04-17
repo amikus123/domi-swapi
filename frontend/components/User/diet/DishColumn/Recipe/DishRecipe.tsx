@@ -1,8 +1,6 @@
 import React from "react"
 import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react"
 import DishModal from "./DishModal/DishModal"
-import { dishPreferencesState } from "../../../api/atoms/dishPreferences"
-import { useRecoilState } from "recoil"
 import { FullDish } from "../../../api/types"
 
 interface DishRecpipeProps {
@@ -20,7 +18,7 @@ const DishRecipe = ({ dishData }: DishRecpipeProps) => {
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque fugit
         aliquid provident eius inventore totam architecto eveniet deleniti
         dolore.
-        {/* {recipe} */}
+        {recipe}
       </Text>
       {replacements && replacements.length > 0 && (
         <>
