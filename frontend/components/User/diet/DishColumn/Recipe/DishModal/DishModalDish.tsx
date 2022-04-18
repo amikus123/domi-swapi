@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Avatar, CSSObject, Spinner } from "@chakra-ui/react"
+import { Flex, Box, Text, CSSObject, Spinner } from "@chakra-ui/react"
 import React from "react"
 import { Dish } from "../../../../api/types"
 import NextImage from "next/image"
@@ -36,14 +36,11 @@ const Img = ({ image }: ImgProps) => {
   )
 }
 const DishModalDish = React.forwardRef(
-  (
-    { dish, onClose, index, handleClick, loading }: DishModalDishProps,
-    ref: any
-  ) => {
-    let { description, name, image } = dish
-    // add nice border and add event on focus
-    description =
-      "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+  ({ dish, index, handleClick, loading }: DishModalDishProps, ref: any) => {
+    const { description, name, image } = dish
+    //  TODO add nice border and add event on focus
+    // description =
+    //   "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
 
     const selectedStle: CSSObject = { borderColor: "red", outlineWidth: 0 }
     const hoverStyle: CSSObject = {
@@ -112,5 +109,5 @@ const DishModalDish = React.forwardRef(
     )
   }
 )
-
+DishModalDish.displayName = "DishModalDish"
 export default DishModalDish

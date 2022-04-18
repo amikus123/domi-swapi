@@ -1,4 +1,3 @@
-import React from 'react';
 
 const BottomRow = () => {
   return <div></div>;

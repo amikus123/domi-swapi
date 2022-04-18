@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
-  Flex,
   Box,
   useColorModeValue,
   Text,
@@ -19,8 +19,8 @@ interface DietCardProps {
 const PlainCard = ({
   image,
   name,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClick = () => {},
-  href = null,
 }: DietCardProps) => {
   return (
     <Box

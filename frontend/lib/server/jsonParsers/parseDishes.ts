@@ -1,23 +1,13 @@
 import { Dish, Ingredient } from "../../../components/User/api/types"
-import { DishPageJson, IngredientJson, DishJson, DishesJson } from "../JsonTypes/dishJsonTypes"
+import {
+  IngredientJson,
+  DishJson,
+  DishesJson,
+} from "../JsonTypes/dishJsonTypes"
 
-
-const createUrl = (slug: string) => {
-  //* will create link to relevant dish post
-  return slug
-}
 // ! TAKE CARE OF DIET PAGES
 
-const handleDishPage = (dishPage: DishPageJson): null => {
-  console.log(dishPage, "XDD")
-  //* if page in not linked, we return null
-
-  // if (dishPage && dishPage.data) {
-  //   const slug: string = dishPage.data
-  //   return createUrl(slug)
-  // } else {
-  //   return null
-  // }
+const handleDishPage = (): null => {
   return null
 }
 
@@ -36,7 +26,7 @@ const handleIngredients = (ingredients: IngredientJson[]): Ingredient[] => {
 const handleDish = (dish: DishJson): Dish => {
   const res: Dish = {
     image: dish.attributes.image,
-    dishPage: handleDishPage(dish.attributes.dishPage),
+    dishPage: handleDishPage(),
     id: dish.id,
     name: dish.attributes.name,
     slug: dish.attributes.slug,

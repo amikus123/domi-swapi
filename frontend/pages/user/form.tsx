@@ -17,32 +17,31 @@ const form = () => {
   })
   return (
     <>
-    <FirstTimeModal/>
-    <Stack spacing={8} w={800}>
-      {/* if user has never saved his data, modal will be shown */}
-      <Text fontSize="40" variant="h2">
-        Edytuj twoje dane
-      </Text>
-      <Flex w="100%" justify="space-between">
-        <InputColumn formData={formData} setFormData={setFormData} />
-        <ResultColumn formData={formData} />
-      </Flex>
-      <Flex justify="flex-end">
-        <Button
-          isLoading={loading}
-          onClick={() => {
-            setLoading(!loading)
-            // make request to save data, show toast on resolve
-          }}
-          colorScheme="teal"
-          variant="solid"
-        >
-          Zapisz zmiany
-        </Button>
-      </Flex>
-    </Stack>
+      <FirstTimeModal />
+      <Stack spacing={8} w={800}>
+        {/* if user has never saved his data, modal will be shown */}
+        <Text fontSize="40" variant="h2">
+          Edytuj twoje dane
+        </Text>
+        <Flex w="100%" justify="space-between">
+          <InputColumn formData={formData} setFormData={setFormData} />
+          <ResultColumn formData={formData} />
+        </Flex>
+        <Flex justify="flex-end">
+          <Button
+            isLoading={loading}
+            onClick={() => {
+              setLoading(!loading)
+              // make request to save data, show toast on resolve
+            }}
+            colorScheme="teal"
+            variant="solid"
+          >
+            Zapisz zmiany
+          </Button>
+        </Flex>
+      </Stack>
     </>
-
   )
 }
 

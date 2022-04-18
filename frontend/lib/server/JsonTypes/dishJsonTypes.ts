@@ -43,4 +43,3 @@ export interface NameAmountJson {
 export interface IngredientJson extends NameAmountJson {
   replacements: NameAmountJson[]
 }
-export interface IngredientReplacementsJson {}

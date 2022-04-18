@@ -13,29 +13,10 @@ interface TextCardProps {
 }
 export default function TextCard({ data }: TextCardProps) {
   const {
-    content,
-    date,
-    description,
     mainImage,
     title,
-    blogCategories,
-    cardData,
-    slug,
   } = data
 
-  const x = [
-    "createdAt",
-    "updatedAt",
-    "title",
-    "description",
-    "date",
-    "slug",
-    "mainImage",
-    "cardData",
-    "blogCategories",
-    "content",
-  ]
-  const href = `/blogs/${slug}`
   return (
     <NextLink href="#">
       <Flex

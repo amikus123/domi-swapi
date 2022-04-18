@@ -1,10 +1,6 @@
-import React from 'react'
+import React from "react"
 
-interface BlogHeaderProps{
-    title:string,
-    tags:any[]
-    
-}
+
 const BlogHeader = () => {
   return (
     <div>BlogHeader</div>

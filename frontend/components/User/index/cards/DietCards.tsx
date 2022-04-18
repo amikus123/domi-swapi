@@ -11,7 +11,6 @@ const DietCards = ({ diets, selectedDietName }: DietCardsProps) => {
   const { isOpen, onToggle } = useDisclosure()
   return (
     <Flex justify="space-evenly" wrap="wrap" w="1000px" direction="column">
-      {/* show current diet */}
       <Flex>
         <Text>Selkected diet: </Text>
         <ImageCard

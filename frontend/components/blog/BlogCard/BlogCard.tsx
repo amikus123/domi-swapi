@@ -14,10 +14,6 @@ interface BlogCardProps {
 }
 export default function BlogCard({ data }: BlogCardProps) {
   const {
-    content,
-    date,
-    description,
-    mainImage,
     title,
     blogCategories,
     cardData,

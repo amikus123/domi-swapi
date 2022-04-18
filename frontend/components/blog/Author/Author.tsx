@@ -1,5 +1,4 @@
-import { Stack, Avatar,Text } from '@chakra-ui/react'
-import React from 'react'
+import { Stack, Avatar,Text } from "@chakra-ui/react"
 
 const Author = () => {
   return (

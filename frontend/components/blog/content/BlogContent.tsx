@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react"
+import {  Stack } from "@chakra-ui/react"
 import React from "react"
 import BlogDescriptionImage from "./BlogDescriptionImage"
 import BlogSeparator from "./BlogSeparator"
@@ -15,9 +15,7 @@ const contentTypes = {
   "blog.description-image": "blog.description-image",
 }
 // based on  propetrt "__copmonents we returt deifferent element
-{
-  /*  */
-}
+
 const BlogContent = ({ data }: BlogContentProps) => {
   const getElement = (obj: any) => {
     const property = obj["__component"]

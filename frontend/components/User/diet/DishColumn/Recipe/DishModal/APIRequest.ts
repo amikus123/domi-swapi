@@ -6,7 +6,7 @@ import { DishPreference, Dish } from "../../../../api/types"
 
 export const resetDishPreferences = async (
   userDataId: number
-): Promise<Boolean> => {
+): Promise<boolean> => {
   const request = await updateDishPreferencesRequest({
     userDataId,
     data: [],
@@ -23,7 +23,7 @@ export const updateDishes = async ({
   data,
   userDataId,
   dishes,
-}: UpdateDishesProps): Promise<Boolean> => {
+}: UpdateDishesProps): Promise<boolean> => {
   const compatibleData = makeDBcompatible(data, dishes)
   console.log(compatibleData, userDataId, "XDD")
   const request = await updateDishPreferencesRequest({

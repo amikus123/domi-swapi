@@ -1,8 +1,7 @@
 import axios from "axios"
 import { getApiUrl } from "../../../../lib/api"
 
-
-export interface PreferedIngredientRequest{
+export interface PreferedIngredientRequest {
   originalName: string
   preferredName: string
 }
@@ -30,7 +29,7 @@ export interface IngredientPreferencesAPI extends UserDataRequestData {
 export const updateDishPreferencesRequest = async ({
   userDataId,
   data,
-}: DishPreferencesAPI): Promise<Boolean> => {
+}: DishPreferencesAPI): Promise<boolean> => {
   const url = `${getApiUrl()}/api/user-combined-datas/${userDataId}`
   const body = {
     data: {
@@ -54,15 +53,15 @@ export const updateDishPreferencesRequest = async ({
 export const updateIngredientPreferencesRequest = async ({
   userDataId,
   data,
-}: IngredientPreferencesAPI): Promise<Boolean> => {
+}: IngredientPreferencesAPI): Promise<boolean> => {
   const url = `${getApiUrl()}/api/user-combined-datas/${userDataId}`
-  
+
   const body = {
     data: {
       ingredientPreferences: data,
     },
   }
-  console.log(body,"XDDD")
+  console.log(body, "XDDD")
   try {
     await axios({
       method: "PUT",

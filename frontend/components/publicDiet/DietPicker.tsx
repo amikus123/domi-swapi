@@ -11,7 +11,7 @@ const DietPicker = ({ categories }: BlogCategoryBoxProps) => {
   return (
     <Wrap spacing="30px" py="20px" justify="center" height="fit-content">
       {Object.values(categories).map((item, index) => {
-        const { image, name, slug, description } = item
+        const { image, name,  description } = item
         return (
           <WrapItem key={index}>
             <DietCard

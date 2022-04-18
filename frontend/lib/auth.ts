@@ -40,13 +40,13 @@ export const loginWithEmail = async (email: string, password: string) => {
       return response.data
     })
     .catch((error) => {
-      console.log(`An error occurred:`, error.response)
+      console.log("An error occurred:", error.response)
       return error.response.data.error.message
     })
   return res
 }
 
-export const resetPassword = async (email: string, password: string) => {
+export const resetPassword = async (email: string) => {
   const res = await axios
     .post(`${process.env.API_URL}/api/auth/forgot-password`, {
       email,
@@ -56,7 +56,7 @@ export const resetPassword = async (email: string, password: string) => {
       return response.data
     })
     .catch((error) => {
-      console.log(`An error occurred:`, error.response)
+      console.log("An error occurred:", error.response)
       return error.response.data.error.message
     })
   return res

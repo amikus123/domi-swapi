@@ -39,7 +39,7 @@ const index = ({ dishes, diets, categories }) => {
 
 export default index
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps() {
   // HARDCODE TEST  USER , OR GIVE FAKE DATA
   // const user = await getUser(jwt)
   // FETCH LIST OF DIETS

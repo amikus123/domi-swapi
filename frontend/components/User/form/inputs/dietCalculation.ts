@@ -35,17 +35,7 @@ export const totalCalc = ({
   }
   const CPM = calculateCPM(BMR)
 
-  // makroskaldniki
-  // 25 B
-  // 35 T
-  // 40W
-  //   const [bRatio, tRatio, wRatio] = [0.25, 0.35, 0.4]
-  //   const calculateMicro = () => {
-  //     const b = (CPM * bRatio) / 4
-  //     const t = (CPM * tRatio) / 9
-  //     const w = (CPM * wRatio) / 4
-  //     return { b, t, w }
-  //   }
+
 
   return { BMI:BMI.toFixed(2), BMR:BMR.toFixed(0), CPM:CPM.toFixed(0) }
 }

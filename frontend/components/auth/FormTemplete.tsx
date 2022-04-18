@@ -41,14 +41,14 @@ const FormTemplate = ({ formData }: FormTemplateProps) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         initialErrors={{ error: "XD" }}
-        onSubmit={async (values, actions) => {
+        onSubmit={async (values) => {
           setGlobalError("")
           const res = await onSubmit(values.email, values.password)
           // either returts string or object
-         console.log(res,"WHA WE GOT")
+          console.log(res, "WHA WE GOT")
           if (typeof res === "string") {
             //TODO add some function to translate this in to polish
-            let errorDesc = res
+            const errorDesc = res
             toast({
               title: errorTitle,
               description: errorDesc,
@@ -75,7 +75,7 @@ const FormTemplate = ({ formData }: FormTemplateProps) => {
               {Object.keys(values).map((item, i) => {
                 return (
                   <Field name={item} key={i}>
-                    {({ field, form }) => (
+                    {({ field }) => (
                       <FormControl isInvalid={errors[item] && touched[item]}>
                         <FormLabel htmlFor={item}>
                           {inputsData[item].label}

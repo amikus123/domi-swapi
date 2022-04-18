@@ -1,11 +1,10 @@
 import { getStrapiMedia } from "../../lib/media"
 import NextImage from "next/image"
 import { Box, chakra, Image } from "@chakra-ui/react"
-import { useEffect } from "react"
 
 export const getImageWithBestWidth = (
   formats: any,
-  idealWidth: number = 1000
+  idealWidth = 1000
 ) => {
   // * gets  the  next biggest size
   const sizeNames = Object.keys(formats)
@@ -46,10 +45,7 @@ export const MyImage = ({
   variant,
   ...rest
 }: ImageProps) => {
-  let { alternativeText, formats, height, width } = image.data.attributes
-  alternativeText = alternativeText || ""
-
-  const ratioWH = width / height
+  const { alternativeText = "", formats } = image.data.attributes
 
   return (
     <>
@@ -78,17 +74,13 @@ export const MyImage = ({
           />
         </Box>
       ) : (
-
-        <BlogImg   
-        
-            objectFit="contain"
-            src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
-            alt={alternativeText}
-            layout="fill"
-            className=""
-            aria-label={alternativeText}
-        
-        
+        <BlogImg
+          objectFit="contain"
+          src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
+          alt={alternativeText}
+          layout="fill"
+          className=""
+          aria-label={alternativeText}
         />
       )}
     </>

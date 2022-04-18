@@ -18,7 +18,6 @@ export interface BlogDataJson {
   cardData: CardDataJson
 }
 
-export interface BlogContentJson {}
 
 export interface BlogImageJson {
   description: string

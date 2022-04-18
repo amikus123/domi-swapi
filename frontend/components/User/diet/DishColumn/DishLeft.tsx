@@ -1,6 +1,6 @@
 import React from "react"
 import NextImage from "next/image"
-import { Flex, Box, Image, Avatar } from "@chakra-ui/react"
+import { Flex, Box } from "@chakra-ui/react"
 import { getStrapiMedia } from "../../../../lib/media"
 
 interface DishLeftProps {

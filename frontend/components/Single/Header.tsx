@@ -19,7 +19,6 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons"
-import { useRouter } from "next/dist/client/router"
 import NextLink from "next/link"
 import { destroyCookie } from "nookies"
 
@@ -28,13 +27,11 @@ interface HeaderProps {
   user: any | null
 }
 
-export default function WithSubnavigation({ navData, user }: HeaderProps) {
+export default function WithSubnavigation({ user }: HeaderProps) {
   const { isOpen, onToggle } = useDisclosure()
   const logout = () => {
     destroyCookie(null, "jwt")
   }
-  const router = useRouter()
-  // color link if we are on their pagbe
   return (
     <Box>
       <Flex

@@ -1,5 +1,5 @@
-import { Stack, Heading, Text, Flex, Button, Divider } from "@chakra-ui/react"
-import React, { useEffect, useState } from "react"
+import { Stack, Heading, Text, Flex, Divider } from "@chakra-ui/react"
+import React, { useEffect } from "react"
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"
 import BlogContent from "./content/BlogContent"

@@ -1,5 +1,5 @@
 import React from "react"
-import {  Heading, Text, Box } from "@chakra-ui/react"
+import {  Box } from "@chakra-ui/react"
 
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"

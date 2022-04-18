@@ -1,4 +1,4 @@
-import { Box, Flex, Stack, Text } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import React from "react"
 import BlogCategoryBox from "../../components/blog/Categories/BlogCategoryBox"
 import CategoryBreadcrumbs from "../../components/blog/Categories/CategoryBreadcrumbs"
@@ -25,7 +25,7 @@ const index = ({ categories }: IndexProps) => {
 
 export default index
 
-export async function getStaticProps(ctx) {
+export async function getStaticProps() {
   const categories = await getBlogCategories()
   return {
     props: { categories: categories },

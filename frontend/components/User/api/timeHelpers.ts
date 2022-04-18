@@ -7,8 +7,8 @@ import {
 import { DateRange, DietDay, DishColumnData, FullDietDay } from "./types"
 
 export const stringToDate = (dateStr: string): Date => {
-  //* dateStr should be in format  YYYY-MM-DD (same as revided from strapi)
-  let [y, m, d] = dateStr.split("-")
+  //* dateStr should be in format  YYYY-MM-DD (same as recived from strapi)
+  const [y, m, d] = dateStr.split("-")
   return new Date(`${m} ${d}, ${y} 00:00:00`)
 }
 
@@ -51,8 +51,6 @@ export const filterSingleDay = (
   // * calculate offset from today
   // * get diet based on modulo
   const today = startOfToday()
-
-  // const indexInMainArr = indexesOfDays[]
   return [
     {
       date,

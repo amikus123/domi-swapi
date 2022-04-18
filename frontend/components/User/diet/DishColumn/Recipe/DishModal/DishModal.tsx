@@ -17,7 +17,6 @@ import { isPublicState } from "../../../../api/atoms/isPublic"
 import { userIdsState } from "../../../../api/atoms/userIds"
 import { FullDish } from "../../../../api/types"
 import DishModalDish from "./DishModalDish"
-import { changeDishPreference } from "./functions"
 import { handlDishChange } from "./handleInteraction"
 
 interface DishModalProps {

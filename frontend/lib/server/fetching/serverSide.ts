@@ -60,7 +60,7 @@ export const getUser = async (jwt: string): Promise<UserFullData> => {
     }
   )
 
-  let userDiet = await fetch(
+  const userDiet = await fetch(
     `${getApiUrl()}/api/user-combined-datas?${query}`,
     {
       headers: {
@@ -136,10 +136,10 @@ export const getAllDishes = async () => {
 // * Fetches all diets
 
 interface DietsFetchConfig {
-  full?: boolean
+  full: boolean
 }
 export const getDiets = async (
-  config: DietsFetchConfig
+  config?: DietsFetchConfig
 ): Promise<Record<string, ParsedDiet>> => {
   const { full = false } = config
   const populateArr = ["dietImage"]

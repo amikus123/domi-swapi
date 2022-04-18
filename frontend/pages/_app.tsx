@@ -1,21 +1,25 @@
-import App from 'next/app';
-import '../style/index.css';
-import { createContext } from 'react';
-import Router from 'next/router';
-import { parseCookies } from 'nookies';
+import App from "next/app";
+import "../style/index.css";
+import { createContext } from "react";
+import Router from "next/router";
+import { parseCookies } from "nookies";
 import {
   RecoilRoot,
-} from 'recoil';
-import { fetchAPI } from '../lib/api';
-import { Chakra } from '../style/chakraProvider';
-import Layout from '../components/Single/Layout';
+} from "recoil";
+import { Chakra } from "../style/chakraProvider";
+import Layout from "../components/Single/Layout";
+import { fetchAPI } from "../lib/api";
 
 export const GlobalContext = createContext({});
 
-function MyApp(props) {
-  const { Component, pageProps, user } = props;
-  const { global } = pageProps;
+interface MyAppProps{
+  Component?:any,
+  user:any,
+  pageProps:any
+}
 
+function MyApp({Component, pageProps, user}:MyAppProps) {
+  const { global } = pageProps;
   return (
     <>
       {/* <DefaultSEO  {...SEO}/> */}
@@ -42,36 +46,33 @@ const redirectUser = (ctx, location) => {
     Router.push(location);
   }
 };
-// getInitialProps disables automatic static optimization for pages that don't
-// have getStaticProps. So article, category and home pages still get SSG.
-// Hopefully we can replace this with getStaticProps once this issue is fixed:
-// https://github.com/vercel/next.js/discussions/10949
 
-MyApp.getInitialProps = async (context) => {
-  const { Component, ctx } = context;
+
+MyApp.getInitialProps = async (context):Promise<MyAppProps> => {
+  const {  ctx } = context;
   const { jwt } = parseCookies(ctx);
   let user = null;
   if (!jwt) {
     // us there is no token, dont allow use to go to the /user pages
-    if (ctx.pathname.startsWith('/user')) {
-      redirectUser(ctx, '/auth/login');
+    if (ctx.pathname.startsWith("/user")) {
+      redirectUser(ctx, "/auth/login");
     }
   } else {
     // if there is token, dont allow use to go to the auth pages
-    if (ctx.pathname.startsWith('/auth')) {
-      redirectUser(ctx, '/');
+    if (ctx.pathname.startsWith("/auth")) {
+      redirectUser(ctx, "/");
     }
-    user = await fetchAPI('/users/me', { jwt });
+    user = await fetchAPI("/users/me", { jwt });
   }
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(context);
   // Fetch global site settings from Strapi
-  const globalRes = await fetchAPI('/global', {
+  const globalRes = await fetchAPI("/global", {
     urlParamsObject: {
       populate: {
-        favicon: '*',
+        favicon: "*",
         defaultSeo: {
-          populate: '*',
+          populate: "*",
         },
       },
     },

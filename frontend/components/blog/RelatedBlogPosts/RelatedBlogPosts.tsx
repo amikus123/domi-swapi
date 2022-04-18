@@ -13,7 +13,6 @@ interface RelatedBlogPostsProps {
 const RelatedBlogPosts = ({
   blogIds,
   currentBlogId,
-  category,
 }: RelatedBlogPostsProps) => {
   const [availableIds, setAvailableIds] =
     useState<Record<number, boolean>>(blogIds)

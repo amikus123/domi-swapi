@@ -2,7 +2,7 @@ import { useRadio, Box, useRadioGroup, HStack } from "@chakra-ui/react"
 
 // 1. Create a component that consumes the `useRadio` hook
 
-function RadioCard(props) {
+function RadioCard(props: any) {
   const { getInputProps, getCheckboxProps } = useRadio(props)
 
   const input = getInputProps()
@@ -45,7 +45,7 @@ export default function GenderButtons({
   changeValue,
   value,
 }: GenderButtonsProps) {
-  const parseToString = (bool: Boolean) => (bool ? "male" : "female")
+  const parseToString = (bool: boolean) => (bool ? "male" : "female")
   const parseToBool = (gender: string) => gender === "male"
 
   const options = ["male", "female"]

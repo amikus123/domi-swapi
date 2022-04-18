@@ -7,6 +7,7 @@ interface BMHLinkProps {
 }
 const BMLink = ({ children, ...props }: BMHLinkProps) => {
   return (
+    // eslint-disable-next-line react/prop-types
     <NextLink href={props.href} passHref>
       <Link {...props} color="blue.500"> {children}</Link>
     </NextLink>

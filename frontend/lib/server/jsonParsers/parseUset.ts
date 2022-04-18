@@ -66,7 +66,7 @@ export const handleDishReplacements = (
 ): Record<string, DishReplacement> => {
   const res: Record<string, DishReplacement> = {}
   dishReplacements.forEach((i) => {
-    const { possibleReplacements, original, id } = i
+    const { possibleReplacements, original } = i
     const originalName = original.data.attributes.name
     const arr: string[] = []
     possibleReplacements.data.forEach((d) => {
@@ -156,7 +156,7 @@ export const handleUser = (data: UserRequestDataJson): UserFullData => {
     return res
   }
   const handlePersonalData = (personalData: UserDataJson): UserPersonalData => {
-    const { age, id } = personalData
+    const { age } = personalData
     return {
       age,
     }

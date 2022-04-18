@@ -13,7 +13,7 @@ export interface DatePickerProps {
   singleDate: Date
   setSingleDate: React.Dispatch<React.SetStateAction<Date>>
   showRange: boolean
-  setShowRange: React.Dispatch<React.SetStateAction<Boolean>>
+  setShowRange: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function DatePicker({

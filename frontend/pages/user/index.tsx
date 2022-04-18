@@ -1,4 +1,4 @@
-import { Stack, Flex, Text, Button } from "@chakra-ui/react"
+import { Stack,  Text, } from "@chakra-ui/react"
 import { parseCookies } from "nookies"
 import React, { useEffect, useState } from "react"
 import { getDiets, getUser } from "../../lib/server/fetching/serverSide"
@@ -18,7 +18,6 @@ const index = ({ user, diets, originalDietName }: IndexProps) => {
     console.log(diets)
     console.log(originalDietName)
   }, [user, diets])
-  const { userDiet } = user
   // change crerwetn diet
   const [selectedDietName, setSelectedDietName] = useState(originalDietName)
   return (

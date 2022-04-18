@@ -57,7 +57,7 @@ const PdfButton = ({ dishColumnData }: MyPdfProps) => {
       document={<MyDocument dishColumnData={dishColumnData} />}
       fileName="dietka.pdf"
     >
-      {({ blob, url, loading, error }) => (
+      {({  loading }) => (
         <>
           <Button isLoading={loading}>Pobierz</Button>
         </>

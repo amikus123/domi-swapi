@@ -7,13 +7,15 @@ import BMHeading from "../../Markdown/Blog/BMHeading"
 import BMLink from "../../Markdown/Blog/BMLink"
 import BMParagraph from "../../Markdown/Blog/BMParagraph"
 import BMQuote from "../../Markdown/Blog/BMQuote"
-interface BlogDescriptionImageProps {
+interface BlogDescriptionImageProps extends ImageDesctiptionProps {
   image: any
-  text: string
-  height:number
+  height: number
 }
 
-const ImageDesctiption = ({ text }) => {
+interface ImageDesctiptionProps {
+  text: string
+}
+const ImageDesctiption = ({ text }: ImageDesctiptionProps) => {
   return (
     <>
       {text && (
@@ -35,20 +37,14 @@ const ImageDesctiption = ({ text }) => {
   )
 }
 
-
-
 const BlogDescriptionImage = ({
   image,
   text,
-  height
+  height,
 }: BlogDescriptionImageProps) => {
   return (
-    <Stack  justify="center" align="center"   >
-      <MyImage
-        variant="fullW"
-        image={image}
-        idealHeight={height}
-      />
+    <Stack justify="center" align="center">
+      <MyImage variant="fullW" image={image} idealHeight={height} />
       <ImageDesctiption text={text} />
     </Stack>
   )
