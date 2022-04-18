@@ -4,13 +4,14 @@ import CategoryBreadcrumbs from "../../components/blog/Categories/CategoryBreadc
 import DietPicker from "../../components/publicDiet/DietPicker"
 import { UserFullData } from "../../components/User/api/types"
 import {
+  getAllDishes,
   getBlogCategories,
   getDiets,
 } from "../../lib/server/fetching/serverSide"
 import DietComponent from "../user/diet"
 
-const index = ({ categories, diets }) => {
-  console.log(diets, categories, "AASSDDD")
+const index = ({ dishes, diets, categories }) => {
+  console.log(diets, categories, "AASSDDD", dishes)
   const [n, setN] = useState(0)
 
   return (
@@ -27,7 +28,7 @@ const index = ({ categories, diets }) => {
       </button>
       <DietPicker categories={categories} />
       <DietComponent
-        originalDishes={originalDishes}
+        originalDishes={dishes}
         user={user}
         isPagePublic={true}
         diet={diets[Object.keys(diets)[n]]}
@@ -44,10 +45,12 @@ export async function getServerSideProps(ctx) {
   // FETCH LIST OF DIETS
   // const dishes = await getDishes(user, jwt)
   const diets = await getDiets({ full: true })
+  const dishes = await getAllDishes()
+
   const categories = await getBlogCategories()
 
   return {
-    props: { categories, diets },
+    props: { dishes, diets, categories },
   }
 }
 
@@ -119,89 +122,9 @@ const user: UserFullData = {
       },
     },
   },
-  dishPreferences: {
-    Spaghetti: {
-      id: 143,
-      originalName: "Spaghetti",
-      preferedName: "Jajecznica",
-    },
-    Pancake: {
-      id: 144,
-      originalName: "Pancake",
-      preferedName: "Spaghetti",
-    },
-    Jajecznica: {
-      id: 145,
-      originalName: "Jajecznica",
-      preferedName: "Pancake",
-    },
-    Salad: {
-      id: 146,
-      originalName: "Salad",
-      preferedName: "Tost",
-    },
-  },
-  ingredientPreferences: {
-    Spaghetti: {
-      id: 128,
-      dishName: "Spaghetti",
-      preferredIngredients: [
-        {
-          id: 187,
-          originalName: "Makaron",
-          preferredName: "Makaron spaghtetii",
-        },
-        {
-          id: 188,
-          originalName: "Makaron",
-          preferredName: "Makaron rurki",
-        },
-        {
-          id: 189,
-          originalName: "Makaron",
-          preferredName: "Makaron spaghtetii",
-        },
-      ],
-    },
-    Tost: {
-      id: 129,
-      dishName: "Tost",
-      preferredIngredients: [
-        {
-          id: 190,
-          originalName: "a",
-          preferredName: "v",
-        },
-      ],
-    },
-  },
-  uniqueDishes: {
-    Spaghetti: {
-      id: 1,
-      name: "Spaghetti",
-      originalName: "Spaghetti",
-    },
-    Jajecznica: {
-      id: 2,
-      name: "Jajecznica",
-      originalName: "Jajecznica",
-    },
-    Salad: {
-      id: 3,
-      name: "Salad",
-      originalName: "Salad",
-    },
-    Pancake: {
-      id: 4,
-      name: "Pancake",
-      originalName: "Pancake",
-    },
-    Tost: {
-      name: "Tost",
-      id: 5,
-      originalName: "Tost",
-    },
-  },
+  dishPreferences: {},
+  ingredientPreferences: {},
+  uniqueDishes: {},
   userDataId: 1,
 }
 

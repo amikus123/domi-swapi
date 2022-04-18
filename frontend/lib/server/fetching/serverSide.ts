@@ -112,6 +112,27 @@ export const getDishes = async (user: UserFullData, jwt: string) => {
   return uniqueDishHandler(dishData)
 }
 
+export const getAllDishes = async () => {
+  const dishQuery = qs.stringify(
+    {
+      populate: [
+        "image",
+        "nutrients",
+        "ingredients",
+        "ingredients.replacements",
+        "dishPage",
+      ],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+  const dishRequest = await fetch(`${getApiUrl()}/api/dishes?${dishQuery}`)
+  const dishData = await dishRequest.json()
+  return uniqueDishHandler(dishData)
+}
+
 // * Fetches all diets
 
 interface DietsFetchConfig {

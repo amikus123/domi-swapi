@@ -25,7 +25,6 @@ import {
 
 export const handleDietDays = (
   dietDays: DayJson[],
-
   uniqueDishes: Record<string, DishUniqueData>
 ): DietDay[] => {
   // console.log(dietDays,"XD")

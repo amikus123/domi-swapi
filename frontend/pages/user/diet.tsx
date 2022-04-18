@@ -35,6 +35,7 @@ import DietLoading from "../../components/User/diet/DietLoading"
 import { userIdsState } from "../../components/User/api/atoms/userIds"
 import PdfButton from "../../components/User/diet/Pdf/PdfButton"
 import { isPublicState } from "../../components/User/api/atoms/isPublic"
+import { createCipheriv } from "crypto"
 
 interface DietProps {
   user: UserFullData
@@ -61,7 +62,6 @@ const DietComponent = ({
   const [isPublic, setIsPublic] = useRecoilState(isPublicState)
 
   useEffect(() => {
-    console.log("STATE", user, originalDishes)
     setIsPublic(isPagePublic)
   }, [isPagePublic])
 
@@ -84,33 +84,20 @@ const DietComponent = ({
 
   // * USER PREFERENCES
   // * key is name of the dish, value contains array of prefference
-  // const [ingredientPreferences, setIngredientPreferences] = useState<
-  //   Record<string, IngredientPreference>
-  // >(originalIngredientPreferences)
+
   const [ingredientPreferences, setIngredientPreferences] = useRecoilState(
     ingredientPreferencesState
   )
   useEffect(() => {
     setIngredientPreferences(originalIngredientPreferences)
     setDishPreferences(originalDishPreferences)
-  }, [])
-
+  }, [originalDishPreferences, originalIngredientPreferences])
   // * key is the name of the dish, value contains  name of prefered dish
   const [dishPreferences, setDishPreferences] =
     useRecoilState(dishPreferencesState)
-
   // * DISH STATE
   // * CHANGE DISHES STATE ON change of "ingredientPreferences"
-  // const [dishes, setDishes] = useState(
-  //   changeDishesIngredients(originalDishes, ingredientPreferences)
-  // )
-
   const [dishes, setDishes] = useRecoilState(dishesState)
-  useEffect(() => {
-    setDishes(
-      changeDishesIngredients(originalDishes, originalIngredientPreferences)
-    )
-  }, [])
 
   useEffect(() => {
     setDishes(changeDishesIngredients(originalDishes, ingredientPreferences))
@@ -122,6 +109,9 @@ const DietComponent = ({
   const [indexesOfDays, setIndexesOfDays] = useState<number[]>(
     getDietArr(dateRange, days)
   )
+  useEffect(() => {
+    setIndexesOfDays(getDietArr(dateRange, days))
+  }, [days, dateRange])
 
   const [fullDietDays, setFullDietDays] = useState<FullDietDay[]>(
     changeDishesInDays(days, dishReplacements, dishPreferences, dishes)
@@ -134,8 +124,11 @@ const DietComponent = ({
       dishPreferences,
       dishes
     )
-    if (res[0].kcalCount !== 0) {
+    console.log(res, "asddsadsdsadsa")
+    if (res.length > 0 && res[0].dishes !== undefined) {
       setFullDietDays(res)
+    } else {
+      console.error("should not fire")
     }
   }, [days, dishReplacements, dishPreferences, dishes])
 
@@ -150,6 +143,14 @@ const DietComponent = ({
       indexesOfDays,
       fullDietDays
     )
+    console.log(newData, "NEW DATA", [
+      showRange,
+      dates,
+      singleDate,
+      dateRange,
+      indexesOfDays,
+      fullDietDays,
+    ])
     setColumData(newData)
   }, [showRange, dates, singleDate, dateRange, indexesOfDays, fullDietDays])
 
@@ -187,8 +188,9 @@ const DietComponent = ({
   }
 
   useEffect(() => {
-    console.log(columnData, "XDDDD")
-  })
+    console.log(ingredientPreferences, "ingredientPreferences")
+  }, [ingredientPreferences])
+
   return (
     <Stack maxW="1000px" justify="center" align="center" spacing={16} pb={20}>
       <Heading mt={8} textAlign={["center", "center", "start"]}>
@@ -203,7 +205,8 @@ const DietComponent = ({
         showRange={showRange}
         setShowRange={setShowRange}
       />
-      {columnData.length > 0 && Object.keys(columnData[0]).length > 0 ? (
+      {columnData.length > 0 &&
+      columnData[0].fullDietDay.dishes[0].dish !== undefined ? (
         <>
           <DishColumn dishColumnData={columnData} />
           <PdfButton dishColumnData={columnData} />
