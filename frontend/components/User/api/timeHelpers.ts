@@ -1,4 +1,9 @@
-import { differenceInCalendarDays, isSameDay, addDays } from "date-fns"
+import {
+  differenceInCalendarDays,
+  isSameDay,
+  addDays,
+  startOfToday,
+} from "date-fns"
 import { DateRange, DietDay, DishColumnData, FullDietDay } from "./types"
 
 export const stringToDate = (dateStr: string): Date => {
@@ -24,6 +29,12 @@ export const getDietArr = (
       index = 0
     }
   }
+
+  const newMethod = []
+  for (let i = 0; i <= uniqueDietDayCount; i++) {
+    newMethod.push(i)
+  }
+  console.log(newMethod, "NEW METHOD", dietDays)
   return dietArr
 }
 
@@ -35,35 +46,44 @@ const calculateOffset = (date: Date, firstPossibleDate: Date) => {
 
 export const filterSingleDay = (
   date: Date,
-  firstPossibleDate: Date,
-  indexesOfDays: number[],
   fullDietDays: FullDietDay[]
 ): DishColumnData[] => {
-  const indexInMainArr = indexesOfDays[calculateOffset(date, firstPossibleDate)]
-  return [{ date, fullDietDay: fullDietDays[indexInMainArr] }]
+  // * calculate offset from today
+  // * get diet based on modulo
+  const today = startOfToday()
+
+  // const indexInMainArr = indexesOfDays[]
+  return [
+    {
+      date,
+      fullDietDay:
+        fullDietDays[calculateOffset(date, today) % fullDietDays.length],
+    },
+  ]
 }
 
 export const filterRange = (
   firstDate: Date,
   lastDate: Date,
-  firstPossibleDate: Date,
-  indexesOfDays: number[],
   fullDietDays: FullDietDay[]
 ): DishColumnData[] => {
+  let firstDateLocal = firstDate
   const arr: DishColumnData[] = []
-  while (!isSameDay(firstDate, lastDate)) {
-    const offSet = calculateOffset(firstDate, firstPossibleDate)
-    const indexInMainArr = indexesOfDays[offSet]
+
+  while (!isSameDay(firstDateLocal, lastDate)) {
+    const indexInMainArr =
+      calculateOffset(firstDateLocal, firstDate) % fullDietDays.length
     arr.push({
-      date: firstDate,
+      date: firstDateLocal,
       fullDietDay: fullDietDays[indexInMainArr],
     })
-    firstDate = addDays(firstDate, 1)
+    firstDateLocal = addDays(firstDateLocal, 1)
   }
-  const offSet = calculateOffset(firstDate, firstPossibleDate)
-  const indexInMainArr = indexesOfDays[offSet]
+  const indexInMainArr =
+    calculateOffset(firstDateLocal, firstDate) % fullDietDays.length
+
   arr.push({
-    date: firstDate,
+    date: firstDateLocal,
     fullDietDay: fullDietDays[indexInMainArr],
   })
 

@@ -77,6 +77,7 @@ const DietComponent = ({
   })
   // * min and max date
 
+
   // * if public  we set to hardcoed high values
   const [dateRange, setDateRange] = useState<DateRange>(
     isPublic ? noLimits() : datesFromUser(user)
@@ -170,22 +171,16 @@ const DietComponent = ({
       return filterRange(
         fDates.start,
         fDates.end,
-        fDateRange.end,
-        fIndexesOfDays,
         fFullDietDays
       )
     } else if (fDates.end === null) {
       return filterSingleDay(
         fDates.start,
-        fDateRange.end,
-        fIndexesOfDays,
         fFullDietDays
       )
     } else {
       return filterSingleDay(
         fSingleDate,
-        fDateRange.end,
-        fIndexesOfDays,
         fFullDietDays
       )
     }
