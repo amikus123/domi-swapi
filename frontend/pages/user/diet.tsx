@@ -7,7 +7,7 @@ import MyCalendar from "../../components/User/diet/MyCalendar"
 import "react-datepicker/dist/react-datepicker.css"
 import { parseCookies } from "nookies"
 
-import { datesFromUser } from "../../components/User/diet/functions"
+import { datesFromUser, noLimits } from "../../components/User/diet/functions"
 import { getUser, getDishes } from "../../lib/server/fetching/serverSide"
 import {
   changeDishesInDays,
@@ -35,7 +35,6 @@ import DietLoading from "../../components/User/diet/DietLoading"
 import { userIdsState } from "../../components/User/api/atoms/userIds"
 import PdfButton from "../../components/User/diet/Pdf/PdfButton"
 import { isPublicState } from "../../components/User/api/atoms/isPublic"
-import { createCipheriv } from "crypto"
 
 interface DietProps {
   user: UserFullData
@@ -57,7 +56,8 @@ const DietComponent = ({
     userDataId,
   } = user
   const { days, dishReplacements, name: dietName } = diet
-  // * USE GLOBAL DATA
+
+  //* STATE
   const [userIds, setUserIds] = useRecoilState(userIdsState)
   const [isPublic, setIsPublic] = useRecoilState(isPublicState)
 
@@ -76,7 +76,11 @@ const DietComponent = ({
     end: startOfToday(),
   })
   // * min and max date
-  const [dateRange, setDateRange] = useState<DateRange>(datesFromUser(user))
+
+  // * if public  we set to hardcoed high values
+  const [dateRange, setDateRange] = useState<DateRange>(
+    isPublic ? noLimits() : datesFromUser(user)
+  )
   //* single selected Date
   const [singleDate, setSingleDate] = useState<Date>(startOfToday())
   // * boolean to control wheather the calendar works on single or range of data
@@ -186,10 +190,6 @@ const DietComponent = ({
       )
     }
   }
-
-  useEffect(() => {
-    console.log(ingredientPreferences, "ingredientPreferences")
-  }, [ingredientPreferences])
 
   return (
     <Stack maxW="1000px" justify="center" align="center" spacing={16} pb={20}>

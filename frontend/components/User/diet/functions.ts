@@ -8,3 +8,13 @@ export const datesFromUser = (user: UserFullData): DateRange => {
     start: stringToDate(user.userDiet.timeRange.start),
   }
 }
+
+
+
+
+export const noLimits = (): DateRange => {
+  return {
+    end: stringToDate("2100-01-01"),
+    start: stringToDate("2000-01-01"),
+  }
+}
