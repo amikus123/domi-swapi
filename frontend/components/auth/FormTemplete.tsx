@@ -12,9 +12,9 @@ import {
 import { Formik, Form, Field } from "formik"
 import React, { useState } from "react"
 import Layout from "./Layout"
-import { FormTemplateData } from "./authTypes"
 import NextLink from "next/link"
 import { useRouter } from "next/dist/client/router"
+import { FormTemplateData } from "../../lib/types/authTypes/authTypes"
 interface FormTemplateProps {
   formData: FormTemplateData
 }

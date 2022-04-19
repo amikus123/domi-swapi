@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
-import { FullDish } from "../../api/types"
+import { FullDish } from "../../../../lib/types/dietPage/dishTypes"
 
 import DishLeft from "./DishLeft"
 import DishRight from "./DishRight"

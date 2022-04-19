@@ -5,6 +5,7 @@ import BlogSeparator from "./BlogSeparator"
 import BlogText from "./BlogText"
 
 interface BlogContentProps {
+ // ! BlogContent is corrdsct type
   data: any[]
 }
 

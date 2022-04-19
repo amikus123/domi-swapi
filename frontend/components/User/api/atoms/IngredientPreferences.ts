@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { IngredientPreference } from "../types";
+import { IngredientPreference } from "../../../../lib/types/dietPage/userTypes";
 
 export const ingredientPreferencesState = atom({
     key: "ingredientPreferencesState",

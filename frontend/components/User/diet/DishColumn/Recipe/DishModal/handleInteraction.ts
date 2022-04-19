@@ -1,5 +1,5 @@
 import { SetterOrUpdater } from "recoil"
-import { Dish, DishPreference } from "../../../../api/types"
+import { Dish, DishPreference } from "../../../../../../lib/types/dietPage/dishTypes"
 import { updateDishes } from "./APIRequest"
 import { changeDishPreference } from "./functions"
 
@@ -9,6 +9,7 @@ export interface HandleDishChangeProps {
   dishes: Record<string, Dish>
   userDataId: number
   // * object from use toast hook
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toast: any
   loading: boolean
   toastSuccessTitle?: string

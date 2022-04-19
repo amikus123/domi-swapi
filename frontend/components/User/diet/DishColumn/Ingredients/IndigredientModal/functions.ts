@@ -1,5 +1,6 @@
 import { cloneDeep } from "lodash"
-import { Dish, IngredientPreference } from "../../../../api/types"
+import { Dish } from "../../../../../../lib/types/dietPage/dishTypes"
+import { IngredientPreference } from "../../../../../../lib/types/dietPage/userTypes"
 
 interface FullProps {
   //* name of default ingredient
@@ -28,7 +29,7 @@ type CheckInsideProps = Omit<
 export const checkIfOriginal = ({
   newName,
   originalName,
-}: CheckOriginalProps): Boolean => {
+}: CheckOriginalProps): boolean => {
   return originalName === newName
 }
 
@@ -63,7 +64,7 @@ const addPreference = ({
     id: dishes[dishName].id,
     preferredIngredients: [],
   }
-  let copy = cloneDeep(ingredientPreference)
+  const copy = cloneDeep(ingredientPreference)
   // * removing fromm array
 
   copy.preferredIngredients.push({
@@ -100,7 +101,7 @@ const modifyPreference = ({
 const checkIfInside = ({
   ingredientPreferences,
   dishName,
-}: CheckInsideProps): Boolean => {
+}: CheckInsideProps): boolean => {
   // * makes app not crash when property is not specifed
   try {
     for (const pref of ingredientPreferences[dishName].preferredIngredients) {

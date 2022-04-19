@@ -1,7 +1,6 @@
-import { Table, Thead, Tr, Th, Tbody, Td } from '@chakra-ui/react'
-import { capitalize } from 'lodash'
-import React from 'react'
-import { NameAmount } from '../../../api/types'
+import { Table, Thead, Tr, Th, Tbody, Td } from "@chakra-ui/react"
+import { capitalize } from "lodash"
+import { NameAmount } from "../../../../../lib/types/generalTypes"
 
 
 

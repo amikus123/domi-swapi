@@ -9,14 +9,16 @@ import {
   LinkOverlay,
 } from "@chakra-ui/react"
 import NextLink from "next/link"
+import { StrapiImage } from "../../../lib/types/generalTypes"
 import { MyImage } from "../../general/Images"
 
 interface DietCardProps {
   slug: string
   name: string
-  image: any
+  image: StrapiImage
   description: string
 }
+
 export default function DietCard({
   image,
   name,

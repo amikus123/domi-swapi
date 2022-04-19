@@ -1,13 +1,13 @@
-import { BlogDataJson } from "../JsonTypes/blogJsonTypes"
-import { BlogPost, handleCardData, handleCategories } from "./parseBlog"
+import { BlogCardFull } from "../../types/JSON/parsed/parsedBlogs"
+import { BlogCategoryWithBlogCardsWrapJson } from "../../types/JSON/raw/blogCategoriesTypes"
+import { handleCardData, handleCategories } from "./parseBlog"
+import { handleBlogImage } from "./parseImage"
 
-export type CategoryBlogPost = Omit<BlogPost, "content">
-
-export const handleBlogCategoryPosts = (
-  initial: BlogCategoryPostWrapJson
-): CategoryBlogPost[] => {
+export const handleBlogCards = (
+  initial: BlogCategoryWithBlogCardsWrapJson
+): BlogCardFull[] => {
   const blogs = initial.data[0].attributes.blogs.data
-  const res: CategoryBlogPost[] = blogs.map((item) => {
+  const res: BlogCardFull[] = blogs.map((item) => {
     const {
       blogCategories,
       cardData,
@@ -24,37 +24,8 @@ export const handleBlogCategoryPosts = (
       readingTime,
       description,
       date,
-      cardData: handleCardData(cardData),
-      mainImage,
-      blogCategories: handleCategories(blogCategories),
-    }
-  })
-
-  return res
-}
-export const handleBlogsById = (
-  initial:any
-): CategoryBlogPost[] => {
-  const blogs = initial.data
-  const res: CategoryBlogPost[] = blogs.map((item) => {
-    const {
-      blogCategories,
-      cardData,
-      date,
-      description,
-      mainImage,
-      readingTime,
-      slug,
-      title,
-    } = item.attributes
-    return {
-      slug,
-      title,
-      readingTime,
-      description,
-      date,
-      cardData: handleCardData(cardData),
-      mainImage,
+      cardData: handleCardData(cardData, mainImage),
+      image: handleBlogImage(mainImage),
       blogCategories: handleCategories(blogCategories),
     }
   })
@@ -64,27 +35,3 @@ export const handleBlogsById = (
 
 
 
-
-export type BlogCategoryPostData = Omit<BlogDataJson, "content">
-
-interface BlogCategoryPostDataWrap {
-  id: number
-  attributes: BlogCategoryPostData
-}
-
-interface BlogCategoryPostAttributesJson {
-  name: string
-  slug: string
-  description: string
-  blogs: {
-    data: BlogCategoryPostDataWrap[]
-  }
-}
-interface BlogCategoryPostDataJson {
-  id: number
-  attributes: BlogCategoryPostAttributesJson
-}
-export interface BlogCategoryPostWrapJson {
-  data: BlogCategoryPostDataJson[]
-  meta: any
-}

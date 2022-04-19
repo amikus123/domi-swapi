@@ -11,14 +11,14 @@ import {
 import BlogTags from "../BlogTags"
 import { MyImage } from "../../general/Images"
 import NextLink from "next/link"
-import { BlogPost } from "../../../lib/server/jsonParsers/parseBlog"
+import { BlogCardFull } from "../../../lib/types/JSON/parsed/parsedBlogs"
 interface BlogCardProps {
-  data: BlogCardData
-  category?: string
-  fullW?:boolean
+  data: BlogCardFull
+  categorySlug?: string
+  fullW?: boolean
 }
 
-export type BlogCardData = Omit<BlogPost,  "content">
+// export type BlogCardData = Omit<BlogPost,  "content">
 
 const createLink = (slug: string, category: string) => {
   return `/blog/${category}/${slug}`
@@ -26,28 +26,34 @@ const createLink = (slug: string, category: string) => {
 
 export default function BlogCardWide({
   data,
-  category = data.blogCategories[0].slug,
-  fullW=false
+  categorySlug = data.blogCategories[0].slug,
+  fullW = false,
 }: BlogCardProps) {
   const {
     description,
     readingTime,
     title,
     blogCategories,
-    mainImage,
+    image: mainImage,
     slug,
     date,
   } = data
 
   return (
-    <LinkBox as={Flex} h={["unset","unset","300px"]} w={["unset","unset",fullW?"unset":"675px"]} cursor="pointer" justify="space-between">
-      <Stack w={["100%", "100%", "50%"]}  direction="column" spacing={4}>
+    <LinkBox
+      as={Flex}
+      h={["unset", "unset", "300px"]}
+      w={["unset", "unset", fullW ? "unset" : "675px"]}
+      cursor="pointer"
+      justify="space-between"
+    >
+      <Stack w={["100%", "100%", "50%"]} direction="column" spacing={4}>
         <Heading
           color={useColorModeValue("gray.700", "white")}
           fontSize={"2xl"}
           fontFamily={"body"}
         >
-          <NextLink href={createLink(slug, category)} passHref>
+          <NextLink href={createLink(slug, categorySlug)} passHref>
             <LinkOverlay>{title}</LinkOverlay>
           </NextLink>
         </Heading>
@@ -60,11 +66,11 @@ export default function BlogCardWide({
           <MyImage variant="fullW" image={mainImage.image} idealHeight={150} />
         </Box>
 
-        <BlogTags blogCategories={blogCategories} pt={0} />
+        <BlogTags blogCategories={blogCategories}  />
       </Stack>
 
       <Box display={["none", "none", "block"]} w="50%" h="100%">
-        <MyImage variant="fullH" image={mainImage.image}  />
+        <MyImage variant="fullH" image={mainImage.image} />
       </Box>
     </LinkBox>
   )

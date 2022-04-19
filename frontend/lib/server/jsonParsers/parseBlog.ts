@@ -1,50 +1,37 @@
 import {
-  BlogCategoriesWrapJson,
-  BlogImageJson,
-  BlogWrapJson,
+  BlogCardFull,
+  BlogCardOnlyData,
+  BlogCategory,
+  BlogContent,
+  BlogPost,
+} from "../../types/JSON/parsed/parsedBlogs"
+import {
   CardDataJson,
-} from "../JsonTypes/blogJsonTypes"
+  BlogCategoriesWrapJson,
+  BlogWrapJson,
+  BlogContentJson,
+  BlogImageJson,
+  BlogFullCardWrapJson,
+} from "../../types/JSON/raw/blogJsonTypes"
+import { handleBlogImage, handleImage } from "./parseImage"
 
-export interface BlogPost {
-  title: string
-  description: string
-  date: string
-  content: any[]
-  mainImage: BlogImageJson
-  blogCategories: Category[]
-  readingTime: number
-  slug: string
-  cardData: BlogCard
-  id?:number
-}
-
-export interface Category {
-  description: string
-  slug: string
-  name: string
-}
-export interface BlogCard {
-  description: string
-  image: any
-}
-
-export const handleCardData = (data: CardDataJson): BlogCard => {
-
-  if(data===null){
-    return{
-      description:"",
-      image:{}
-    }
-  }
-  const { description, image } = data
-  return {
-    description,
-    image,
+export const handleCardData = (
+  data: CardDataJson,
+  backUp: BlogImageJson
+): BlogCardOnlyData => {
+  if (data === null) {
+    const { description, image } = backUp
+    return { description, image: handleImage(image) }
+  } else {
+    const { description, image } = data
+    return { description, image: handleImage(image) }
   }
 }
 
-export const handleCategories = (data: BlogCategoriesWrapJson): Category[] => {
-  const res: Category[] = data.data.map((item) => {
+export const handleCategories = (
+  data: BlogCategoriesWrapJson
+): BlogCategory[] => {
+  const res: BlogCategory[] = data.data.map((item) => {
     const { description, name, slug } = item.attributes
     return {
       name,
@@ -54,14 +41,15 @@ export const handleCategories = (data: BlogCategoriesWrapJson): Category[] => {
   })
   return res
 }
+
 export const handleBlogPost = (initial: BlogWrapJson): BlogPost => {
   const { data } = initial
-  const { attributes,id } = data[0]
+  const { attributes, id } = data[0]
+
   const {
     blogCategories,
     cardData,
     content,
-
     date,
     description,
     mainImage,
@@ -74,15 +62,64 @@ export const handleBlogPost = (initial: BlogWrapJson): BlogPost => {
     date,
     slug,
     title,
-    mainImage,
+    image: handleBlogImage(mainImage),
     description,
     readingTime,
     blogCategories: handleCategories(blogCategories),
-    cardData: handleCardData(cardData),
-    content,
+    cardData: handleCardData(cardData, mainImage),
+    content: handleContent(content),
     id,
   }
 
   return res
 }
 
+const handleContent = (data: BlogContentJson[]): BlogContent[] => {
+  const res: BlogContent[] = data.map((item) => {
+    const { __component, id, description, image, text } = item
+    const tmp: BlogContent = { id, __component }
+
+    if (image !== undefined) {
+      tmp.image = handleImage(image)
+    }
+    if (description !== undefined) {
+      tmp.description = description
+    }
+    if (text !== undefined) {
+      tmp.text = text
+    }
+    return tmp
+  })
+
+  return res
+}
+
+export const handleBlogsById = (
+  initial: BlogFullCardWrapJson
+): BlogCardFull[] => {
+  const blogs = initial.data
+  const res: BlogCardFull[] = blogs.map((item) => {
+    const {
+      blogCategories,
+      cardData,
+      date,
+      description,
+      mainImage,
+      readingTime,
+      slug,
+      title,
+    } = item.attributes
+    return {
+      slug,
+      title,
+      readingTime,
+      description,
+      date,
+      cardData: handleCardData(cardData, mainImage),
+      image: handleBlogImage(mainImage),
+      blogCategories: handleCategories(blogCategories),
+    }
+  })
+
+  return res
+}

@@ -1,27 +1,24 @@
+import { DishUniqueData, DietDay, Diet } from "../../types/dietPage/dietTypes"
+import { DishReplacement, DishPreference } from "../../types/dietPage/dishTypes"
+import { TimeRange } from "../../types/dietPage/timeTypes"
 import {
   UserFullData,
-  DishUniqueData,
-  DietDay,
   IngredientPreference,
-  DishPreference,
-  TimeRange,
-  DishReplacement,
-  Diet,
   UserDiet,
   UserPersonalData,
-} from "../../../components/User/api/types"
+} from "../../types/dietPage/userTypes"
 import {
-  UserRequestDataJson,
-  StubDishesWrapJson,
   DayJson,
+  StubDishesWrapJson,
+  DishReplacementJson,
+  DietJsonWrap,
+  UserRequestDataJson,
   IngredientPreferenceJson,
   DishPreferencesJson,
   TimeRangeJson,
-  DishReplacementJson,
-  DietJsonWrap,
   UserDietJson,
   UserDataJson,
-} from "../JsonTypes/userJsonTypes.ts"
+} from "../../types/JSON/raw/userJsonTypes.ts"
 
 export const handleDietDays = (
   dietDays: DayJson[],

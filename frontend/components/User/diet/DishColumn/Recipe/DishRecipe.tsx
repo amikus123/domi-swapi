@@ -1,7 +1,7 @@
 import React from "react"
 import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react"
 import DishModal from "./DishModal/DishModal"
-import { FullDish } from "../../../api/types"
+import { FullDish } from "../../../../../lib/types/dietPage/dishTypes"
 
 interface DishRecpipeProps {
   dishData: FullDish

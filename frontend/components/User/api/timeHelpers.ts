@@ -4,7 +4,9 @@ import {
   addDays,
   startOfToday,
 } from "date-fns"
-import { DateRange, DietDay, DishColumnData, FullDietDay } from "./types"
+import { DietDay, FullDietDay } from "../../../lib/types/dietPage/dietTypes"
+import { DishColumnData } from "../../../lib/types/dietPage/dishTypes"
+import { DateRange } from "../../../lib/types/dietPage/timeTypes"
 
 export const stringToDate = (dateStr: string): Date => {
   //* dateStr should be in format  YYYY-MM-DD (same as recived from strapi)

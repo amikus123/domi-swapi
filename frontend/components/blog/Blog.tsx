@@ -1,14 +1,14 @@
 import { Stack, Heading, Text, Flex, Divider } from "@chakra-ui/react"
-import React, { useEffect } from "react"
+import React from "react"
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"
 import BlogContent from "./content/BlogContent"
 import BlogDescriptionImage from "./content/BlogDescriptionImage"
 import BlogTags from "./BlogTags"
 import SocialRow from "./socials/SocialRow"
-import { BlogPost } from "../../lib/server/jsonParsers/parseBlog"
 import CategoryBreadcrumbs from "./Categories/CategoryBreadcrumbs"
 import RelatedBlogPosts from "./RelatedBlogPosts/RelatedBlogPosts"
+import { BlogPost } from "../../lib/types/JSON/parsed/parsedBlogs"
 
 interface BlogProps {
   data: BlogPost
@@ -20,15 +20,13 @@ const Blog = ({ data, category, blogIds }: BlogProps) => {
   const {
     content,
     description,
-    mainImage,
+    image: mainImage,
     title,
     blogCategories,
     slug,
     id = -1,
   } = data
-  useEffect(() => {
-    console.log(id)
-  })
+
 
   return (
     <>
@@ -40,7 +38,7 @@ const Blog = ({ data, category, blogIds }: BlogProps) => {
         spacing={0}
         px={[4, 12, 20]}
         maxW="1000px"
-        minW={["unset","unset","675px"]}
+        minW={["unset", "unset", "675px"]}
       >
         <Flex w="100%" alignContent="left" pb={4} maxW="100%">
           <CategoryBreadcrumbs

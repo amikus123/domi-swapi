@@ -1,6 +1,6 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react"
 import React from "react"
-import { FullDish } from "../../api/types"
+import { FullDish } from "../../../../lib/types/dietPage/dishTypes"
 
 import Dishingredients from "./Ingredients/Dishingredients"
 import DishNutrition from "./Nutrients/DishNutrition"

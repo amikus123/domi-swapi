@@ -1,6 +1,6 @@
 import { Flex, Text, Button, Collapse, useDisclosure } from "@chakra-ui/react"
 import React from "react"
-import { ParsedDiet } from "../../../../lib/server/jsonParsers/parseDiets"
+import { ParsedDiet } from "../../../../lib/types/JSON/parsed/parsedDiets"
 import ImageCard from "../../../general/ImageCards/ImageCard"
 
 interface DietCardsProps {

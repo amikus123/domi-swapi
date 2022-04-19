@@ -1,9 +1,7 @@
-import {
-  DietDay,
-  DishReplacement,
-  DishUniqueData,
-} from "../../../components/User/api/types"
+import { DishUniqueData } from "../../types/dietPage/dietTypes"
+import { ParsedFullDiet } from "../../types/JSON/parsed/parsedDiets"
 import { handleDietDays, handleDishReplacements } from "./parseUset"
+
 
 export const handleFullDiets = (
   initial: any
@@ -28,25 +26,5 @@ export const handleFullDiets = (
     res[name] = diet
   })
   return res
-}
-
-export interface DietFullJsonInitial {
-  data: DietFullJson[]
-}
-export interface DietFullJson {
-  id: number
-  attributes: {
-    name: string
-    dietImage: any
-    dietDescription: string
-  }
-}
-export interface ParsedFullDiet {
-  id: number
-  name: string
-  dietImage: any
-  dietDescription: string
-  days: DietDay[]
-  dishReplacements: Record<string, DishReplacement>
 }
 

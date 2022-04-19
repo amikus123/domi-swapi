@@ -1,22 +1,22 @@
 import { Wrap, WrapItem } from "@chakra-ui/react"
 import React from "react"
-import { BlogCategory } from "../../../lib/server/exampleData/blogCategories"
+import { BlogCard } from "../../../lib/types/JSON/parsed/parsedBlogs"
 import DietCard from "../DietCard/DietCard"
 
 interface BlogCategoryBoxProps {
-  categories: Record<string, BlogCategory>
+  categories: BlogCard[]
 }
 
 const BlogCategoryBox = ({ categories }: BlogCategoryBoxProps) => {
   return (
     <Wrap spacing="30px" py="20px" justify="center" height="fit-content">
-      {Object.values(categories).map((item, index) => {
-        const { image, name, slug, description } = item
+      {categories.map((item, index) => {
+        const { slug, description, image, title } = item
         return (
-          <WrapItem key={index} >
+          <WrapItem key={index}>
             <DietCard
               image={image}
-              name={name}
+              name={title}
               slug={slug}
               description={description}
             />

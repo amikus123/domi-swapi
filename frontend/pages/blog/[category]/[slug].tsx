@@ -2,15 +2,18 @@ import { Flex } from "@chakra-ui/react"
 import React from "react"
 import Blog from "../../../components/blog/Blog"
 import { fetchAPI } from "../../../lib/api"
-import { getBlogPost, getIdsOfBlogs } from "../../../lib/server/fetching/serverSide"
-import { BlogPost } from "../../../lib/server/jsonParsers/parseBlog"
+import {
+  getBlogPost,
+  getIdsOfBlogs,
+} from "../../../lib/server/fetching/getBlogPost"
+import { BlogPost } from "../../../lib/types/JSON/parsed/parsedBlogs"
 
 interface BlogPostProps {
   category: string
   blogData: BlogPost
-  blogIds:Record<number,boolean>
+  blogIds: Record<number, boolean>
 }
-const article = ({ blogData, category ,blogIds}: BlogPostProps) => {
+const article = ({ blogData, category, blogIds }: BlogPostProps) => {
   return (
     <Flex>
       <Blog data={blogData} category={category} blogIds={blogIds} />
@@ -54,12 +57,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const blogData = await getBlogPost(params.slug)
-  
   const blogIds = await getIdsOfBlogs()
 
-  
   return {
-    props: { blogData, category: params.category,blogIds },
+    props: { blogData, category: params.category, blogIds },
     revalidate: 1,
   }
 }

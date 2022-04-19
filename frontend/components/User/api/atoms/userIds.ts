@@ -1,5 +1,5 @@
 import { atom } from "recoil"
-import { UserIds } from "../types"
+import { UserIds } from "../../../../lib/types/dietPage/userTypes"
 
 export const userIdsState = atom({
   key: "userIds",

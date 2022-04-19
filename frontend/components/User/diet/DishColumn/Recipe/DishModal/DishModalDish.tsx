@@ -1,8 +1,9 @@
 import { Flex, Box, Text, CSSObject, Spinner } from "@chakra-ui/react"
 import React from "react"
-import { Dish } from "../../../../api/types"
 import NextImage from "next/image"
 import { getStrapiMedia } from "../../../../../../lib/media"
+import { StrapiImage } from "../../../../../../lib/types/generalTypes"
+import { Dish } from "../../../../../../lib/types/dietPage/dishTypes"
 
 interface DishModalDishProps {
   onClose: () => void
@@ -13,15 +14,15 @@ interface DishModalDishProps {
 }
 
 interface ImgProps {
-  image: any
+  image: StrapiImage
 }
+// ! TO CHANE
 const Img = ({ image }: ImgProps) => {
   const fixHeight = (w: number, h: number) => {
     const ratio = w / h
     return { h: 150 / ratio, w: 150 }
   }
-  const attributes = image.data.attributes
-  const { alternativeText, formats } = attributes
+  const { alternativeText, formats } = image
   const { height, width, url } = formats.thumbnail
   const { w, h } = fixHeight(width, height)
   return (
@@ -35,12 +36,12 @@ const Img = ({ image }: ImgProps) => {
     </Box>
   )
 }
+
 const DishModalDish = React.forwardRef(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ({ dish, index, handleClick, loading }: DishModalDishProps, ref: any) => {
     const { description, name, image } = dish
     //  TODO add nice border and add event on focus
-    // description =
-    //   "Lorem ipsum dolor sit amet, **consectetur** adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
 
     const selectedStle: CSSObject = { borderColor: "red", outlineWidth: 0 }
     const hoverStyle: CSSObject = {

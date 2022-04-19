@@ -1,23 +1,13 @@
 import {
   IngredientPreferencesData,
   PreferedIngredientRequest,
-  updateIngredientPreferencesRequest,
-} from "../../../../api/dbInteraction/PUT"
+} from "../../../../../../lib/types/API/requestTypes"
+import { Dish } from "../../../../../../lib/types/dietPage/dishTypes"
 import {
-  Dish,
   IngredientPreference,
   PreferedIngredient,
-} from "../../../../api/types"
-
-export const resetIngredients = async (
-  userDataId: number
-): Promise<Boolean> => {
-  const request = await updateIngredientPreferencesRequest({
-    userDataId,
-    data: [],
-  })
-  return request
-}
+} from "../../../../../../lib/types/dietPage/userTypes"
+import { updateIngredientPreferencesRequest } from "../../../../api/dbInteraction/PUT"
 
 interface UpdateIngredientsProps {
   userDataId: number
@@ -28,7 +18,7 @@ export const updateIngredients = async ({
   data,
   userDataId,
   dishes,
-}: UpdateIngredientsProps): Promise<Boolean> => {
+}: UpdateIngredientsProps): Promise<boolean> => {
   const compatibleData = makeDBcompatible(data, dishes)
   console.log(compatibleData, userDataId, "XDD")
   const request = await updateIngredientPreferencesRequest({
@@ -36,6 +26,16 @@ export const updateIngredients = async ({
     data: compatibleData,
   })
 
+  return request
+}
+
+export const resetIngredients = async (
+  userDataId: number
+): Promise<boolean> => {
+  const request = await updateIngredientPreferencesRequest({
+    userDataId,
+    data: [],
+  })
   return request
 }
 

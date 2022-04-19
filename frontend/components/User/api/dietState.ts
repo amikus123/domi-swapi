@@ -1,15 +1,9 @@
 import { cloneDeep } from "lodash"
-import {
-  DietDay,
-  Dish,
-  DishPreference,
-  DishReplacement,
-  FullDietDay,
-  FullDish,
-  Ingredient,
-  IngredientPreference,
-  NameAmount,
-} from "./types"
+import { DietDay, FullDietDay } from "../../../lib/types/dietPage/dietTypes"
+import { Ingredient, Dish, DishReplacement, DishPreference, FullDish } from "../../../lib/types/dietPage/dishTypes"
+import { IngredientPreference } from "../../../lib/types/dietPage/userTypes"
+import { NameAmount } from "../../../lib/types/generalTypes"
+
 
 // TODO conider changing:
 // * comparing using lower case , minimize amount off errors

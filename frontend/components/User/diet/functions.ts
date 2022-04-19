@@ -1,5 +1,6 @@
+import { DateRange } from "../../../lib/types/dietPage/timeTypes"
+import { UserFullData } from "../../../lib/types/dietPage/userTypes"
 import { stringToDate } from "../api/timeHelpers"
-import {  UserFullData, DateRange } from "../api/types"
 
 
 export const datesFromUser = (user: UserFullData): DateRange => {

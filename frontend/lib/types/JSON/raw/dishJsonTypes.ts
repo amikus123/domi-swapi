@@ -1,16 +1,9 @@
-
+import { GenericMetaData, ImageRaw } from "../../generalTypes"
 
 // ! TAKE CARE OF DIET PAGES
 export interface DishesJson {
   data: DishJson[]
-  meta: {
-    pagination: {
-      page: number
-      pageSize: number
-      pageCount: number
-      total: number
-    }
-  }
+  meta: GenericMetaData
 }
 
 export interface DishJson {
@@ -26,7 +19,7 @@ export interface DishJsonAttributes {
   meal: string
   recipe: string
   description: string
-  image: any
+  image: ImageRaw
   nutrients: NameAmountJson[]
   ingredients: IngredientJson[]
   dishPage: DishPageJson

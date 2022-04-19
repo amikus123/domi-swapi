@@ -10,8 +10,8 @@ const BlogSeparator = () => {
       display="flex"
       align="center"
       justifyContent="center"
-      pt="3rem"
-      pb="3rem"
+      pt="2rem"
+      pb="2rem"
       mt="0!important"
       // _css={{ margin: "1.5rem 0 0 0 " }}
     >

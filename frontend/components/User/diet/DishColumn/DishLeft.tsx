@@ -2,9 +2,10 @@ import React from "react"
 import NextImage from "next/image"
 import { Flex, Box } from "@chakra-ui/react"
 import { getStrapiMedia } from "../../../../lib/media"
+import { StrapiImage } from "../../../../lib/types/generalTypes"
 
 interface DishLeftProps {
-  image: any
+  image: StrapiImage
 }
 
 const fixHeight = (w: number, h: number) => {
@@ -13,8 +14,7 @@ const fixHeight = (w: number, h: number) => {
   return { h: 200, w: 200 * ratio }
 }
 const DishLeft = ({ image }: DishLeftProps) => {
-  const attributes = image.data.attributes
-  const { alternativeText, formats } = attributes
+  const { alternativeText, formats } = image
   const { height, width, url } = formats.small
   const { w, h } = fixHeight(width, height)
   return (
@@ -39,72 +39,3 @@ const DishLeft = ({ image }: DishLeftProps) => {
 }
 
 export default DishLeft
-// * example of image
-// {
-//   "data": {
-//     "id": 18,
-//     "attributes": {
-//       "name": "spaghtetti.jpg",
-//       "alternativeText": "spaghtetti.jpg",
-//       "caption": "spaghtetti.jpg",
-//       "width": 6000,
-//       "height": 4000,
-//       "formats": {
-//         "thumbnail": {
-//           "name": "thumbnail_spaghtetti.jpg",
-//           "hash": "thumbnail_spaghtetti_2e33fb7a5f",
-//           "ext": ".jpg",
-//           "mime": "image/jpeg",
-//           "width": 234,
-//           "height": 156,
-//           "size": 10.01,
-//           "path": null,
-//           "url": "/uploads/thumbnail_spaghtetti_2e33fb7a5f.jpg"
-//         },
-//         "large": {
-//           "name": "large_spaghtetti.jpg",
-//           "hash": "large_spaghtetti_2e33fb7a5f",
-//           "ext": ".jpg",
-//           "mime": "image/jpeg",
-//           "width": 1000,
-//           "height": 667,
-//           "size": 105.31,
-//           "path": null,
-//           "url": "/uploads/large_spaghtetti_2e33fb7a5f.jpg"
-//         },
-//         "medium": {
-//           "name": "medium_spaghtetti.jpg",
-//           "hash": "medium_spaghtetti_2e33fb7a5f",
-//           "ext": ".jpg",
-//           "mime": "image/jpeg",
-//           "width": 750,
-//           "height": 500,
-//           "size": 64.7,
-//           "path": null,
-//           "url": "/uploads/medium_spaghtetti_2e33fb7a5f.jpg"
-//         },
-//         "small": {
-//           "name": "small_spaghtetti.jpg",
-//           "hash": "small_spaghtetti_2e33fb7a5f",
-//           "ext": ".jpg",
-//           "mime": "image/jpeg",
-//           "width": 500,
-//           "height": 333,
-//           "size": 33.53,
-//           "path": null,
-//           "url": "/uploads/small_spaghtetti_2e33fb7a5f.jpg"
-//         }
-//       },
-//       "hash": "spaghtetti_2e33fb7a5f",
-//       "ext": ".jpg",
-//       "mime": "image/jpeg",
-//       "size": 3248.26,
-//       "url": "/uploads/spaghtetti_2e33fb7a5f.jpg",
-//       "previewUrl": null,
-//       "provider": "local",
-//       "provider_metadata": null,
-//       "createdAt": "2022-02-22T13:34:00.328Z",
-//       "updatedAt": "2022-02-22T13:34:00.328Z"
-//     }
-//   }
-// }

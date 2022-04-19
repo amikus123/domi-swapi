@@ -1,7 +1,9 @@
 import { SetterOrUpdater } from "recoil"
-import { IngredientPreference, Dish } from "../../../../api/types"
+import { Dish } from "../../../../../../lib/types/dietPage/dishTypes"
+import { IngredientPreference } from "../../../../../../lib/types/dietPage/userTypes"
 import { updateIngredients } from "./APIRequest"
 import { changeIngredients, removeAllPreferences } from "./functions"
+
 
 export interface HandleIngredientChangeProps {
   newName: string
@@ -12,6 +14,7 @@ export interface HandleIngredientChangeProps {
   userDataId: number
   loading: boolean
   // * object from use toast hook
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toast: any
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 

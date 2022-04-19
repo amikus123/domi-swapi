@@ -1,10 +1,10 @@
 import { Flex, Button } from "@chakra-ui/react"
 import { sampleSize } from "lodash"
 import React, { useEffect, useState } from "react"
-import { getBlogsByIds } from "../../../lib/server/fetching/serverSide"
-import { BlogCardData } from "../BlogCard/BlogCardWide"
 import CardStack from "../BlogCard/CardStack"
 import NextLink from "next/link"
+import { BlogCardFull } from "../../../lib/types/JSON/parsed/parsedBlogs"
+import { getBlogCardDataByIds } from "../../../lib/server/fetching/getBlogPost"
 interface RelatedBlogPostsProps {
   currentBlogId: number
   blogIds: Record<number, boolean>
@@ -16,7 +16,7 @@ const RelatedBlogPosts = ({
 }: RelatedBlogPostsProps) => {
   const [availableIds, setAvailableIds] =
     useState<Record<number, boolean>>(blogIds)
-  const [fetchedBlogs, setFetchedPosts] = useState<BlogCardData[]>([])
+  const [fetchedBlogs, setFetchedPosts] = useState<BlogCardFull[]>([])
   const [isFetching, setIsFetching] = useState<boolean>(false)
   useEffect(() => {
     const tmp = async () => {
@@ -27,7 +27,7 @@ const RelatedBlogPosts = ({
       const arr = Object.keys(copy)
       const randomIDs = sampleSize(arr, 1)
 
-      const xd = await getBlogsByIds(randomIDs)
+      const xd = await getBlogCardDataByIds(randomIDs)
       randomIDs.forEach((id) => {
         delete copy[id]
       })
@@ -43,7 +43,7 @@ const RelatedBlogPosts = ({
     const randomIDs = sampleSize(arr, 3)
 
     console.log(randomIDs, arr)
-    const xd = await getBlogsByIds(randomIDs)
+    const xd = await getBlogCardDataByIds(randomIDs)
 
     // removing ids
     const copy = { ...availableIds }

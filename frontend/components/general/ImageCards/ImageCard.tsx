@@ -8,9 +8,10 @@ import {
 } from "@chakra-ui/react"
 import { MyImage } from "../Images"
 import NextLink from "next/link"
+import { StrapiImage } from "../../../lib/types/generalTypes"
 
 interface DietCardProps {
-  image: any
+  image: StrapiImage
   name: string
   onClick?: () => void
   href?: null | string

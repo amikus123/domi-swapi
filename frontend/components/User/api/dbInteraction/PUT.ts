@@ -1,30 +1,7 @@
 import axios from "axios"
 import { getApiUrl } from "../../../../lib/api"
+import { DishPreferencesAPI, IngredientPreferencesAPI } from "../../../../lib/types/API/requestTypes"
 
-export interface PreferedIngredientRequest {
-  originalName: string
-  preferredName: string
-}
-export interface UserDataRequestData {
-  userDataId: number
-}
-
-export interface PreferenceDishIds {
-  base: number
-  replacement: number
-}
-
-export interface IngredientPreferencesData {
-  dish: number
-  preferredReplacements: PreferedIngredientRequest[]
-}
-
-export interface DishPreferencesAPI extends UserDataRequestData {
-  data: PreferenceDishIds[]
-}
-export interface IngredientPreferencesAPI extends UserDataRequestData {
-  data: IngredientPreferencesData[]
-}
 
 export const updateDishPreferencesRequest = async ({
   userDataId,
@@ -45,7 +22,6 @@ export const updateDishPreferencesRequest = async ({
     return true
   } catch (e) {
     console.error(e, "removePreferenceBack Error")
-
     return false
   }
 }
@@ -55,13 +31,11 @@ export const updateIngredientPreferencesRequest = async ({
   data,
 }: IngredientPreferencesAPI): Promise<boolean> => {
   const url = `${getApiUrl()}/api/user-combined-datas/${userDataId}`
-
   const body = {
     data: {
       ingredientPreferences: data,
     },
   }
-  console.log(body, "XDDD")
   try {
     await axios({
       method: "PUT",

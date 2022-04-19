@@ -14,6 +14,7 @@ import React, { useEffect } from "react"
 
 const FirstTimeModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  // TODO add logic based on user 
   useEffect(() => {
     onOpen()
   }, [])

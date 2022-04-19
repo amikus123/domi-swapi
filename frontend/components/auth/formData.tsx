@@ -1,6 +1,6 @@
 import { loginWithEmail, registerEmail, resetPassword } from "../../lib/auth"
-import { InputsData, LinkData, FormTemplateData } from "./authTypes"
 import * as Yup from "yup"
+import { InputsData, LinkData, FormTemplateData } from "../../lib/types/authTypes/authTypes"
 
 // *  YUP SCHEMAS
 

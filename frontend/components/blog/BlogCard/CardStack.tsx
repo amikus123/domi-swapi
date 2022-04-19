@@ -1,9 +1,10 @@
 import {  Box, Divider,  Stack } from "@chakra-ui/react"
 import React from "react"
-import BlogCardWide, { BlogCardData } from "./BlogCardWide"
+import { BlogCardFull } from "../../../lib/types/JSON/parsed/parsedBlogs"
+import BlogCardWide from "./BlogCardWide"
 
 interface CardStackProps {
-  cards: BlogCardData[]
+  cards: BlogCardFull[]
 
 }
 
@@ -13,7 +14,7 @@ const CardStack = ({ cards,  }: CardStackProps) => {
       {cards.map((item, index) => {
         return (
           <React.Fragment key={index}>
-            <BlogCardWide data={item} />
+            <BlogCardWide data={item} / >
 
             {index === cards.length-1 ? <Box py={4}></Box> : <Divider />}
           </React.Fragment>

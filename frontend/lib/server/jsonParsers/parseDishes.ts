@@ -1,11 +1,8 @@
-import { Dish, Ingredient } from "../../../components/User/api/types"
-import {
-  IngredientJson,
-  DishJson,
-  DishesJson,
-} from "../JsonTypes/dishJsonTypes"
 
 // ! TAKE CARE OF DIET PAGES
+
+import { Ingredient, Dish } from "../../types/dietPage/dishTypes"
+import { IngredientJson, DishJson, DishesJson } from "../../types/JSON/raw/dishJsonTypes"
 
 const handleDishPage = (): null => {
   return null

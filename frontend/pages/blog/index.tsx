@@ -2,11 +2,11 @@ import { Box, Flex } from "@chakra-ui/react"
 import React from "react"
 import BlogCategoryBox from "../../components/blog/Categories/BlogCategoryBox"
 import CategoryBreadcrumbs from "../../components/blog/Categories/CategoryBreadcrumbs"
-import { BlogCategory } from "../../lib/server/exampleData/blogCategories"
-import { getBlogCategories } from "../../lib/server/fetching/serverSide"
+import { getBlogCategories } from "../../lib/server/fetching/getBlogCategories"
+import { BlogCard } from "../../lib/types/JSON/parsed/parsedBlogs"
 
 interface IndexProps {
-  categories: Record<string, BlogCategory>
+  categories: BlogCard[]
 }
 const index = ({ categories }: IndexProps) => {
   return (

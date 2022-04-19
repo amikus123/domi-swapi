@@ -1,8 +1,7 @@
-import {
-  updateDishPreferencesRequest,
-  PreferenceDishIds,
-} from "../../../../api/dbInteraction/PUT"
-import { DishPreference, Dish } from "../../../../api/types"
+import { PreferenceDishIds } from "../../../../../../lib/types/API/requestTypes"
+import { DishPreference, Dish } from "../../../../../../lib/types/dietPage/dishTypes"
+import { updateDishPreferencesRequest } from "../../../../api/dbInteraction/PUT"
+
 
 export const resetDishPreferences = async (
   userDataId: number
@@ -19,13 +18,13 @@ interface UpdateDishesProps {
   data: Record<string, DishPreference>
   dishes: Record<string, Dish>
 }
+
 export const updateDishes = async ({
   data,
   userDataId,
   dishes,
 }: UpdateDishesProps): Promise<boolean> => {
   const compatibleData = makeDBcompatible(data, dishes)
-  console.log(compatibleData, userDataId, "XDD")
   const request = await updateDishPreferencesRequest({
     userDataId,
     data: compatibleData,
@@ -51,7 +50,6 @@ export const makeDBcompatible = (
     if (a.replacement !== undefined) {
       res.push(a)
     }
-    // const a:IngredientPreferencesData ={dish:}
   })
   return res
 }

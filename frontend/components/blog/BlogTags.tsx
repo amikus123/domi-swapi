@@ -1,12 +1,11 @@
 import { Tag, HStack } from "@chakra-ui/react"
 import React from "react"
 import NextLink from "next/link"
-import { Category } from "../../lib/server/jsonParsers/parseBlog"
+import { BlogCategory } from "../../lib/types/JSON/parsed/parsedBlogs"
 interface BlogTagsProps {
-  blogCategories: Category[]
-  pt?: any
+  blogCategories: BlogCategory[]
 }
-const BlogTags = ({ blogCategories, pt = 4 }: BlogTagsProps) => {
+const BlogTags = ({ blogCategories }: BlogTagsProps) => {
   // link to page with blgos of thaht category
   return (
     <HStack
@@ -16,7 +15,6 @@ const BlogTags = ({ blogCategories, pt = 4 }: BlogTagsProps) => {
       justify="flex-start"
       shouldWrapChildren={true}
       w="100%"
-      pt={pt}
     >
       {blogCategories.map((item, index) => {
         return (

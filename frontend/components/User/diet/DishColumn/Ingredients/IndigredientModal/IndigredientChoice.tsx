@@ -2,11 +2,11 @@ import { Button, Flex, Stack, Text, useToast } from "@chakra-ui/react"
 import { capitalize } from "lodash"
 import React from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
+import { Ingredient } from "../../../../../../lib/types/dietPage/dishTypes"
 import { dishesState } from "../../../../api/atoms/dishes"
 import { ingredientPreferencesState } from "../../../../api/atoms/IngredientPreferences"
 import { isPublicState } from "../../../../api/atoms/isPublic"
 import { userIdsState } from "../../../../api/atoms/userIds"
-import {  Ingredient } from "../../../../api/types"
 import {
   handleIngredientChange,
 } from "./handleInteraction"

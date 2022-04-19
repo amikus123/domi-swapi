@@ -1,23 +1,15 @@
 import React from "react"
 import {
   TwitterShareButton,
-  TwitterIcon,
-  FacebookMessengerShareButton,
-  FacebookMessengerIcon,
   FacebookShareButton,
-  FacebookIcon,
 } from "next-share"
-import {
-  FaFacebook,
-  FaTwitter,
-  FaShare,
-  FaCopy,
-} from "react-icons/fa"
+import { FaFacebook, FaTwitter, FaShare, FaCopy } from "react-icons/fa"
 
 import { useToast, Icon, HStack } from "@chakra-ui/react"
+import { IconType } from "react-icons"
 
 interface CustomIconProps {
-  as: any
+  as: IconType
   onClick?: () => Promise<void>
 }
 const size = 8
@@ -25,12 +17,11 @@ const CustomIcon = ({ as, onClick }: CustomIconProps) => {
   return <Icon as={as} onClick={onClick} w={size} h={size} cursor="pointer" />
 }
 
-
-interface SocialRowProps{
-  category:string
-  slug:string
+interface SocialRowProps {
+  category: string
+  slug: string
 }
-const SocialRow = ({category,slug}:SocialRowProps) => {
+const SocialRow = ({ category, slug }: SocialRowProps) => {
   const toast = useToast()
   // ! DODAJ DOMENE
   const text = "Przeczytałem/am bardzo ciekawy artykuł: "

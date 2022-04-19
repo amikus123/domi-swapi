@@ -10,14 +10,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react"
 import { capitalize } from "lodash"
-import React from "react"
-import { Ingredient } from "../../../api/types"
+import React, { RefObject } from "react"
+import { Ingredient } from "../../../../../lib/types/dietPage/dishTypes"
+import { FocusableElement } from "@chakra-ui/utils"
 
 import IndigredientModal from "./IndigredientModal/IndigredientModal"
+// const initialRef = React.useRef() as RefObject<FocusableElement>
 
 interface DishRecpipeProps {
   ingredients: Ingredient[]
-  name:string
+  name: string
 }
 
 const checkIfCanReplace = (data: Ingredient[]) => {
@@ -29,9 +31,10 @@ const checkIfCanReplace = (data: Ingredient[]) => {
   return false
 }
 
-const Dishingredients = ({ ingredients,name }: DishRecpipeProps) => {
+const Dishingredients = ({ ingredients, name }: DishRecpipeProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const initialRef = React.useRef()
+  // * may require changes
+  const initialRef = React.useRef() as RefObject<FocusableElement>
   //* if there ar no viable options for replacements, we wont show the modal
   return (
     <Flex direction="column" align="center">
@@ -60,7 +63,7 @@ const Dishingredients = ({ ingredients,name }: DishRecpipeProps) => {
           </Button>
 
           <IndigredientModal
-          name={name}
+            name={name}
             isOpen={isOpen}
             onClose={onClose}
             initialRef={initialRef}

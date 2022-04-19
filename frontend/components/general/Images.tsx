@@ -1,9 +1,10 @@
 import { getStrapiMedia } from "../../lib/media"
 import NextImage from "next/image"
 import { Box, chakra, Image } from "@chakra-ui/react"
+import { FormatImage, StrapiImage } from "../../lib/types/generalTypes"
 
 export const getImageWithBestWidth = (
-  formats: any,
+  formats: Record<string, FormatImage>,
   idealWidth = 1000
 ) => {
   // * gets  the  next biggest size
@@ -26,11 +27,11 @@ export const getImageWithBestWidth = (
   return smallestSize
 }
 interface ImageProps {
-  image: any
+  image: StrapiImage
   idealWidth?: number
   idealHeight?: number
   variant?: "full" | "fullH" | "fullW"
-  [key: string]: any
+  [key: string]: string | number | StrapiImage
 }
 
 const BlogImg = chakra(Image, {
@@ -45,7 +46,7 @@ export const MyImage = ({
   variant,
   ...rest
 }: ImageProps) => {
-  const { alternativeText = "", formats } = image.data.attributes
+  const { alternativeText = "", formats } = image
 
   return (
     <>
@@ -55,13 +56,10 @@ export const MyImage = ({
           alt={alternativeText}
           layout="fill"
           aria-label={alternativeText}
+          {...rest}
         />
       ) : variant === "fullH" ? (
-        <Box
-          className="fullHeightImageWrap"
-          style={{ height: "100%" }}
-          {...rest}
-        >
+        <Box className="fullHeightImageWrap" style={{ height: "100%" }}>
           <NextImage
             src={getStrapiMedia(
               getImageWithBestWidth(formats, idealHeight).url
@@ -71,10 +69,12 @@ export const MyImage = ({
             layout="fill"
             className="fullHeightImage"
             aria-label={alternativeText}
+            {...rest}
           />
         </Box>
       ) : (
         <BlogImg
+          {...rest}
           objectFit="contain"
           src={getStrapiMedia(getImageWithBestWidth(formats, idealWidth).url)}
           alt={alternativeText}

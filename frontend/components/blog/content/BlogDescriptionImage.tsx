@@ -2,13 +2,14 @@ import { Stack, Text } from "@chakra-ui/react"
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
+import { StrapiImage } from "../../../lib/types/generalTypes"
 import { MyImage } from "../../general/Images"
 import BMHeading from "../../Markdown/Blog/BMHeading"
 import BMLink from "../../Markdown/Blog/BMLink"
 import BMParagraph from "../../Markdown/Blog/BMParagraph"
 import BMQuote from "../../Markdown/Blog/BMQuote"
 interface BlogDescriptionImageProps extends ImageDesctiptionProps {
-  image: any
+  image: StrapiImage
   height: number
 }
 

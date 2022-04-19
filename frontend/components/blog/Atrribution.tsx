@@ -10,6 +10,8 @@ interface PageProps {
   pageName?: string
   pageLink?: string
 }
+
+
 export interface AttributionProps extends AuthorProps, PageProps {}
 
 const AuthorPart = ({ authorName, authorLink }: AuthorProps) => {

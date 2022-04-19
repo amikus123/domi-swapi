@@ -9,20 +9,21 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react"
-import React, { useState } from "react"
+import React, { RefObject, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { dishesState } from "../../../../api/atoms/dishes"
 import { dishPreferencesState } from "../../../../api/atoms/dishPreferences"
 import { isPublicState } from "../../../../api/atoms/isPublic"
 import { userIdsState } from "../../../../api/atoms/userIds"
-import { FullDish } from "../../../../api/types"
-import DishModalDish from "./DishModalDish"
 import { handlDishChange } from "./handleInteraction"
+import { FocusableElement } from "@chakra-ui/utils"
+import { FullDish } from "../../../../../../lib/types/dietPage/dishTypes"
+import DishModalDish from "./DishModalDish"
 
 interface DishModalProps {
   isOpen: boolean
   onClose: () => void
-  initialRef: any
+  initialRef:  RefObject<FocusableElement>
   dishData: FullDish
 }
 

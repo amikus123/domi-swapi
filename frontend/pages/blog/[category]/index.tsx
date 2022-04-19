@@ -3,19 +3,27 @@ import { Button, Divider, Heading, Stack } from "@chakra-ui/react"
 import { fetchAPI } from "../../../lib/api"
 import CategoryBreadcrumbs from "../../../components/blog/Categories/CategoryBreadcrumbs"
 import BlogCardWide from "../../../components/blog/BlogCard/BlogCardWide"
-import { getBlogFromCategory } from "../../../lib/server/fetching/serverSide"
-import { CategoryBlogPost } from "../../../lib/server/jsonParsers/parseBlogCategoryPosts"
 import { capitalize } from "lodash"
 import NextLink from "next/link"
+import { getBlogCardsFromCategory } from "../../../lib/server/fetching/getBlogCategories"
+import { BlogCardFull } from "../../../lib/types/JSON/parsed/parsedBlogs"
 
 interface BlogCategoryPostsProps {
-  relatedBlogs: CategoryBlogPost[]
+  relatedBlogs: BlogCardFull[]
   category: string
 }
 
 const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
   return (
-    <Stack width="100%" mx="20" maxW={1000} my={4} pb={4} spacing={8} display="flex">
+    <Stack
+      width="100%"
+      mx="20"
+      maxW={1000}
+      my={4}
+      pb={4}
+      spacing={8}
+      display="flex"
+    >
       ~
       <CategoryBreadcrumbs
         links={[
@@ -27,7 +35,7 @@ const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
       {relatedBlogs.map((item, index) => {
         return (
           <React.Fragment key={index}>
-            <BlogCardWide data={item} category={category} fullW={true} />
+            <BlogCardWide data={item} categorySlug={category} fullW={true} />
 
             {index === relatedBlogs.length - 1 ? null : <Divider />}
           </React.Fragment>
@@ -70,7 +78,7 @@ export async function getStaticPaths() {
 // gets data for selected page
 export async function getStaticProps({ params }) {
   const { category } = params
-  const relatedBlogs = await getBlogFromCategory(category)
+  const relatedBlogs = await getBlogCardsFromCategory(category)
   return {
     props: { relatedBlogs, category },
     revalidate: 1,

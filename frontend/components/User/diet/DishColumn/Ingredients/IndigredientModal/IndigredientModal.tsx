@@ -10,25 +10,21 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react"
-import { cloneDeep } from "lodash"
-import React, { useState } from "react"
-import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil"
+import React, { useState, RefObject } from "react"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { Ingredient } from "../../../../../../lib/types/dietPage/dishTypes"
 import { dishesState } from "../../../../api/atoms/dishes"
 import { ingredientPreferencesState } from "../../../../api/atoms/IngredientPreferences"
 import { isPublicState } from "../../../../api/atoms/isPublic"
 import { userIdsState } from "../../../../api/atoms/userIds"
-import { Dish, Ingredient, IngredientPreference } from "../../../../api/types"
-import { updateIngredients } from "./APIRequest"
-import { changeIngredients } from "./functions"
 import { handleIngredientChange } from "./handleInteraction"
-
 import IndigredientChoice from "./IndigredientChoice"
-
+import { FocusableElement } from "@chakra-ui/utils"
 interface IndigredientModalProps {
   isOpen: boolean
   onClose: () => void
   ingredients: Ingredient[]
-  initialRef: any
+  initialRef: RefObject<FocusableElement>
   name: string
 }
 
@@ -60,7 +56,7 @@ const IndigredientModal = ({
       toast,
       userDataId,
       loading,
-      isPublic
+      isPublic,
     })
   }
 

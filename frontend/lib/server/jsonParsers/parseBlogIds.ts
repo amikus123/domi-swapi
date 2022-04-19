@@ -1,4 +1,4 @@
-import { BlogCategoryPostWrapJson } from "./parseBlogCategoryPosts"
+import { BlogCategoryPostWrapJson } from "../../types/JSON/parsed/parsedBlogs"
 
 export const handleBlogIds = (
     initial: BlogCategoryPostWrapJson

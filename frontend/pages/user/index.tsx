@@ -1,7 +1,7 @@
-import { Stack,  Text, } from "@chakra-ui/react"
+import { Stack, Text } from "@chakra-ui/react"
 import { parseCookies } from "nookies"
-import React, { useEffect, useState } from "react"
-import { getDiets, getUser } from "../../lib/server/fetching/serverSide"
+import React, { useState } from "react"
+import { getDiets, getUser } from "../../lib/server/fetching/getDiets"
 import { UserFullData } from "../../components/User/api/types"
 import DietCards from "../../components/User/index/cards/DietCards"
 import { ParsedDiet } from "../../lib/server/jsonParsers/parseDiets"
@@ -12,20 +12,12 @@ interface IndexProps {
   originalDietName: string
 }
 
-const index = ({ user, diets, originalDietName }: IndexProps) => {
-  useEffect(() => {
-    console.log(user)
-    console.log(diets)
-    console.log(originalDietName)
-  }, [user, diets])
-  // change crerwetn diet
-  const [selectedDietName, setSelectedDietName] = useState(originalDietName)
+const index = ({ diets, originalDietName }: IndexProps) => {
+  const [selectedDietName] = useState(originalDietName)
   return (
     <Stack spacing={8} maxW={1200}>
       <Text fontSize="40" variant="h2"></Text>
       <DietCards diets={diets} selectedDietName={selectedDietName} />
-
-
     </Stack>
   )
 }
