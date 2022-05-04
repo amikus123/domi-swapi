@@ -1,18 +1,12 @@
 import qs from "qs"
 import { getApiUrl } from "../../api"
-import { ParsedDiet } from "../../types/JSON/parsed/parsedDiets"
-
+import { ParsedDiet, ParsedFullDiet } from "../../types/JSON/parsed/parsedDiets"
+import { DietsFullJsonWrap } from "../../types/JSON/raw/dietJsonTypes"
 
 import { handleDiets } from "../jsonParsers/parseDiets"
 import { handleFullDiets } from "../jsonParsers/parseFullDiets"
 
 // * fetches user Id from cookie
-
-
-
-
-
-
 // * Fetches all diets
 
 interface DietsFetchConfig {
@@ -40,18 +34,17 @@ export const getDiets = async (
     }
   )
 
-  const dietRequest = await fetch(`${getApiUrl()}/api/diets?${dishQuery}`, {})
-  const dietDataRaw = await dietRequest.json()
+  const dietsRequest = await fetch(`${getApiUrl()}/api/diets?${dishQuery}`, {})
+  const dietsDataRaw = (await dietsRequest.json()) as DietsFullJsonWrap
 
-  let dietData
+  let diets: Record<string, ParsedDiet> | Record<string, ParsedFullDiet>
   if (full) {
-    dietData = handleFullDiets(dietDataRaw)
+    diets = handleFullDiets(dietsDataRaw)
 
     // parseFullDiets
   } else {
-    dietData = handleDiets(dietDataRaw)
+    diets = handleDiets(dietsDataRaw)
   }
 
-  return dietData
+  return diets
 }
-

@@ -1,7 +1,7 @@
-import { BlogCategoryPostWrapJson } from "../../types/JSON/parsed/parsedBlogs"
+import { BlogCategoriesWrapJson } from "../../types/JSON/raw/blogJsonTypes"
 
 export const handleBlogIds = (
-    initial: BlogCategoryPostWrapJson
+    initial: BlogCategoriesWrapJson
   ): Record<number,boolean> => {
     const blogs = initial.data
     const res = {}

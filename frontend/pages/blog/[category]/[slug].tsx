@@ -14,6 +14,7 @@ interface BlogPostProps {
   blogIds: Record<number, boolean>
 }
 const article = ({ blogData, category, blogIds }: BlogPostProps) => {
+
   return (
     <Flex>
       <Blog data={blogData} category={category} blogIds={blogIds} />
@@ -57,7 +58,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const blogData = await getBlogPost(params.slug)
-  const blogIds = await getIdsOfBlogs()
+  const  blogIds = await getIdsOfBlogs()
 
   return {
     props: { blogData, category: params.category, blogIds },

@@ -1,37 +1,27 @@
-import {  Stack } from "@chakra-ui/react"
+import { Stack } from "@chakra-ui/react"
 import React from "react"
+import { BlogContent } from "../../../lib/types/JSON/parsed/parsedBlogs"
 import BlogDescriptionImage from "./BlogDescriptionImage"
 import BlogSeparator from "./BlogSeparator"
 import BlogText from "./BlogText"
 
 interface BlogContentProps {
- // ! BlogContent is corrdsct type
-  data: any[]
+  data: BlogContent[]
 }
 
-const contentTypes = {
-  "blog.text": "blog.text",
-  "blog.separator": "blog.separator",
-  "blog.image": "blog.image",
-  "blog.description-image": "blog.description-image",
-}
-// based on  propetrt "__copmonents we returt deifferent element
+// based on  propetrt "__copmonents we return  diffrent element
 
-const BlogContent = ({ data }: BlogContentProps) => {
-  const getElement = (obj: any) => {
-    const property = obj["__component"]
-    if (property === contentTypes["blog.description-image"]) {
+const BlogContentElement = ({ data }: BlogContentProps) => {
+  const getElement = (obj: BlogContent) => {
+    const { __component: property, description, image, text } = obj
+    if (property === "blog.description-image") {
       return (
-        <BlogDescriptionImage
-          image={obj.image}
-          text={obj.description}
-          height={400}
-        />
+        <BlogDescriptionImage image={image} text={description} height={400} />
       )
-    } else if (property === contentTypes["blog.image"]) {
-      return <BlogDescriptionImage image={obj.image} text={""} height={400} />
-    } else if (property === contentTypes["blog.text"]) {
-      return <BlogText text={obj.text} />
+    } else if (property === "blog.image") {
+      return <BlogDescriptionImage image={image} text={text} height={400} />
+    } else if (property === "blog.text") {
+      return <BlogText text={text} />
     } else {
       return <BlogSeparator />
     }
@@ -45,4 +35,4 @@ const BlogContent = ({ data }: BlogContentProps) => {
   )
 }
 
-export default BlogContent
+export default BlogContentElement

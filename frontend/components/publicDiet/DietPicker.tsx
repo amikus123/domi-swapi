@@ -1,10 +1,10 @@
 import { Wrap, WrapItem } from "@chakra-ui/react"
 import React from "react"
-import { BlogCategoryDataCard } from "../../lib/types/JSON/parsed/parsedBlogs"
+import { BlogCard } from "../../lib/types/JSON/parsed/parsedBlogs"
 import DietCard from "../blog/DietCard/DietCard"
 
 interface BlogCategoryBoxProps {
-  categories: Record<string, BlogCategoryDataCard>
+  categories: Record<string, BlogCard>
 }
 
 const DietPicker = ({ categories }: BlogCategoryBoxProps) => {

@@ -1,7 +1,11 @@
-import { DietJsonInitial, ParsedDiet } from "../../types/JSON/parsed/parsedDiets"
+import {
+  DietJsonInitial,
+  ParsedDiet,
+} from "../../types/JSON/parsed/parsedDiets"
+import { handleImage } from "./parseImage"
 
 export const handleDiets = (
-  initial: DietJsonInitial,
+  initial: DietJsonInitial
 ): Record<string, ParsedDiet> => {
   const { data } = initial
 
@@ -10,7 +14,7 @@ export const handleDiets = (
     const { attributes, id } = item
     const { dietImage, name, dietDescription } = attributes
     const diet: ParsedDiet = {
-      dietImage,
+      dietImage: handleImage(dietImage),
       id,
       name,
       dietDescription,
@@ -19,4 +23,3 @@ export const handleDiets = (
   })
   return res
 }
-

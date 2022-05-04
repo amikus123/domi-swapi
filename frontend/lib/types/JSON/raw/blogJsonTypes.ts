@@ -1,4 +1,5 @@
 import { GenericMetaData, ImageRaw } from "../../generalTypes"
+import { BlogContentComponentName } from "../parsed/parsedBlogs";
 
 export interface BlogWrapJson {
   data: { id: number; attributes: BlogDataJson }[]
@@ -29,8 +30,8 @@ export interface BlogImageJson {
 }
 
 export interface BlogContentJson {
+  __component: BlogContentComponentName
   id: number
-  __component: string
   text?: string
   description?: string
   image?: ImageRaw
@@ -55,7 +56,6 @@ export interface CardDataJson {
   image: ImageRaw
   id: number
 }
-
 
 export interface BlogFullCardWrapJson {
   data: { id: number; attributes: BlogDataContentLessJson }[]

@@ -1,10 +1,11 @@
 import { Stack, Text } from "@chakra-ui/react"
 import { parseCookies } from "nookies"
 import React, { useState } from "react"
-import { getDiets, getUser } from "../../lib/server/fetching/getDiets"
-import { UserFullData } from "../../components/User/api/types"
 import DietCards from "../../components/User/index/cards/DietCards"
-import { ParsedDiet } from "../../lib/server/jsonParsers/parseDiets"
+import { getDiets } from "../../lib/server/fetching/getDiets"
+import { getUser } from "../../lib/server/fetching/getUser"
+import { UserFullData } from "../../lib/types/dietPage/userTypes"
+import { ParsedDiet } from "../../lib/types/JSON/parsed/parsedDiets"
 
 interface IndexProps {
   user: UserFullData

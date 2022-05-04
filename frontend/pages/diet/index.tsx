@@ -3,9 +3,7 @@ import React, { useState } from "react"
 import CategoryBreadcrumbs from "../../components/blog/Categories/CategoryBreadcrumbs"
 import DietPicker from "../../components/publicDiet/DietPicker"
 import { getBlogCategories } from "../../lib/server/fetching/getBlogCategories"
-import {
-  getDiets,
-} from "../../lib/server/fetching/getDiets"
+import { getDiets } from "../../lib/server/fetching/getDiets"
 import { getAllDishes } from "../../lib/server/fetching/getDishes"
 import { UserFullData } from "../../lib/types/dietPage/userTypes"
 import DietComponent from "../user/diet"
@@ -44,7 +42,8 @@ export async function getServerSideProps() {
   // const user = await getUser(jwt)
   // FETCH LIST OF DIETS
   // const dishes = await getDishes(user, jwt)
-  const diets = await getDiets({ full: true })
+
+  const diets  = await getDiets({ full: true })
   const dishes = await getAllDishes()
 
   const categories = await getBlogCategories()
@@ -127,4 +126,3 @@ const user: UserFullData = {
   uniqueDishes: {},
   userDataId: 1,
 }
-

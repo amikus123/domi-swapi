@@ -7,18 +7,14 @@ import {
   UserDiet,
   UserPersonalData,
 } from "../../types/dietPage/userTypes"
+import { DayJson, StubDishesWrapJson, DishReplacementJson, DietJsonWrap, DishPreferencesJson, TimeRangeJson } from "../../types/JSON/raw/dietJsonTypes"
 import {
-  DayJson,
-  StubDishesWrapJson,
-  DishReplacementJson,
-  DietJsonWrap,
   UserRequestDataJson,
   IngredientPreferenceJson,
-  DishPreferencesJson,
-  TimeRangeJson,
   UserDietJson,
   UserDataJson,
 } from "../../types/JSON/raw/userJsonTypes.ts"
+
 
 export const handleDietDays = (
   dietDays: DayJson[],
@@ -67,13 +63,14 @@ export const handleDishReplacements = (
     const originalName = original.data.attributes.name
     const arr: string[] = []
     possibleReplacements.data.forEach((d) => {
-      arr.push(d.attributes.name)
-      if (uniqueDishes[d.attributes.name] === undefined) {
-        console.log("ADDDEDD")
-        uniqueDishes[d.attributes.name] = {
-          name: d.attributes.name,
-          id: d.id,
-          originalName: d.attributes.name,
+      const  {attributes,id} =d 
+      const {name} = attributes
+      arr.push(name)
+      if (uniqueDishes[name] === undefined) {
+        uniqueDishes[name] = {
+          name: name,
+          id,
+          originalName: name,
         }
       }
     })

@@ -8,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css"
 import { parseCookies } from "nookies"
 
 import { datesFromUser, noLimits } from "../../components/User/diet/functions"
-import { getUser, getDishes } from "../../lib/server/fetching/getDiets"
 import {
   changeDishesInDays,
   changeDishesIngredients,
@@ -18,16 +17,8 @@ import {
   filterRange,
   filterSingleDay,
 } from "../../components/User/api/timeHelpers"
-import {
-  Dish,
-  DateRange,
-  DateRangeNullable,
-  DishColumnData,
-  FullDietDay,
-  UserFullData,
-  Diet,
-} from "../../components/User/api/types"
-import { useRecoilState } from "recoil"
+
+import { useRecoilState, useSetRecoilState } from "recoil"
 import { ingredientPreferencesState } from "../../components/User/api/atoms/IngredientPreferences"
 import { dishPreferencesState } from "../../components/User/api/atoms/dishPreferences"
 import { dishesState } from "../../components/User/api/atoms/dishes"
@@ -35,6 +26,15 @@ import DietLoading from "../../components/User/diet/DietLoading"
 import { userIdsState } from "../../components/User/api/atoms/userIds"
 import PdfButton from "../../components/User/diet/Pdf/PdfButton"
 import { isPublicState } from "../../components/User/api/atoms/isPublic"
+import { getDishes } from "../../lib/server/fetching/getDishes"
+import { getUser } from "../../lib/server/fetching/getUser"
+import { Diet, FullDietDay } from "../../lib/types/dietPage/dietTypes"
+import { Dish, DishColumnData } from "../../lib/types/dietPage/dishTypes"
+import {
+  DateRangeNullable,
+  DateRange,
+} from "../../lib/types/dietPage/timeTypes"
+import { UserFullData } from "../../lib/types/dietPage/userTypes"
 
 interface DietProps {
   user: UserFullData
@@ -56,9 +56,9 @@ const DietComponent = ({
     userDataId,
   } = user
   const { days, dishReplacements, name: dietName } = diet
-
   //* STATE
-  const [userIds, setUserIds] = useRecoilState(userIdsState)
+
+  const setUserIds = useSetRecoilState(userIdsState)
   const [isPublic, setIsPublic] = useRecoilState(isPublicState)
 
   useEffect(() => {
@@ -77,11 +77,11 @@ const DietComponent = ({
   })
   // * min and max date
 
-
   // * if public  we set to hardcoed high values
-  const [dateRange, setDateRange] = useState<DateRange>(
-    isPublic ? noLimits() : datesFromUser(user)
-  )
+  // const [dateRange, setDateRange] = useState<DateRange>()
+
+  const dateRange: DateRange = isPublic ? noLimits() : datesFromUser(user)
+
   //* single selected Date
   const [singleDate, setSingleDate] = useState<Date>(startOfToday())
   // * boolean to control wheather the calendar works on single or range of data
@@ -168,21 +168,11 @@ const DietComponent = ({
     fFullDietDays: FullDietDay[]
   ) => {
     if (fShowRange && fDates.end !== null) {
-      return filterRange(
-        fDates.start,
-        fDates.end,
-        fFullDietDays
-      )
+      return filterRange(fDates.start, fDates.end, fFullDietDays)
     } else if (fDates.end === null) {
-      return filterSingleDay(
-        fDates.start,
-        fFullDietDays
-      )
+      return filterSingleDay(fDates.start, fFullDietDays)
     } else {
-      return filterSingleDay(
-        fSingleDate,
-        fFullDietDays
-      )
+      return filterSingleDay(fSingleDate, fFullDietDays)
     }
   }
 

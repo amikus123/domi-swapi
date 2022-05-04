@@ -3,16 +3,21 @@ import { StrapiImage } from "../../generalTypes"
 // *used on dedicated blog page
 export interface BlogPost extends BlogCardFull {
   content: BlogContent[]
-  
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
+
+export type BlogContentComponentName =
+  | "blog.description-image"
+  | "blog.image"
+  | "blog.separator"
+  | "blog.text"
 export interface BlogContent {
-  id:number,
-  __component:string
-  text?:string,
-  description?:string,
-  image?:StrapiImage
+  id: number
+  __component: BlogContentComponentName
+  text?: string
+  description?: string
+  image?: StrapiImage
 }
 
 export interface BlogImage {
@@ -36,7 +41,7 @@ export interface BlogCardFull extends BlogCardBase {
   image: BlogImage
   blogCategories: BlogCategory[]
   readingTime: number
-  cardData:BlogCardOnlyData
+  cardData: BlogCardOnlyData
   id?: number
 }
 

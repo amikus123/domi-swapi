@@ -1,22 +1,9 @@
 import { DietDay } from "../../dietPage/dietTypes";
 import { DishReplacement } from "../../dietPage/dishTypes";
+import { StrapiImage, ImageRaw } from "../../generalTypes";
 
-export interface DietFullJsonInitial {
-  data: DietFullJson[]
-}
-export interface DietFullJson {
-  id: number
-  attributes: {
-    name: string
-    dietImage: any
-    dietDescription: string
-  }
-}
-export interface ParsedFullDiet {
-  id: number
-  name: string
-  dietImage: any
-  dietDescription: string
+
+export interface ParsedFullDiet extends  ParsedDiet{
   days: DietDay[]
   dishReplacements: Record<string, DishReplacement>
 }
@@ -24,7 +11,7 @@ export interface ParsedFullDiet {
 export interface ParsedDiet {
   id: number
   name: string
-  dietImage: any
+  dietImage: StrapiImage
   dietDescription: string
 }
 
@@ -35,7 +22,7 @@ export interface DietJsonInitial {
     id: number
     attributes: {
       name: string
-      dietImage: any
+      dietImage: ImageRaw
       dietDescription: string
     }
   }

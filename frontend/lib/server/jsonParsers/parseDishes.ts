@@ -1,8 +1,12 @@
-
 // ! TAKE CARE OF DIET PAGES
 
 import { Ingredient, Dish } from "../../types/dietPage/dishTypes"
-import { IngredientJson, DishJson, DishesJson } from "../../types/JSON/raw/dishJsonTypes"
+import {
+  IngredientJson,
+  DishJson,
+  DishesJson,
+} from "../../types/JSON/raw/dishJsonTypes"
+import { handleImage } from "./parseImage"
 
 const handleDishPage = (): null => {
   return null
@@ -21,17 +25,27 @@ const handleIngredients = (ingredients: IngredientJson[]): Ingredient[] => {
 }
 
 const handleDish = (dish: DishJson): Dish => {
+  const {
+    description,
+    image,
+    ingredients,
+    meal,
+    name,
+    nutrients,
+    recipe,
+    slug,
+  } = dish.attributes
   const res: Dish = {
-    image: dish.attributes.image,
+    image:handleImage(image),
     dishPage: handleDishPage(),
     id: dish.id,
-    name: dish.attributes.name,
-    slug: dish.attributes.slug,
-    ingredients: handleIngredients(dish.attributes.ingredients),
-    nutrients: dish.attributes.nutrients,
-    timeCategory: dish.attributes.meal,
-    description: dish.attributes.description,
-    recipe: dish.attributes.recipe,
+    name,
+    slug,
+    ingredients: handleIngredients(ingredients),
+    nutrients,
+    timeCategory: meal,
+    description,
+    recipe,
   }
   return res
 }

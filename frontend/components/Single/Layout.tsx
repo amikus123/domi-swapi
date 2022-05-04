@@ -1,5 +1,6 @@
 import { Flex } from "@chakra-ui/react"
 import { useRouter } from "next/dist/client/router"
+import { useEffect } from "react"
 import Footer from "./Footer"
 import Header from "./Header"
 
@@ -9,7 +10,9 @@ interface LayoutProps {
 }
 export default function Layout({ children, user }: LayoutProps) {
   const router = useRouter()
-
+  useEffect(() => {
+    console.log(user, "Asdasdad")
+  }, [user])
   const isOnAuthPage = router.pathname.startsWith("/auth/")
   const isOnFrontPage = router.pathname === "/"
   return (
