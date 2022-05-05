@@ -25,7 +25,8 @@ const DishColumnHeader = ({ date,kcalCount }: DishColumnHeaderProps) => {
       justify="space-between"
       fontWeight={500}
       fontSize={20}
-      py={4}
+      p={4}
+      
     >
       <Text w={120}>{daysOfWeek[getISODay(date)]}</Text>
       <Text>{formatISO9075(date, { representation: "date" })}</Text>

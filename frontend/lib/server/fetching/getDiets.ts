@@ -12,9 +12,10 @@ import { handleFullDiets } from "../jsonParsers/parseFullDiets"
 interface DietsFetchConfig {
   full: boolean
 }
-export const getDiets = async (
+
+const getDiets = async (
   config?: DietsFetchConfig
-): Promise<Record<string, ParsedDiet>> => {
+): Promise<Record<string, ParsedDiet> | Record<string, ParsedFullDiet>> => {
   const { full = false } = config
   const populateArr = ["dietImage"]
   if (full) {
@@ -47,4 +48,18 @@ export const getDiets = async (
   }
 
   return diets
+}
+
+export const getFullDiets = async (): Promise<
+  Record<string, ParsedFullDiet>
+> => {
+  const res = (await getDiets({ full: true })) as Record<string, ParsedFullDiet>
+  return res
+}
+
+export const getPartialDiets = async (): Promise<
+  Record<string, ParsedDiet>
+> => {
+  const res = (await getDiets({ full: false })) as Record<string, ParsedDiet>
+  return res
 }

@@ -11,9 +11,10 @@ import {
 import NextLink from "next/link"
 import { StrapiImage } from "../../../lib/types/generalTypes"
 import { MyImage } from "../../general/Images"
+import "react-datepicker/dist/react-datepicker.css"
 
 interface DietCardProps {
-  slug: string
+  slug: string | null
   name: string
   image: StrapiImage
   description: string
@@ -57,9 +58,13 @@ export default function DietCard({
             fontSize={"2xl"}
             fontFamily={"body"}
           >
-            <NextLink href={`/blog/${slug}`} passHref>
-              <LinkOverlay>{name}</LinkOverlay>
-            </NextLink>
+            {slug ? (
+              <NextLink href={`/blog/${slug}`} passHref>
+                <LinkOverlay>{name}</LinkOverlay>
+              </NextLink>
+            ) : (
+              <Text>{name}</Text>
+            )}
           </Heading>
           <Text color={"gray.500"}>{description}</Text>
         </Stack>

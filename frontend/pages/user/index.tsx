@@ -2,7 +2,7 @@ import { Stack, Text } from "@chakra-ui/react"
 import { parseCookies } from "nookies"
 import React, { useState } from "react"
 import DietCards from "../../components/User/index/cards/DietCards"
-import { getDiets } from "../../lib/server/fetching/getDiets"
+import { getPartialDiets } from "../../lib/server/fetching/getDiets"
 import { getUser } from "../../lib/server/fetching/getUser"
 import { UserFullData } from "../../lib/types/dietPage/userTypes"
 import { ParsedDiet } from "../../lib/types/JSON/parsed/parsedDiets"
@@ -28,7 +28,7 @@ export default index
 export async function getServerSideProps(ctx) {
   const jwt = parseCookies(ctx).jwt
   const user = await getUser(jwt)
-  const diets = await getDiets()
+  const diets = await getPartialDiets()
 
   // TODO filter diets so only allowed for user are shown
   // * get current  diet from user

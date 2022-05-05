@@ -36,7 +36,7 @@ export const getDietArr = (
   for (let i = 0; i <= uniqueDietDayCount; i++) {
     newMethod.push(i)
   }
-  console.log(newMethod, "NEW METHOD", dietDays)
+  
   return dietArr
 }
 

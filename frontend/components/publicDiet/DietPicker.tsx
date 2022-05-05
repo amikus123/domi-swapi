@@ -1,29 +1,54 @@
-import { Wrap, WrapItem } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Collapse,
+  Fade,
+  Stack,
+  useDisclosure,
+  Wrap,
+  WrapItem,
+} from "@chakra-ui/react"
 import React from "react"
-import { BlogCard } from "../../lib/types/JSON/parsed/parsedBlogs"
+import { ParsedFullDiet } from "../../lib/types/JSON/parsed/parsedDiets"
 import DietCard from "../blog/DietCard/DietCard"
 
 interface BlogCategoryBoxProps {
-  categories: Record<string, BlogCard>
+  diets: Record<string, ParsedFullDiet>
+  setDiet: (name: string) => void
 }
 
-const DietPicker = ({ categories }: BlogCategoryBoxProps) => {
+const DietPicker = ({ diets, setDiet }: BlogCategoryBoxProps) => {
+  const { isOpen, onToggle } = useDisclosure()
+
   return (
-    <Wrap spacing="30px" py="20px" justify="center" height="fit-content">
-      {Object.values(categories).map((item, index) => {
-        const { image, title: name, description, slug } = item
-        return (
-          <WrapItem key={index}>
-            <DietCard
-              image={image}
-              name={name}
-              slug={slug}
-              description={description}
-            />
-          </WrapItem>
-        )
-      })}
-    </Wrap>
+    <Stack align="center" py={4} spacing={4}>
+      <Button onClick={onToggle} w={120}>
+        Pokaż diety
+      </Button>
+
+      <Collapse in={isOpen} animateOpacity>
+        <Wrap spacing="20px" py="8px" justify="center" height="fit-content">
+          {Object.values(diets).map((item, index) => {
+            const { dietImage, dietDescription, name } = item
+            return (
+              <WrapItem
+                key={index}
+                onClick={() => {
+                  setDiet(name)
+                }}
+              >
+                <DietCard
+                  image={dietImage}
+                  name={name}
+                  slug={null}
+                  description={dietDescription}
+                />
+              </WrapItem>
+            )
+          })}
+        </Wrap>
+      </Collapse>
+    </Stack>
   )
 }
 

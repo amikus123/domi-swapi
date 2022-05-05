@@ -1,35 +1,49 @@
-import { Flex, Stack } from "@chakra-ui/react"
+import { Flex, Heading, Stack, useToast } from "@chakra-ui/react"
 import React, { useState } from "react"
 import CategoryBreadcrumbs from "../../components/blog/Categories/CategoryBreadcrumbs"
+import DietControl from "../../components/DietControl/DietControl"
 import DietPicker from "../../components/publicDiet/DietPicker"
-import { getBlogCategories } from "../../lib/server/fetching/getBlogCategories"
-import { getDiets } from "../../lib/server/fetching/getDiets"
+import { getFullDiets } from "../../lib/server/fetching/getDiets"
 import { getAllDishes } from "../../lib/server/fetching/getDishes"
+import { Dish } from "../../lib/types/dietPage/dishTypes"
 import { UserFullData } from "../../lib/types/dietPage/userTypes"
-import DietComponent from "../user/diet"
+import { ParsedFullDiet } from "../../lib/types/JSON/parsed/parsedDiets"
 
-const index = ({ dishes, diets, categories }) => {
-  console.log(diets, categories, "AASSDDD", dishes)
-  const [n, setN] = useState(0)
+interface DietPageProps {
+  dishes: Record<string, Dish>
+  diets: Record<string, ParsedFullDiet>
+}
+
+const index = ({ dishes, diets }: DietPageProps) => {
+  const toast = useToast()
+
+  const [selectedDiet, setSelectedDiet] = useState(diets[Object.keys(diets)[0]])
+  const setDiet = (dietName: string) => {
+    setSelectedDiet(diets[dietName])
+    toast({
+      title: "Wybrałeś nową diete",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    })
+  }
 
   return (
     <Stack justify="flex-start" align="center" w="100%" textAlign="left">
       <Flex w="100%" alignContent="left" pb={4} maxW="100%">
         <CategoryBreadcrumbs links={[{ href: "/diet", name: "Dieta" }]} />
       </Flex>
-      <button
-        onClick={() => {
-          setN(n + 1)
-        }}
-      >
-        adsads
-      </button>
-      <DietPicker categories={categories} />
-      <DietComponent
+
+      <Heading my={8} textAlign={["center", "center", "start"]}>
+        Wybrana dieta: {selectedDiet.name}
+      </Heading>
+      <DietPicker diets={diets} setDiet={setDiet} />
+
+      <DietControl
         originalDishes={dishes}
         user={user}
         isPagePublic={true}
-        diet={diets[Object.keys(diets)[n]]}
+        diet={selectedDiet}
       />
     </Stack>
   )
@@ -38,18 +52,12 @@ const index = ({ dishes, diets, categories }) => {
 export default index
 
 export async function getServerSideProps() {
-  // HARDCODE TEST  USER , OR GIVE FAKE DATA
-  // const user = await getUser(jwt)
-  // FETCH LIST OF DIETS
-  // const dishes = await getDishes(user, jwt)
 
-  const diets  = await getDiets({ full: true })
+  const diets = await getFullDiets()
   const dishes = await getAllDishes()
 
-  const categories = await getBlogCategories()
-
   return {
-    props: { dishes, diets, categories },
+    props: { dishes, diets },
   }
 }
 
