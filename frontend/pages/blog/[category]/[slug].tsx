@@ -17,7 +17,7 @@ const article = ({ blogData, category, blogIds }: BlogPostProps) => {
 
   return (
     <Flex>
-      <Blog data={blogData} category={category} blogIds={blogIds} />
+      {/* <Blog data={blogData} category={category} blogIds={blogIds} /> */}
     </Flex>
   )
 }
