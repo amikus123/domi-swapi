@@ -1,11 +1,9 @@
 import React from "react"
-// perchance move to difftent file so it does not always load
 import { parseCookies } from "nookies"
 import { getDishes } from "../../lib/server/fetching/getDishes"
 import { getUser } from "../../lib/server/fetching/getUser"
 import { Diet } from "../../lib/types/dietPage/dietTypes"
 import { Dish } from "../../lib/types/dietPage/dishTypes"
-
 import { UserFullData } from "../../lib/types/dietPage/userTypes"
 import DietControl from "../../components/DietControl/DietControl"
 
