@@ -65,7 +65,6 @@ export async function getStaticPaths() {
 
   const queryString = qs.stringify(
     {
-      populate: [ "slug"],
     },
 
     {
@@ -75,8 +74,11 @@ export async function getStaticPaths() {
 
   const res = await fetch(`${getApiUrl()}/api/blog-categories/?${queryString}`)
   const as = await res.json()
-
-
+  console.log(
+    as,
+    `${getApiUrl()}/api/blog-categories/?${queryString}`,
+    "asaadsasdq111"
+  )
 
   const a = as.data
   a.forEach((x) => {

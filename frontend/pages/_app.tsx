@@ -74,7 +74,7 @@ MyApp.getInitialProps = async (context): Promise<MyAppProps> => {
   //   },
   // })
   // Pass the data to our page via props
-  return { ...appProps, pageProps: { global: null }, user }
+  return { ...appProps, pageProps: { global: { attributes: {} } }, user }
 }
 
 export default MyApp
