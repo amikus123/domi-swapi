@@ -74,16 +74,7 @@ export async function getStaticPaths() {
 
   const res = await fetch(`${getApiUrl()}/api/blog-categories/?${queryString}`)
   const as = await res.json()
-  console.log(
-    as,
-    `${getApiUrl()}/api/blog-categories/?${queryString}`,
-    "asaadsasdq111"
-  )
 
-  const a = as.data
-  a.forEach((x) => {
-    console.log(x.attributes, "xd ")
-  })
   return {
     paths: as.data.map((article) => ({
       params: {
@@ -98,6 +89,8 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { category } = params
   const relatedBlogs = await getBlogCardsFromCategory(category)
+
+  
   return {
     props: { relatedBlogs, category },
     revalidate: 1,
