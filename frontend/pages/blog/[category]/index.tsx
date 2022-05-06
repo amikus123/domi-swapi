@@ -1,12 +1,13 @@
 import React from "react"
 import { Button, Divider, Heading, Stack } from "@chakra-ui/react"
-import { fetchAPI } from "../../../lib/api"
+import { fetchAPI, getApiUrl } from "../../../lib/api"
 import CategoryBreadcrumbs from "../../../components/blog/Categories/CategoryBreadcrumbs"
 import BlogCardWide from "../../../components/blog/BlogCard/BlogCardWide"
 import { capitalize } from "lodash"
 import NextLink from "next/link"
 import { getBlogCardsFromCategory } from "../../../lib/server/fetching/getBlogCategories"
 import { BlogCardFull } from "../../../lib/types/JSON/parsed/parsedBlogs"
+import qs from "qs"
 
 interface BlogCategoryPostsProps {
   relatedBlogs: BlogCardFull[]
@@ -58,15 +59,31 @@ export default blog
 
 // sets whcih pages should be statucly rendered
 export async function getStaticPaths() {
-  const articlesRes = await fetchAPI("/blog-categories/", {
-    urlParamsObject: { fields: ["slug"] },
-  })
-  const a = articlesRes.data
+  // const articlesRes = await fetchAPI("/blog-categories/", {
+  //   urlParamsObject: { fields: ["slug"] },
+  // })
+
+  const queryString = qs.stringify(
+    {
+      populate: [ "slug"],
+    },
+
+    {
+      encodeValuesOnly: false,
+    }
+  )
+
+  const res = await fetch(`${getApiUrl()}/api/blog-categories/?${queryString}`)
+  const as = await res.json()
+
+
+
+  const a = as.data
   a.forEach((x) => {
     console.log(x.attributes, "xd ")
   })
   return {
-    paths: articlesRes.data.map((article) => ({
+    paths: as.data.map((article) => ({
       params: {
         category: article.attributes.slug,
       },

@@ -63,18 +63,18 @@ MyApp.getInitialProps = async (context): Promise<MyAppProps> => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(context)
   // Fetch global site settings from Strapi
-  const globalRes = await fetchAPI("/global", {
-    urlParamsObject: {
-      populate: {
-        favicon: "*",
-        defaultSeo: {
-          populate: "*",
-        },
-      },
-    },
-  })
+  // const globalRes = await fetchAPI("/global", {
+  //   urlParamsObject: {
+  //     populate: {
+  //       favicon: "*",
+  //       defaultSeo: {
+  //         populate: "*",
+  //       },
+  //     },
+  //   },
+  // })
   // Pass the data to our page via props
-  return { ...appProps, pageProps: { global: globalRes.data }, user }
+  return { ...appProps, pageProps: { global: null }, user }
 }
 
 export default MyApp

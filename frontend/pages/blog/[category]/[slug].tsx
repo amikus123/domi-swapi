@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react"
 import React from "react"
 import Blog from "../../../components/blog/Blog"
-import { fetchAPI, getApiUrl } from "../../../lib/api"
+import {  getApiUrl } from "../../../lib/api"
 import {
   getBlogPost,
   getIdsOfBlogs,
