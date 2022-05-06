@@ -28,12 +28,13 @@ export async function getStaticPaths() {
       fields: ["slug"],
       populate: {
         blogCategories: {
-          populate: "",
+          populate: "*",
         },
       },
       encodeValuesOnly: true,
     },
   })
+  
   const fin = []
   // * to each blog post we generate paths based on categories
   // * for example if post has two categories, it generates 2 paths.
