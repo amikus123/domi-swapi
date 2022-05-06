@@ -1,6 +1,6 @@
 import qs from "qs"
 import { getApiUrl } from "../../api"
-import {  BlogCardFull, BlogCard } from "../../types/JSON/parsed/parsedBlogs"
+import { BlogCardFull, BlogCard } from "../../types/JSON/parsed/parsedBlogs"
 import { handleBlogCards } from "../jsonParsers/parseBlogCategoryPosts"
 import { handleBlogCategories } from "../jsonParsers/parseDietCategories"
 
@@ -10,10 +10,11 @@ export const getBlogCategories = async (): Promise<BlogCard[]> => {
       populate: ["image"],
     },
     {
-      encodeValuesOnly: true,
+      encodeValuesOnly: false,
     }
   )
 
+  console.log(`/api/blog-categories?${queryString}`, "ADASADSADS")
   const request = await fetch(
     `${getApiUrl()}/api/blog-categories?${queryString}`,
     {}
