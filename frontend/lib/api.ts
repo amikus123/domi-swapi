@@ -9,9 +9,8 @@ export function getStrapiURL(path = ""): string {
   return `${process.env.API_URL.replace || "http://localhost:1337"}${path}`
 }
 
-export const getApiUrl = ()=>{
+export const getApiUrl = () => {
   return `${process.env.API_URL || "http://localhost:1337"}`
-
 }
 interface FetchApiOptions {
   headers?: Record<string, any>
@@ -38,8 +37,12 @@ export const fetchAPI = async (path: string, parmas: FetchApiOptions = {}) => {
     `/api${path}${queryString ? `?${queryString}` : ""}`
   )}`
   // Trigger API call
-  const response = await fetch(requestUrl, mergedOptions)
-    console.log(requestUrl,"XDD")
+
+  const response = await fetch(
+    `${getApiUrl()}/api/blog-categories?${queryString}`,
+    mergedOptions
+  )
+  console.log(requestUrl, "XDD")
   // Handle response
   if (!response.ok) {
     console.error(response.statusText)
@@ -48,4 +51,3 @@ export const fetchAPI = async (path: string, parmas: FetchApiOptions = {}) => {
   const data = await response.json()
   return data
 }
-

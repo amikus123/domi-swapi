@@ -48,8 +48,9 @@ export const getBlogCardsFromCategory = async (
     }
   )
 
-  const xd = `${getApiUrl()}/api/blog-categories?${queryString}`
-  console.log(xd,"no halo ")
+  const xddd = new URL(`/api/blog-categories?${queryString}`, getApiUrl())
+
+  console.log(xddd, "no halo ")
   const request = await fetch(
     `${getApiUrl()}/api/blog-categories?${queryString}`
   )
