@@ -35,7 +35,7 @@ const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
       {relatedBlogs.map((item, index) => {
         return (
           <React.Fragment key={index}>
-            {/* <BlogCardWide data={item} categorySlug={category} fullW={true} /> */}
+            <BlogCardWide data={item} categorySlug={category} fullW={true} />
 
             {index === relatedBlogs.length - 1 ? null : <Divider />}
           </React.Fragment>

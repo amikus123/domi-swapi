@@ -6,7 +6,7 @@ import qs from "qs"
  * @returns {string} Full Strapi URL
  */
 export function getStrapiURL(path = ""): string {
-  return `${process.env.API_URL.replace || "http://localhost:1337"}${path}`
+  return `${process.env.API_URL || "http://localhost:1337"}${path}`
 }
 
 export const getApiUrl = () => {
