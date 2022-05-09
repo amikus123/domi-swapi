@@ -23,7 +23,8 @@ function MyApp({ Component, pageProps, user }: MyAppProps) {
     <>
       {/* <DefaultSEO  {...SEO}/> */}
       <Chakra cookies={pageProps.cookies}>
-        <GlobalContext.Provider value={global.attributes}>
+        {/* value={global.attributes} */}
+        <GlobalContext.Provider value={{}}>
           <RecoilRoot>
             <Layout user={user}>
               <Component {...pageProps} />
