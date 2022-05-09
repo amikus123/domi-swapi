@@ -21,7 +21,7 @@ const article = ({ blogData, category, blogIds }: BlogPostProps) => {
     </Flex>
   )
 }
-
+//a
 export async function getStaticPaths() {
   const queryString = qs.stringify(
     {
