@@ -17,20 +17,21 @@ interface BlogProps {
 }
 
 const Blog = ({ data, category, blogIds }: BlogProps) => {
-  const {
-    content,
-    description,
-    image: mainImage,
-    title,
-    blogCategories,
-    slug,
-    id = -1,
-  } = data
+  // const {
+  //   content,
+  //   description,
+  //   image: mainImage,
+  //   title,
+  //   blogCategories,
+  //   slug,
+  //   id = -1,
+  // } = data
 
 
   return (
     <>
-      <Stack
+    {data?JSON.stringify(data):"XD"}
+      {/* <Stack
         justify="flex-start"
         align="center"
         w="100%"
@@ -72,7 +73,7 @@ const Blog = ({ data, category, blogIds }: BlogProps) => {
           blogIds={blogIds}
           category={category}
         />
-      </Stack>
+      </Stack> */}
     </>
   )
 }

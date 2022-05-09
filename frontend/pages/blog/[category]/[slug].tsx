@@ -36,17 +36,6 @@ export async function getStaticPaths() {
   const res = await fetch(`${getApiUrl()}/api/blogs/?${queryString}`)
   const a = await res.json()
 
-  // const articlesRes = await fetchAPI("/blogs", {
-  //   urlParamsObject: {sss
-  //     fields: ["slug", "blogCategories"],
-  //     populate: {
-  //       blogCategories: {
-  //         populate: "slug",
-  //       },
-  //     },
-  //     encodeValuesOnly: false,
-  //   },
-  // })
 
   const fin = []
   // * to each blog post we generate paths based on categories
