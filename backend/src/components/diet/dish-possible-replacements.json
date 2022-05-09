@@ -1,8 +1,10 @@
 {
-  "collectionName": "components_diet_dish_possible_replacements",
+  "collectionName": "c_d_d_p_r",
+
   "info": {
-    "displayName": "dishPossibleReplacements",
-    "icon": "balance-scale-left"
+    "displayName": "DPReplacements",
+    "icon": "balance-scale-left",
+    "description": ""
   },
   "options": {},
   "attributes": {

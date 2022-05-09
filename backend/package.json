@@ -4,6 +4,7 @@
     "@strapi/plugin-i18n": "4.0.6",
     "@strapi/plugin-users-permissions": "4.0.6",
     "@strapi/strapi": "4.0.6",
+    "heroku": "^7.60.2",
     "lodash.set": "^4.3.2",
     "mime-types": "^2.1.27",
     "pg": "^8.7.3",
@@ -20,7 +21,6 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "author": {
     "name": "A Strapi developer"
   },
