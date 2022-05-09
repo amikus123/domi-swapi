@@ -37,7 +37,7 @@ export async function getStaticPaths() {
   const a = await res.json()
 
   // const articlesRes = await fetchAPI("/blogs", {
-  //   urlParamsObject: {
+  //   urlParamsObject: {sss
   //     fields: ["slug", "blogCategories"],
   //     populate: {
   //       blogCategories: {
