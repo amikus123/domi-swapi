@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react"
 import React from "react"
 import Blog from "../../../components/blog/Blog"
-import {  getApiUrl } from "../../../lib/api"
+import { getApiUrl } from "../../../lib/api"
 import {
   getBlogPost,
   getIdsOfBlogs,
@@ -17,7 +17,9 @@ interface BlogPostProps {
 const article = ({ blogData, category, blogIds }: BlogPostProps) => {
   return (
     <Flex>
-      <Blog data={blogData} category={category} blogIds={blogIds} />
+      {blogData === undefined ? null : (
+        <Blog data={blogData} category={category} blogIds={blogIds} />
+      )}
     </Flex>
   )
 }
@@ -25,7 +27,7 @@ const article = ({ blogData, category, blogIds }: BlogPostProps) => {
 export async function getStaticPaths() {
   const queryString = qs.stringify(
     {
-      populate: [ "blogCategories"],
+      populate: ["blogCategories"],
     },
 
     {
@@ -35,7 +37,6 @@ export async function getStaticPaths() {
 
   const res = await fetch(`${getApiUrl()}/api/blogs/?${queryString}`)
   const a = await res.json()
-
 
   const fin = []
   // * to each blog post we generate paths based on categories
@@ -58,7 +59,6 @@ export async function getStaticPaths() {
   return {
     paths: fin,
     fallback: true,
-
   }
 }
 
