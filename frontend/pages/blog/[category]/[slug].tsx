@@ -65,7 +65,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const blogData = await getBlogPost(params.slug)
   const blogIds = await getIdsOfBlogs()
-
+  console.log(blogData, "nor halo")
   return {
     props: { blogData, category: params.category, blogIds },
     revalidate: 1,
