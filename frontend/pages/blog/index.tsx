@@ -17,7 +17,7 @@ const index = ({ categories }: IndexProps) => {
         />
       </Box>
       <Flex grow={1} alignContent="center" direction="column" justify="center">
-        {/* <BlogCategoryBox categories={categories} /> */}
+        <BlogCategoryBox categories={categories} />
       </Flex>
     </>
   )
