@@ -59,10 +59,10 @@ export const MyImage = ({
 
   return (
     <>
-      {/* {JSON.stringify(image)} */}
+      {JSON.stringify(image)}
 
       {variant === "full" ? (
-        <BlogImg
+        <NextImage
           alt={alternativeText}
           src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
           layout="fill"
@@ -71,7 +71,7 @@ export const MyImage = ({
         />
       ) : variant === "fullH" ? (
         <Box className="fullHeightImageWrap" style={{ height: "100%" }}>
-          <BlogImg
+          <NextImage
             src={getStrapiMedia(getImageWithBestWidth(image, idealHeight))}
             objectFit="contain"
             alt={alternativeText}
@@ -82,7 +82,6 @@ export const MyImage = ({
           />
         </Box>
       ) : (
-        // <>aaaa</>
         <BlogImg
           {...rest}
           objectFit="contain"
