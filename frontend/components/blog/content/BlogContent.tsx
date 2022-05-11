@@ -9,7 +9,7 @@ interface BlogContentProps {
   data: BlogContent[]
 }
 
-// based on  propetrt "__copmonents we return  diffrent element
+// * based on  propetrt "__copmonents we return  diffrent element
 
 const BlogContentElement = ({ data }: BlogContentProps) => {
   const getElement = (obj: BlogContent) => {

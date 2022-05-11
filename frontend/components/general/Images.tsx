@@ -55,6 +55,8 @@ export const MyImage = ({
 
   return (
     <>
+      {JSON.stringify(image)}
+
       {variant === "full" ? (
         <NextImage
           src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
