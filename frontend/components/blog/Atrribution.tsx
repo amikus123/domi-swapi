@@ -29,9 +29,7 @@ const AuthorPart = ({ authorName, authorLink }: AuthorProps) => {
     }
   }
   return (
-    <>
       <Helper />
-    </>
   )
 }
 
@@ -51,9 +49,7 @@ const PagePart = ({ pageLink, pageName }: PageProps) => {
   }
 
   return (
-    <>
       <Helper />
-    </>
   )
 }
 

@@ -6,7 +6,6 @@ import qs from "qs"
  * @returns {string} Full Strapi URL
  */
 export function getStrapiURL(path = ""): string {
-  console.log(process.env.API_URL, "API")
   return `${process.env.API_URL || "http://localhost:1337"}${path}`
 }
 
@@ -40,10 +39,9 @@ export const fetchAPI = async (path: string, parmas: FetchApiOptions = {}) => {
   // Trigger API call
 
   const response = await fetch(
-    `${getApiUrl()}/api/blog-categories?${queryString}`,
+    requestUrl,
     mergedOptions
   )
-  console.log(requestUrl, "XDD")
   // Handle response
   if (!response.ok) {
     console.error(response.statusText)

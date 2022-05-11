@@ -42,10 +42,8 @@ const RelatedBlogPosts = ({
     setIsFetching(true)
     const randomIDs = sampleSize(arr, 3)
 
-    console.log(randomIDs, arr)
     const xd = await getBlogCardDataByIds(randomIDs)
 
-    // removing ids
     const copy = { ...availableIds }
     randomIDs.forEach((id) => {
       delete copy[id]
@@ -53,7 +51,6 @@ const RelatedBlogPosts = ({
     setAvailableIds(copy)
     setFetchedPosts([...fetchedBlogs, ...xd])
     setIsFetching(false)
-    console.log(xd)
   }
   return (
     <>

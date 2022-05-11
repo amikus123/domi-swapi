@@ -75,7 +75,6 @@ export const getBlogPost = async (slug: string): Promise<BlogPost> => {
       encodeValuesOnly: true,
     }
   )
-  console.log(queryString, "AAAA")
   const request = await fetch(`${getApiUrl()}/api/blogs?${queryString}`, {})
   const rawJSON = (await request.json()) as BlogWrapJson
   const data = handleBlogPost(rawJSON)

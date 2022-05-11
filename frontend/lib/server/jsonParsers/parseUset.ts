@@ -20,7 +20,6 @@ export const handleDietDays = (
   dietDays: DayJson[],
   uniqueDishes: Record<string, DishUniqueData>
 ): DietDay[] => {
-  // console.log(dietDays,"XD")
   const res: DietDay[] = dietDays.map((day) => {
     return {
       id: day.id,

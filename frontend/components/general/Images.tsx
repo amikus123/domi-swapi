@@ -1,5 +1,5 @@
 import { getStrapiMedia } from "../../lib/media"
-import { Box, chakra, Image } from "@chakra-ui/react"
+import {  chakra, Image } from "@chakra-ui/react"
 import { StrapiImage } from "../../lib/types/generalTypes"
 
 export const getImageWithBestWidth = (
@@ -12,7 +12,6 @@ export const getImageWithBestWidth = (
     return url
   }
   const sizeNames = Object.keys(formats)
-  console.log(sizeNames)
   let smallestDifference = 999999
   let smallestSize = formats[sizeNames[0]]
   sizeNames.forEach((sizeName) => {

@@ -14,7 +14,6 @@ export const getBlogCategories = async (): Promise<BlogCard[]> => {
     }
   )
 
-  console.log(`/api/blog-categories?${queryString}`, "ADASADSADS")
   const request = await fetch(
     `${getApiUrl()}/api/blog-categories?${queryString}`,
     {}
@@ -51,7 +50,6 @@ export const getBlogCardsFromCategory = async (
   const request = await fetch(
     `${getApiUrl()}/api/blog-categories?${queryString}`
   )
-  console.log(`${getApiUrl()}/api/blog-categories?${queryString}`, "adasdaa")
   const rawJSON = await request.json()
   const data = handleBlogCards(rawJSON)
   return data

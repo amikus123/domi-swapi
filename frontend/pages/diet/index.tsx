@@ -52,7 +52,6 @@ const index = ({ dishes, diets }: DietPageProps) => {
 export default index
 
 export async function getServerSideProps() {
-
   const diets = await getFullDiets()
   const dishes = await getAllDishes()
 

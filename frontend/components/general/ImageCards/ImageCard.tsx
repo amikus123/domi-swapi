@@ -20,7 +20,6 @@ interface DietCardProps {
 const PlainCard = ({
   image,
   name,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClick = () => {},
 }: DietCardProps) => {
   return (

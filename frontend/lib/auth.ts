@@ -18,7 +18,7 @@ export const registerEmail = async (email: string, password: string) => {
       return response.data
     })
     .catch((error) => {
-      console.log(error.response.data.error.message)
+      console.error(error.response.data.error.message)
       return error.response.data.error.message
     })
   return res
@@ -40,7 +40,7 @@ export const loginWithEmail = async (email: string, password: string) => {
       return response.data
     })
     .catch((error) => {
-      console.log("An error occurred:", error.response)
+      console.error("An error occurred:", error.response)
       return error.response.data.error.message
     })
   return res
@@ -56,7 +56,7 @@ export const resetPassword = async (email: string) => {
       return response.data
     })
     .catch((error) => {
-      console.log("An error occurred:", error.response)
+      console.error("An error occurred:", error.response)
       return error.response.data.error.message
     })
   return res

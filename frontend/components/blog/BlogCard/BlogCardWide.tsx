@@ -43,7 +43,7 @@ export default function BlogCardWide({
     <LinkBox
       as={Flex}
       h={["unset", "unset", "300px"]}
-      w={["unset", "unset", fullW ? "unset" : "675px"]}
+      w={["100%", "100%", fullW ? "100%" : "675px"]}
       cursor="pointer"
       justify="space-between"
     >
