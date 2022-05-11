@@ -38,7 +38,7 @@ export default function DietCard({
         overflow={"hidden"}
       >
         <Box
-          h={"210px"}
+          h={300}
           bg={"gray.100"}
           mt={-6}
           mx={-6}

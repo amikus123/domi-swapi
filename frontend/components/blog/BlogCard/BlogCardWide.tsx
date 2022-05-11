@@ -62,7 +62,11 @@ export default function BlogCardWide({
         </Text>
 
         <Text noOfLines={[3, 3]}>{description}</Text>
-        <Box display={["flex", "flex", "none"]} justifyContent="center">
+        <Box
+          display={["flex", "flex", "none"]}
+          justifyContent="center"
+          alignContent="center"
+        >
           <MyImage variant="fullH" image={mainImage.image} idealHeight={150} />
         </Box>
 

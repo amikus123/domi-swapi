@@ -56,8 +56,6 @@ const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
 }
 
 export default blog
-const a =
-  "https://domi-strapi.herokuapp.com/uploads/photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg?updated_at=2022-05-11T13:44:37.175Z"
 // sets whcih pages should be statucly rendered
 export async function getStaticPaths() {
   // const articlesRes = await fetchAPI("/blog-categories/", {
