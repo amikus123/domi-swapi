@@ -44,6 +44,10 @@ const BlogImg = chakra(Image, {
     ["height", "width", "quality", "src", "alt"].includes(prop),
 })
 
+const onError = (s: string) => {
+  console.log("aaaa")
+}
+
 export const MyImage = ({
   image,
   idealWidth = 1000,
@@ -55,19 +59,19 @@ export const MyImage = ({
 
   return (
     <>
-      {JSON.stringify(image)}
+      {/* {JSON.stringify(image)} */}
 
       {variant === "full" ? (
-        <NextImage
-        alt={alternativeText}
-        src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
+        <BlogImg
+          alt={alternativeText}
+          src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
           layout="fill"
           aria-label={alternativeText}
           {...rest}
         />
       ) : variant === "fullH" ? (
         <Box className="fullHeightImageWrap" style={{ height: "100%" }}>
-          <NextImage
+          <BlogImg
             src={getStrapiMedia(getImageWithBestWidth(image, idealHeight))}
             objectFit="contain"
             alt={alternativeText}
@@ -78,6 +82,7 @@ export const MyImage = ({
           />
         </Box>
       ) : (
+        // <>aaaa</>
         <BlogImg
           {...rest}
           objectFit="contain"
