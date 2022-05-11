@@ -59,8 +59,8 @@ export const MyImage = ({
 
       {variant === "full" ? (
         <NextImage
-          src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
-          alt={alternativeText}
+        alt={alternativeText}
+        src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
           layout="fill"
           aria-label={alternativeText}
           {...rest}

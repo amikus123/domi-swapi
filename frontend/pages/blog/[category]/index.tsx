@@ -56,7 +56,8 @@ const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
 }
 
 export default blog
-const a = "https://domi-strapi.herokuapp.com/uploads/photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg?updated_at=2022-05-11T13:44:37.175Z"
+const a =
+  "https://domi-strapi.herokuapp.com/uploads/photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg?updated_at=2022-05-11T13:44:37.175Z"
 // sets whcih pages should be statucly rendered
 export async function getStaticPaths() {
   // const articlesRes = await fetchAPI("/blog-categories/", {
@@ -64,8 +65,7 @@ export async function getStaticPaths() {
   // })
 
   const queryString = qs.stringify(
-    {
-    },
+    {},
 
     {
       encodeValuesOnly: false,
@@ -90,9 +90,136 @@ export async function getStaticProps({ params }) {
   const { category } = params
   const relatedBlogs = await getBlogCardsFromCategory(category)
 
-  
   return {
     props: { relatedBlogs, category },
     revalidate: 1,
   }
+}
+
+  const c = {
+    name: "photo-1599964815811-30b9aea11d17.jpg",
+    alternativeText: "photo-1599964815811-30b9aea11d17.jpg",
+    caption: "photo-1599964815811-30b9aea11d17.jpg",
+    width: 1170,
+    height: 780,
+    formats: {
+      large: {
+        ext: ".jpg",
+        url: "/uploads/large_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+        hash: "large_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+        mime: "image/jpeg",
+        name: "large_photo-1599964815811-30b9aea11d17.jpg",
+        path: null,
+        size: 95.77,
+        width: 1000,
+        height: 667,
+      },
+      small: {
+        ext: ".jpg",
+        url: "/uploads/small_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+        hash: "small_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+        mime: "image/jpeg",
+        name: "small_photo-1599964815811-30b9aea11d17.jpg",
+        path: null,
+        size: 29.38,
+        width: 500,
+        height: 333,
+      },
+      medium: {
+        ext: ".jpg",
+        url: "/uploads/medium_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+        hash: "medium_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+        mime: "image/jpeg",
+        name: "medium_photo-1599964815811-30b9aea11d17.jpg",
+        path: null,
+        size: 59.69,
+        width: 750,
+        height: 500,
+      },
+      thumbnail: {
+        ext: ".jpg",
+        url: "/uploads/thumbnail_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+        hash: "thumbnail_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+        mime: "image/jpeg",
+        name: "thumbnail_photo-1599964815811-30b9aea11d17.jpg",
+        path: null,
+        size: 8.59,
+        width: 234,
+        height: 156,
+      },
+    },
+    hash: "photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+    ext: ".jpg",
+    mime: "image/jpeg",
+    size: 124.7,
+    url: "/uploads/photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+    previewUrl: null,
+    provider: "local",
+    provider_metadata: null,
+    createdAt: "2022-05-11T13:44:37.175Z",
+    updatedAt: "2022-05-11T13:44:37.175Z",
+  }
+
+const b = {
+  name: "photo-1599964815811-30b9aea11d17.jpg",
+  alternativeText: "photo-1599964815811-30b9aea11d17.jpg",
+  caption: "photo-1599964815811-30b9aea11d17.jpg",
+  width: 1170,
+  height: 780,
+  formats: {
+    large: {
+      ext: ".jpg",
+      url: "/uploads/large_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+      hash: "large_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+      mime: "image/jpeg",
+      name: "large_photo-1599964815811-30b9aea11d17.jpg",
+      path: null,
+      size: 95.77,
+      width: 1000,
+      height: 667,
+    },
+    small: {
+      ext: ".jpg",
+      url: "/uploads/small_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+      hash: "small_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+      mime: "image/jpeg",
+      name: "small_photo-1599964815811-30b9aea11d17.jpg",
+      path: null,
+      size: 29.38,
+      width: 500,
+      height: 333,
+    },
+    medium: {
+      ext: ".jpg",
+      url: "/uploads/medium_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+      hash: "medium_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+      mime: "image/jpeg",
+      name: "medium_photo-1599964815811-30b9aea11d17.jpg",
+      path: null,
+      size: 59.69,
+      width: 750,
+      height: 500,
+    },
+    thumbnail: {
+      ext: ".jpg",
+      url: "/uploads/thumbnail_photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+      hash: "thumbnail_photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+      mime: "image/jpeg",
+      name: "thumbnail_photo-1599964815811-30b9aea11d17.jpg",
+      path: null,
+      size: 8.59,
+      width: 234,
+      height: 156,
+    },
+  },
+  hash: "photo_1599964815811_30b9aea11d17_1cfe6e99dd",
+  ext: ".jpg",
+  mime: "image/jpeg",
+  size: 124.7,
+  url: "/uploads/photo_1599964815811_30b9aea11d17_1cfe6e99dd.jpg",
+  previewUrl: null,
+  provider: "local",
+  provider_metadata: null,
+  createdAt: "2022-05-11T13:44:37.175Z",
+  updatedAt: "2022-05-11T13:44:37.175Z",
 }
