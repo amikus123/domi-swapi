@@ -21,7 +21,7 @@ const nextConfig = {
   // },
   images: {
     loader: "default",
-    domains: ["localhost"],
+    domains: ["https://domi-strapi.herokuapp.com"],
   },
 }
 
