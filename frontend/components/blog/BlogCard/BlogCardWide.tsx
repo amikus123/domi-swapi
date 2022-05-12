@@ -42,12 +42,18 @@ export default function BlogCardWide({
   return (
     <LinkBox
       as={Flex}
-      h={["unset", "unset", "300px"]}
+      h={["100%", "100%", "300px"]}
+      // minH={[0, 0, "300px"]}
       w={["100%", "100%", fullW ? "100%" : "675px"]}
       cursor="pointer"
       justify="space-between"
     >
-      <Stack w={["100%", "100%", "50%"]} direction="column" spacing={4}>
+      <Stack
+        w={["100%", "100%", "50%"]}
+        direction="column"
+        spacing={4}
+        h="100%"
+      >
         <Heading
           color={useColorModeValue("gray.700", "white")}
           fontSize={"2xl"}
@@ -66,8 +72,9 @@ export default function BlogCardWide({
           display={["flex", "flex", "none"]}
           justifyContent="center"
           alignContent="center"
+          h={300}
         >
-          <MyImage variant="fullH" image={mainImage.image} idealHeight={150} />
+          <MyImage variant="fullW" image={mainImage.image} idealHeight={300} />
         </Box>
 
         <BlogTags blogCategories={blogCategories} />

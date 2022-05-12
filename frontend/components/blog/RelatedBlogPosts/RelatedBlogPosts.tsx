@@ -1,4 +1,4 @@
-import { Flex, Button } from "@chakra-ui/react"
+import { Flex, Button, LinkBox, LinkOverlay } from "@chakra-ui/react"
 import { sampleSize } from "lodash"
 import React, { useEffect, useState } from "react"
 import CardStack from "../BlogCard/CardStack"
@@ -57,7 +57,7 @@ const RelatedBlogPosts = ({
       <Flex py={12} w="100%" direction="column" align="center">
         <CardStack cards={fetchedBlogs} />
         {Object.keys(availableIds).length === 0 ? (
-          <Button colorScheme="teal" w="60" size="lg">
+          <Button colorScheme="teal" w="60" size="lg" as="div">
             <NextLink href="/blog/">Sprawdź inne kategorie</NextLink>
           </Button>
         ) : (

@@ -1,4 +1,4 @@
-import { Stack } from "@chakra-ui/react"
+import { Stack, Box } from "@chakra-ui/react"
 import React from "react"
 import { BlogContent } from "../../../lib/types/JSON/parsed/parsedBlogs"
 import BlogDescriptionImage from "./BlogDescriptionImage"
@@ -16,10 +16,16 @@ const BlogContentElement = ({ data }: BlogContentProps) => {
     const { __component: property, description, image, text } = obj
     if (property === "blog.description-image") {
       return (
-        <BlogDescriptionImage image={image} text={description} height={400} />
+        <Box>
+          <BlogDescriptionImage image={image} text={description} height={400} />
+        </Box>
       )
     } else if (property === "blog.image") {
-      return <BlogDescriptionImage image={image} text={text} height={400} />
+      return (
+        <Box>
+          <BlogDescriptionImage image={image} text={text} height={400} />
+        </Box>
+      )
     } else if (property === "blog.text") {
       return <BlogText text={text} />
     } else {

@@ -44,7 +44,7 @@ const BlogDescriptionImage = ({
   height,
 }: BlogDescriptionImageProps) => {
   return (
-    <Stack justify="center" align="center">
+    <Stack justify="center" align="center" w="100%" pt={4}>
       <MyImage variant="fullW" image={image} idealHeight={height} />
       <ImageDesctiption text={text} />
     </Stack>

@@ -37,16 +37,9 @@ export default function DietCard({
         p={6}
         overflow={"hidden"}
       >
-        <Box
-          h={300}
-          bg={"gray.100"}
-          mt={-6}
-          mx={-6}
-          mb={6}
-          pos={"relative"}
-        >
+        <Box h={300} bg={"gray.100"} mt={-6} mx={-6} mb={6} pos={"relative"}>
           <MyImage
-            variant="full"
+            variant="fullH"
             image={image}
             roundedTop="lg"
             overflow="hidden"

@@ -60,13 +60,15 @@ const Blog = ({ data, category, blogIds }: BlogProps) => {
                 {description}
               </ReactMarkdown>
             </Text>
-            <BlogTags blogCategories={blogCategories} />
-            <BlogDescriptionImage 
-            
+
+            <BlogTags blogCategories={blogCategories} pb={4} />
+
+            <BlogDescriptionImage
               image={mainImage.image as StrapiImage}
               text={mainImage.description}
               height={800}
             />
+          
             <BlogContent data={content} />
             <Divider py={4} />
             <Flex w="100%" justify="flex-end" pt={4}>

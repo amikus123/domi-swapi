@@ -1,24 +1,28 @@
 import { getStrapiMedia } from "../../lib/media"
-import {  chakra, Image } from "@chakra-ui/react"
+import { chakra, Image } from "@chakra-ui/react"
 import { StrapiImage } from "../../lib/types/generalTypes"
 
-export const getImageWithBestWidth = (
+const getBestImage = (
   image: StrapiImage,
-  idealWidth = 1000
+  dimension: "width" | "height",
+  idealDimension = 1000
 ) => {
   // * gets  the  next biggest size
   const { formats, url } = image
+
   if (formats == null) {
     return url
   }
   const sizeNames = Object.keys(formats)
+  console.log(sizeNames, "rozmairy")
   let smallestDifference = 999999
   let smallestSize = formats[sizeNames[0]]
   sizeNames.forEach((sizeName) => {
     const item = formats[sizeName]
-    const offset = item.width - idealWidth
-
-    if (offset > 0 && offset < smallestDifference) {
+    const imageSize = dimension === "height" ? item.height : item.width
+    const offset = imageSize - idealDimension
+    console.log(offset, sizeName, "XD", url, smallestDifference)
+    if (Math.abs(offset) < Math.abs(smallestDifference)) {
       smallestDifference = offset
       smallestSize = item
     }
@@ -27,8 +31,11 @@ export const getImageWithBestWidth = (
     smallestDifference == 999999
       ? formats[sizeNames[sizeNames.length - 1]]
       : smallestSize
+
+  console.log(image.alternativeText, smallestSize, "XD")
   return smallestSize.url
 }
+
 interface ImageProps {
   image: StrapiImage
   idealWidth?: number
@@ -56,7 +63,7 @@ export const MyImage = ({
       {variant === "full" ? (
         <BlogImg
           alt={alternativeText}
-          src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
+          src={getStrapiMedia(getBestImage(image, "width", idealWidth))}
           layout="fill"
           aria-label={alternativeText}
           {...rest}
@@ -64,27 +71,29 @@ export const MyImage = ({
         />
       ) : variant === "fullH" ? (
         <BlogImg
-          src={getStrapiMedia(getImageWithBestWidth(image, idealHeight))}
-          // objectFit="contain"
+          src={getStrapiMedia(getBestImage(image, "height", idealHeight))}
           alt={alternativeText}
-          // layout="fill"
           m="0 auto"
           height={"inherit"}
-          // className="fullHeightImage"
           aria-label={alternativeText}
           {...rest}
           lazy
         />
       ) : (
-        <BlogImg
-          {...rest}
-          objectFit="contain"
-          src={getStrapiMedia(getImageWithBestWidth(image, idealWidth))}
-          alt={alternativeText}
-          layout="fill"
-          className=""
-          aria-label={alternativeText}
-        />
+        <>
+          <BlogImg
+            {...rest}
+            objectFit="contain"
+            // maxH={idealHeight}
+            w="100%"
+            height="inherit"
+            src={getStrapiMedia(getBestImage(image, "width", idealWidth))}
+            alt={alternativeText}
+            layout="fill"
+            className=""
+            aria-label={alternativeText}
+          />
+        </>
       )}
     </>
   )
