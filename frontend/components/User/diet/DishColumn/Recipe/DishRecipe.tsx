@@ -1,7 +1,8 @@
 import React from "react"
-import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react"
+import { Button, Flex, Text, useDisclosure, Stack } from "@chakra-ui/react"
 import DishModal from "./DishModal/DishModal"
 import { FullDish } from "../../../../../lib/types/dietPage/dishTypes"
+import BlogMarkdown from "../../../../Markdown/Blog/BlogMarkdown"
 
 interface DishRecpipeProps {
   dishData: FullDish
@@ -14,12 +15,7 @@ const DishRecipe = ({ dishData }: DishRecpipeProps) => {
   // TODO handle markdown
   return (
     <Flex direction="column" align="center">
-      <Text>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque fugit
-        aliquid provident eius inventore totam architecto eveniet deleniti
-        dolore.
-        {recipe}
-      </Text>
+        <BlogMarkdown text={recipe} spacing={4} />
       {replacements && replacements.length > 0 && (
         <>
           <Button mt={10} w={60} onClick={onOpen}>

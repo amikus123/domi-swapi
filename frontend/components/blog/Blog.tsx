@@ -1,7 +1,5 @@
 import { Stack, Heading, Text, Flex, Divider, Box } from "@chakra-ui/react"
 import React from "react"
-import rehypeRaw from "rehype-raw"
-import ReactMarkdown from "react-markdown"
 import BlogContent from "./content/BlogContent"
 import BlogDescriptionImage from "./content/BlogDescriptionImage"
 import BlogTags from "./BlogTags"
@@ -10,6 +8,7 @@ import CategoryBreadcrumbs from "./Categories/CategoryBreadcrumbs"
 import RelatedBlogPosts from "./RelatedBlogPosts/RelatedBlogPosts"
 import { BlogPost } from "../../lib/types/JSON/parsed/parsedBlogs"
 import { StrapiImage } from "../../lib/types/generalTypes"
+import BlogMarkdown from "../Markdown/Blog/BlogMarkdown"
 
 interface BlogProps {
   data: BlogPost
@@ -56,9 +55,7 @@ const Blog = ({ data, category, blogIds }: BlogProps) => {
           >
             <Heading w="100%">{title}</Heading>
             <Text as="span" w="100%" fontSize="2xl" color="gray.600">
-              <ReactMarkdown rehypePlugins={[rehypeRaw]}>
-                {description}
-              </ReactMarkdown>
+              <BlogMarkdown  text={description}  />
             </Text>
 
             <BlogTags blogCategories={blogCategories} pb={4} />

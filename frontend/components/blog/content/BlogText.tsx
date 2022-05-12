@@ -1,12 +1,6 @@
 import React from "react"
-import {  Box } from "@chakra-ui/react"
-
-import rehypeRaw from "rehype-raw"
-import ReactMarkdown from "react-markdown"
-import BMQuote from "../../Markdown/Blog/BMQuote"
-import BMHeading from "../../Markdown/Blog/BMHeading"
-import BMParagraph from "../../Markdown/Blog/BMParagraph"
-import BMLink from "../../Markdown/Blog/BMLink"
+import { Box } from "@chakra-ui/react"
+import BlogMarkdown from "../../Markdown/Blog/BlogMarkdown"
 
 interface BlogTextProps {
   text: string
@@ -19,20 +13,10 @@ const BlogText = ({ text }: BlogTextProps) => {
       css={{
         "> *": {
           marginTop: "1.5rem",
-        }
+        },
       }}
     >
-      <ReactMarkdown
-        components={{
-          h1: BMHeading,
-          blockquote:BMQuote,
-          p:BMParagraph,
-          a:BMLink
-        }}
-        rehypePlugins={[rehypeRaw]}
-      >
-        {text}
-      </ReactMarkdown>
+      <BlogMarkdown text={text} />
     </Box>
   )
 }

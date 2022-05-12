@@ -14,7 +14,6 @@ const CardStack = ({ cards }: CardStackProps) => {
         return (
           <React.Fragment key={index}>
             <BlogCardWide data={item} fullW={true} />
-
             {index === cards.length - 1 ? <Box py={4}></Box> : <Divider />}
           </React.Fragment>
         )
