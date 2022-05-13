@@ -2,19 +2,14 @@ import {
   Document,
   Page,
   StyleSheet,
-  PDFDownloadLink,
-  Font,
   View,
   Text,
 } from "@react-pdf/renderer"
 import { getISODay, formatISO9075 } from "date-fns"
 import { capitalize } from "lodash"
-import recipe from "next-seo/lib/jsonld/recipe"
 import React, { useEffect, useState } from "react"
 import { DietDay } from "../../../../lib/types/dietPage/dietTypes"
 import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
-import index from "../../../../pages/blog"
-import DayPdf from "./DayPdf"
 import MarkdownPdf from "./MarkdownPdf"
 import { MyPdfDocProps } from "./PdfButton"
 
@@ -87,7 +82,7 @@ const renderContent = (
             const { ingredients, nutrients, recipe, name } = item.dish
             return (
               <View style={styles.contentContainers} key={index} wrap={true}>
-                {/* <Text style={styles.dishName}>{name}</Text>
+                <Text style={styles.dishName}>{name}</Text>
                 <View style={styles.twoColumns}>
                   <View style={styles.column}>
                     {ingredients.map((i, k) => {
@@ -112,7 +107,7 @@ const renderContent = (
                 </View>
                 <View style={styles.recipe}>
                   <MarkdownPdf text={recipe} />
-                </View> */}
+                </View>
               </View>
             )
           })}

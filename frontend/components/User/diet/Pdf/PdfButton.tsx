@@ -69,9 +69,7 @@ const PdfButton = ({
       fileName={createFileName(dates, singleDate, showRange, dietName)}
     >
       {({ loading }) => (
-        <>
           <Button isLoading={loading}>Pobierz</Button>
-        </>
       )}
     </PDFDownloadLink>
   )

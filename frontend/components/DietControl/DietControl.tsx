@@ -184,7 +184,7 @@ const DietControl = ({
       {columnData.length > 0 &&
       columnData[0].fullDietDay.dishes[0].dish !== undefined ? (
         <>
-          {/* <DishColumn dishColumnData={columnData} /> */}
+          <DishColumn dishColumnData={columnData} />
           <PdfButton
             dishColumnData={columnData}
             singleDate={singleDate}
