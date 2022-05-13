@@ -26,7 +26,7 @@ const DishLeft = ({ image }: DishLeftProps) => {
       py={[6, 6, 0]}
     >
       <Box w={w} h={h} overflow="hidden">
-        <Image src={getStrapiMedia(url)} alt={alternativeText} />
+        <Image src={getStrapiMedia(url)} alt={alternativeText} loading="lazy" />
       </Box>
     </Flex>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React  from "react"
 import { PDFDownloadLink, Font } from "@react-pdf/renderer"
 import { Button, useToast } from "@chakra-ui/react"
 import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
@@ -83,9 +83,10 @@ const PdfButton = ({
         <PDFDownloadLink
           document={<DocumentPdf dishColumnData={dishColumnData} days={days} />}
           fileName={createFileName(dates, singleDate, showRange, dietName)}
+        
         >
           {({ loading }) => (
-            <Button isLoading={loading && generatedPdf}>Pobierz</Button>
+            <Button isLoading={loading || !generatedPdf}>Pobierz</Button>
           )}
         </PDFDownloadLink>
       )}

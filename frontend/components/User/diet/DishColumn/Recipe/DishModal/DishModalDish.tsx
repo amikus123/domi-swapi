@@ -1,6 +1,5 @@
-import { Flex, Box, Text, CSSObject, Spinner } from "@chakra-ui/react"
+import { Flex, Box, Text, CSSObject, Spinner, Image } from "@chakra-ui/react"
 import React from "react"
-import NextImage from "next/image"
 import { getStrapiMedia } from "../../../../../../lib/media"
 import { StrapiImage } from "../../../../../../lib/types/generalTypes"
 import { Dish } from "../../../../../../lib/types/dietPage/dishTypes"
@@ -27,11 +26,12 @@ const Img = ({ image }: ImgProps) => {
   const { w, h } = fixHeight(width, height)
   return (
     <Box w={w} h={h} overflow="hidden">
-      <NextImage
+      <Image
         width={w}
         height={h}
         src={getStrapiMedia(url)}
         alt={alternativeText}
+        loading="lazy"
       />
     </Box>
   )

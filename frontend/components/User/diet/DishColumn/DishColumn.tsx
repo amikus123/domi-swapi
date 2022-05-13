@@ -27,7 +27,6 @@ const renderContent = (
           {dishes.map((dish, index) => {
             return (
               <Accordion
-                // eslint-disable-next-line no-constant-condition
                 defaultIndex={[]}
                 allowMultiple
                 key={index}

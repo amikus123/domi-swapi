@@ -1,7 +1,9 @@
 import { PreferenceDishIds } from "../../../../../../lib/types/API/requestTypes"
-import { DishPreference, Dish } from "../../../../../../lib/types/dietPage/dishTypes"
+import {
+  DishPreference,
+  Dish,
+} from "../../../../../../lib/types/dietPage/dishTypes"
 import { updateDishPreferencesRequest } from "../../../../api/dbInteraction/PUT"
-
 
 export const resetDishPreferences = async (
   userDataId: number
@@ -40,6 +42,7 @@ export const makeDBcompatible = (
   dishes: Record<string, Dish>
 ): PreferenceDishIds[] => {
   const res: PreferenceDishIds[] = []
+
   Object.keys(preferenceData).forEach((dishName) => {
     const dishPreferenceData = preferenceData[dishName]
     const { originalName, preferedName } = dishPreferenceData

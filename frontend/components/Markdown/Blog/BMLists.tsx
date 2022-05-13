@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 
 interface BMUnordedListProps {
   children: any
@@ -6,8 +6,5 @@ interface BMUnordedListProps {
 }
 
 export const BMUnordedList = ({ children, ...props }: BMUnordedListProps) => {
-  useEffect(() => {
-    console.log(children,"BMUnordedList")
-  }, [children])
   return <p>{children}</p>
 }
