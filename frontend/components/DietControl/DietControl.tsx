@@ -151,6 +151,7 @@ const DietControl = ({
     )
 
     setColumData(newData)
+    setGeneratedPdf(false)
   }, [showRange, dates, singleDate, dateRange, indexesOfDays, fullDietDays])
 
   const filterHelper = (
@@ -170,6 +171,7 @@ const DietControl = ({
     }
   }
 
+  const [generatedPdf, setGeneratedPdf] = useState(false)
   return (
     <Stack maxW="1000px" justify="center" align="center" spacing={16} pb={20}>
       <MyCalendar
@@ -185,14 +187,16 @@ const DietControl = ({
       columnData[0].fullDietDay.dishes[0].dish !== undefined ? (
         <>
           <DishColumn dishColumnData={columnData} days={days} />
-           <PdfButton
+          <PdfButton
             dishColumnData={columnData}
             singleDate={singleDate}
             showRange={showRange}
             dates={dates}
             dietName={diet.name}
             days={days}
-          /> 
+            generatedPdf={generatedPdf}
+            setGeneratedPdf={setGeneratedPdf}
+          />
         </>
       ) : (
         <DietLoading />

@@ -28,7 +28,7 @@ const renderContent = (
             return (
               <Accordion
                 // eslint-disable-next-line no-constant-condition
-                defaultIndex={0 === 0 ? [0] : []}
+                defaultIndex={[]}
                 allowMultiple
                 key={index}
               >
@@ -53,7 +53,7 @@ const DishColumn = ({ dishColumnData, days }: DishColumnProps) => {
     <Stack spacing={12} w={[500, 700, 1000]} px={[0, 4, 10]} maxW="95vw">
       {dishColumnData.map((item, key) => {
         const { date, fullDietDay,dayId } = item
-        const { dishes, kcalCount } = fullDietDay
+        const {  kcalCount } = fullDietDay
         return (
           <Stack w="100%" key={key} spacing={4}>
             <DishColumnHeader date={date} kcalCount={kcalCount} />

@@ -1,13 +1,8 @@
 import { Stack, Text } from "@chakra-ui/react"
 import React from "react"
-import ReactMarkdown from "react-markdown"
-import rehypeRaw from "rehype-raw"
 import { StrapiImage } from "../../../lib/types/generalTypes"
 import { MyImage } from "../../general/Images"
-import BMHeading from "../../Markdown/Blog/BMHeading"
-import BMLink from "../../Markdown/Blog/BMLink"
-import BMParagraph from "../../Markdown/Blog/BMParagraph"
-import BMQuote from "../../Markdown/Blog/BMQuote"
+import BlogMarkdown from "../../Markdown/Blog/BlogMarkdown"
 interface BlogDescriptionImageProps extends ImageDesctiptionProps {
   image: StrapiImage
   height: number
@@ -21,17 +16,7 @@ const ImageDesctiption = ({ text }: ImageDesctiptionProps) => {
     <>
       {text && (
         <Text as="span" color="gray.500">
-          <ReactMarkdown
-            components={{
-              h1: BMHeading,
-              blockquote: BMQuote,
-              p: BMParagraph,
-              a: BMLink,
-            }}
-            rehypePlugins={[rehypeRaw]}
-          >
-            {text}
-          </ReactMarkdown>
+          <BlogMarkdown text={text} />
         </Text>
       )}
     </>

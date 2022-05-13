@@ -1,9 +1,6 @@
-import React from "react"
-import {
-  PDFDownloadLink,
-  Font,
-} from "@react-pdf/renderer"
-import { Button } from "@chakra-ui/react"
+import React, { useState } from "react"
+import { PDFDownloadLink, Font } from "@react-pdf/renderer"
+import { Button, useToast } from "@chakra-ui/react"
 import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
 import { DateRangeNullable } from "../../../../lib/types/dietPage/timeTypes"
 import { formatISO9075 } from "date-fns"
@@ -21,19 +18,17 @@ Font.register({
 })
 
 export interface MyPdfDocProps {
-  dishColumnData: DishColumnData[],
-  days:DietDay[]
-
+  dishColumnData: DishColumnData[]
+  days: DietDay[]
 }
 interface MyPdfProps extends MyPdfDocProps {
   dates: DateRangeNullable
   singleDate: Date
   showRange: boolean
   dietName: string
-
+  generatedPdf: boolean
+  setGeneratedPdf: React.Dispatch<React.SetStateAction<boolean>>
 }
-
-
 
 const createFileName = (
   dates: DateRangeNullable,
@@ -61,17 +56,40 @@ const PdfButton = ({
   showRange,
   singleDate,
   dietName,
-  days
+  days,
+  generatedPdf,
+  setGeneratedPdf,
 }: MyPdfProps) => {
+  const toast = useToast()
+
   return (
-    <PDFDownloadLink
-      document={<DocumentPdf dishColumnData={dishColumnData} days={days}  />}
-      fileName={createFileName(dates, singleDate, showRange, dietName)}
-    >
-      {({ loading }) => (
-          <Button isLoading={loading}>Pobierz</Button>
+    <>
+      {!generatedPdf ? (
+        <Button
+          onClick={() => {
+            setGeneratedPdf(true)
+            toast({
+              title: "Pdf jest gotowy do pobrania",
+              description: "",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            })
+          }}
+        >
+          Stwórz Pdf
+        </Button>
+      ) : (
+        <PDFDownloadLink
+          document={<DocumentPdf dishColumnData={dishColumnData} days={days} />}
+          fileName={createFileName(dates, singleDate, showRange, dietName)}
+        >
+          {({ loading }) => (
+            <Button isLoading={loading && generatedPdf}>Pobierz</Button>
+          )}
+        </PDFDownloadLink>
       )}
-    </PDFDownloadLink>
+    </>
   )
 }
 export default PdfButton
