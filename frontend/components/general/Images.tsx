@@ -14,14 +14,12 @@ const getBestImage = (
     return url
   }
   const sizeNames = Object.keys(formats)
-  console.log(sizeNames, "rozmairy")
   let smallestDifference = 999999
   let smallestSize = formats[sizeNames[0]]
   sizeNames.forEach((sizeName) => {
     const item = formats[sizeName]
     const imageSize = dimension === "height" ? item.height : item.width
     const offset = imageSize - idealDimension
-    console.log(offset, sizeName, "XD", url, smallestDifference)
     if (Math.abs(offset) < Math.abs(smallestDifference)) {
       smallestDifference = offset
       smallestSize = item
@@ -32,7 +30,6 @@ const getBestImage = (
       ? formats[sizeNames[sizeNames.length - 1]]
       : smallestSize
 
-  console.log(image.alternativeText, smallestSize, "XD")
   return smallestSize.url
 }
 

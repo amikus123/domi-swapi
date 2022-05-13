@@ -43,15 +43,13 @@ const styles = StyleSheet.create({
   column: {},
   recipe: {
     marginVertical: 10,
-    marginHorizontal:20
+    marginHorizontal: 20,
   },
 })
 
 const DayPdf = ({ item }: GenerateHtmlProps) => {
   const { date, fullDietDay } = item
-
   const { dishes, kcalCount } = fullDietDay
-
   return (
     <View style={styles.dayWrap}>
       <View style={styles.dateContainer}>
@@ -59,12 +57,14 @@ const DayPdf = ({ item }: GenerateHtmlProps) => {
         <Text>{formatISO9075(date, { representation: "date" })}</Text>
         <Text>{kcalCount} kcal</Text>
       </View>
+
       {dishes.map((item, index) => {
         const { ingredients, nutrients, recipe, name } = item.dish
         return (
           <View style={styles.contentContainers} key={index} wrap={true}>
             <Text style={styles.dishName}>{name}</Text>
             <View style={styles.twoColumns}>
+              <Text>{index}</Text>
               <View style={styles.column}>
                 {ingredients.map((i, k) => {
                   const { amount, name } = i
