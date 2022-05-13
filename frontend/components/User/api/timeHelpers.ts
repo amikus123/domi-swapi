@@ -57,8 +57,7 @@ export const filterSingleDay = (
   return [
     {
       date,
-      fullDietDay:
-        fullDietDays[value],
+
         dayId:value
     },
   ]
@@ -77,7 +76,6 @@ export const filterRange = (
       calculateOffset(firstDateLocal, firstDate) % fullDietDays.length
     arr.push({
       date: firstDateLocal,
-      fullDietDay: fullDietDays[indexInMainArr],
       dayId:indexInMainArr
     })
     firstDateLocal = addDays(firstDateLocal, 1)
@@ -87,7 +85,6 @@ export const filterRange = (
 
   arr.push({
     date: firstDateLocal,
-    fullDietDay: fullDietDays[indexInMainArr],
   dayId:indexInMainArr
   })
 

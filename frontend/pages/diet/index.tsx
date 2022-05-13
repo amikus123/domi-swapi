@@ -18,14 +18,17 @@ const index = ({ dishes, diets }: DietPageProps) => {
   const toast = useToast()
 
   const [selectedDiet, setSelectedDiet] = useState(diets[Object.keys(diets)[0]])
-  const setDiet = (dietName: string) => {
-    setSelectedDiet(diets[dietName])
-    toast({
-      title: "Wybrałeś nową diete",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    })
+  const setDiet = (dietName: string, currentDietName: string) => {
+    if (currentDietName !== dietName) {
+      setSelectedDiet(diets[dietName])
+
+      toast({
+        title: "Wybrałeś nową diete",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      })
+    }
   }
 
   return (
@@ -37,7 +40,7 @@ const index = ({ dishes, diets }: DietPageProps) => {
       <Heading my={8} textAlign={["center", "center", "start"]}>
         Wybrana dieta: {selectedDiet.name}
       </Heading>
-      <DietPicker diets={diets} setDiet={setDiet} />
+      <DietPicker diets={diets} setDiet={setDiet} currentDietName={selectedDiet.name} />
 
       <DietControl
         originalDishes={dishes}

@@ -50,7 +50,11 @@ const DietControl = ({
   } = user
   const { days, dishReplacements } = diet
   //* STATE
+  useEffect(() => {
+    setUpdatedDays(false)
+  }, [diet])
 
+  const [updatedDays, setUpdatedDays] = useState(false)
   const setUserIds = useSetRecoilState(userIdsState)
   const [isPublic, setIsPublic] = useRecoilState(isPublicState)
 
@@ -151,17 +155,10 @@ const DietControl = ({
     )
 
     setColumData(newData)
+    setUpdatedDays(true)
     setGeneratedPdf(false)
   }, [showRange, dates, singleDate, dateRange, indexesOfDays, fullDietDays])
 
-  useEffect(() => {
-    console.log(columnData, "duzy")
-    if (columnData.length > 5) {
-      console.log(columnData[0] === columnData[2])
-    } else {
-      console.log(columnData.length)
-    }
-  }, [columnData])
   const filterHelper = (
     fShowRange: boolean,
     fDates: DateRangeNullable,
@@ -192,17 +189,20 @@ const DietControl = ({
         setShowRange={setShowRange}
       />
       {columnData.length > 0 &&
-      columnData[0].fullDietDay.dishes[0].dish !== undefined ? (
+      updatedDays &&
+      fullDietDays[0].dishes &&
+      fullDietDays[0].dishes[0] &&
+      fullDietDays[0].dishes[0].dish &&
+      fullDietDays[0].dishes[0].dish.image ? (
         <>
-
-          <DishColumn dishColumnData={columnData} days={days} />
+          <DishColumn dishColumnData={columnData} days={fullDietDays} />
           <PdfButton
             dishColumnData={columnData}
             singleDate={singleDate}
             showRange={showRange}
             dates={dates}
             dietName={diet.name}
-            days={days}
+            days={fullDietDays}
             generatedPdf={generatedPdf}
             setGeneratedPdf={setGeneratedPdf}
           />

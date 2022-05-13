@@ -36,7 +36,6 @@ export interface DishReplacement {
 }
 
 export interface DishColumnData {
-  fullDietDay: FullDietDay
   date: Date
   dayId: number
 }

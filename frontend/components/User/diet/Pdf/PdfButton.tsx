@@ -5,7 +5,7 @@ import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
 import { DateRangeNullable } from "../../../../lib/types/dietPage/timeTypes"
 import { formatISO9075 } from "date-fns"
 import DocumentPdf from "./DocumentPdf"
-import { DietDay } from "../../../../lib/types/dietPage/dietTypes"
+import { FullDietDay } from "../../../../lib/types/dietPage/dietTypes"
 
 Font.register({
   family: "Roboto-b",
@@ -19,7 +19,7 @@ Font.register({
 
 export interface MyPdfDocProps {
   dishColumnData: DishColumnData[]
-  days: DietDay[]
+  days: FullDietDay[]
 }
 interface MyPdfProps extends MyPdfDocProps {
   dates: DateRangeNullable

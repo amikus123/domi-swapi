@@ -2,7 +2,7 @@ import { Document, Page, StyleSheet, View, Text } from "@react-pdf/renderer"
 import { getISODay, formatISO9075 } from "date-fns"
 import { capitalize } from "lodash"
 import React, { useEffect, useState } from "react"
-import { DietDay } from "../../../../lib/types/dietPage/dietTypes"
+import { FullDietDay } from "../../../../lib/types/dietPage/dietTypes"
 import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
 import MarkdownPdf from "./MarkdownPdf"
 import { MyPdfDocProps } from "./PdfButton"
@@ -63,53 +63,51 @@ const daysOfWeek = [
 
 const renderContent = (
   dishColumnData: DishColumnData[],
-  days: DietDay[]
+  days: FullDietDay[]
 ): JSX.Element[] => {
   const res = []
   days.forEach((day, index) => {
-    const data = dishColumnData[index]
-    if (data !== undefined) {
-      const { fullDietDay } = data
-      const JSX = (
-        <>
-          {fullDietDay.dishes.map((item, index) => {
-            const { ingredients, nutrients, recipe, name } = item.dish
-            return (
-              <View style={styles.contentContainers} key={index} wrap={true}>
-                <Text style={styles.dishName}>{name}</Text>
-                <View style={styles.twoColumns}>
-                  <View style={styles.column}>
-                    {ingredients.map((i, k) => {
-                      const { amount, name } = i
-                      return (
-                        <Text key={k}>
-                          {capitalize(name)} - {amount}
-                        </Text>
-                      )
-                    })}
-                  </View>
-                  <View style={styles.column}>
-                    {nutrients.map((i, k) => {
-                      const { amount, name } = i
-                      return (
-                        <Text key={k}>
-                          {capitalize(name)} - {amount}
-                        </Text>
-                      )
-                    })}
-                  </View>
+    const { dishes } = day
+
+    const JSX = (
+      <>
+        {dishes.map((item, index) => {
+          const { ingredients, nutrients, recipe, name } = item.dish
+          return (
+            <View style={styles.contentContainers} key={index} wrap={true}>
+              <Text style={styles.dishName}>{name}</Text>
+              <View style={styles.twoColumns}>
+                <View style={styles.column}>
+                  {ingredients.map((i, k) => {
+                    const { amount, name } = i
+                    return (
+                      <Text key={k}>
+                        {capitalize(name)} - {amount}
+                      </Text>
+                    )
+                  })}
                 </View>
-                <View style={styles.recipe}>
-                  <MarkdownPdf text={recipe} />
+                <View style={styles.column}>
+                  {nutrients.map((i, k) => {
+                    const { amount, name } = i
+                    return (
+                      <Text key={k}>
+                        {capitalize(name)} - {amount}
+                      </Text>
+                    )
+                  })}
                 </View>
               </View>
-            )
-          })}
-        </>
-      )
+              <View style={styles.recipe}>
+                <MarkdownPdf text={recipe} />
+              </View>
+            </View>
+          )
+        })}
+      </>
+    )
 
-      res.push(JSX)
-    }
+    res.push(JSX)
   })
 
   return res
@@ -126,8 +124,8 @@ const DocumentPdf = ({ dishColumnData, days }: MyPdfDocProps) => {
     <Document language="PL">
       <Page size="A4" style={styles.page}>
         {dishColumnData.map((item, index) => {
-          const { date, fullDietDay, dayId } = item
-          const { kcalCount } = fullDietDay
+          const { date, dayId } = item
+          const { kcalCount } = days[dayId]
 
           return (
             <View style={styles.dayWrap} key={index}>

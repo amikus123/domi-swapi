@@ -1,9 +1,14 @@
 import { cloneDeep } from "lodash"
 import { DietDay, FullDietDay } from "../../../lib/types/dietPage/dietTypes"
-import { Ingredient, Dish, DishReplacement, DishPreference, FullDish } from "../../../lib/types/dietPage/dishTypes"
+import {
+  Ingredient,
+  Dish,
+  DishReplacement,
+  DishPreference,
+  FullDish,
+} from "../../../lib/types/dietPage/dishTypes"
 import { IngredientPreference } from "../../../lib/types/dietPage/userTypes"
 import { NameAmount } from "../../../lib/types/generalTypes"
-
 
 // TODO conider changing:
 // * comparing using lower case , minimize amount off errors
@@ -153,7 +158,7 @@ export const changeDishesInDays = (
   return res
 }
 
-export const getKcal = (dishes: FullDish[]) => {
+export const getKcal = (dishes: FullDish[]) :number=> {
   let kcalCount = 0
   dishes.forEach((item) => {
     // * if item has no calories for some reason, it does not break
@@ -169,8 +174,8 @@ export const getKcal = (dishes: FullDish[]) => {
         }
       }
     } catch (e) {
-      console.error(e,"getKcal")
+      console.error(e, "getKcal")
     }
   })
-  return kcalCount
+  return kcalCount ? kcalCount : 0
 }

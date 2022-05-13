@@ -1,8 +1,6 @@
 import {
-  Box,
   Button,
   Collapse,
-  Fade,
   Stack,
   useDisclosure,
   Wrap,
@@ -14,10 +12,15 @@ import DietCard from "../blog/DietCard/DietCard"
 
 interface BlogCategoryBoxProps {
   diets: Record<string, ParsedFullDiet>
-  setDiet: (name: string) => void
+  setDiet: (name: string, currentDietName: string) => void
+  currentDietName: string
 }
 
-const DietPicker = ({ diets, setDiet }: BlogCategoryBoxProps) => {
+const DietPicker = ({
+  diets,
+  setDiet,
+  currentDietName,
+}: BlogCategoryBoxProps) => {
   const { isOpen, onToggle } = useDisclosure()
 
   return (
@@ -34,7 +37,7 @@ const DietPicker = ({ diets, setDiet }: BlogCategoryBoxProps) => {
               <WrapItem
                 key={index}
                 onClick={() => {
-                  setDiet(name)
+                  setDiet(name, currentDietName)
                 }}
               >
                 <DietCard
