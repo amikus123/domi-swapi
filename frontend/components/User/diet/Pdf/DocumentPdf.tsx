@@ -125,9 +125,7 @@ const DocumentPdf = ({ dishColumnData, days }: MyPdfDocProps) => {
   const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>(
     renderContent(dishColumnData, days)
   )
-  useEffect(() => {
-    console.log(renderedComponents, "asdasdads")
-  }, [])
+
   return (
     <Document language="PL">
       <Page size="A4" style={styles.page}>
