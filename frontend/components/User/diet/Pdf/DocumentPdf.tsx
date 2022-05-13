@@ -1,10 +1,4 @@
-import {
-  Document,
-  Page,
-  StyleSheet,
-  View,
-  Text,
-} from "@react-pdf/renderer"
+import { Document, Page, StyleSheet, View, Text } from "@react-pdf/renderer"
 import { getISODay, formatISO9075 } from "date-fns"
 import { capitalize } from "lodash"
 import React, { useEffect, useState } from "react"
@@ -125,7 +119,9 @@ const DocumentPdf = ({ dishColumnData, days }: MyPdfDocProps) => {
   const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>(
     renderContent(dishColumnData, days)
   )
-
+  useEffect(() => {
+    setRenderedComponents(renderContent(dishColumnData, days))
+  }, [dishColumnData, days])
   return (
     <Document language="PL">
       <Page size="A4" style={styles.page}>

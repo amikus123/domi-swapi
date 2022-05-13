@@ -154,6 +154,14 @@ const DietControl = ({
     setGeneratedPdf(false)
   }, [showRange, dates, singleDate, dateRange, indexesOfDays, fullDietDays])
 
+  useEffect(() => {
+    console.log(columnData, "duzy")
+    if (columnData.length > 5) {
+      console.log(columnData[0] === columnData[2])
+    } else {
+      console.log(columnData.length)
+    }
+  }, [columnData])
   const filterHelper = (
     fShowRange: boolean,
     fDates: DateRangeNullable,
@@ -186,6 +194,7 @@ const DietControl = ({
       {columnData.length > 0 &&
       columnData[0].fullDietDay.dishes[0].dish !== undefined ? (
         <>
+
           <DishColumn dishColumnData={columnData} days={days} />
           <PdfButton
             dishColumnData={columnData}

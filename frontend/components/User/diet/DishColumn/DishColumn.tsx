@@ -1,5 +1,5 @@
 import { Accordion, Stack } from "@chakra-ui/react"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { DietDay } from "../../../../lib/types/dietPage/dietTypes"
 import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
 import DishColumnHeader from "./DishColumnHeader"
@@ -26,11 +26,7 @@ const renderContent = (
         <>
           {dishes.map((dish, index) => {
             return (
-              <Accordion
-                defaultIndex={[]}
-                allowMultiple
-                key={index}
-              >
+              <Accordion defaultIndex={[]} allowMultiple key={index}>
                 <DishRow dishData={dish} />
               </Accordion>
             )
@@ -48,11 +44,14 @@ const DishColumn = ({ dishColumnData, days }: DishColumnProps) => {
   const [renderedComponents, setRenderedComponents] = useState<JSX.Element[]>(
     renderContent(dishColumnData, days)
   )
+  useEffect(() => {
+    setRenderedComponents(renderContent(dishColumnData, days))
+  }, [dishColumnData, days])
   return (
     <Stack spacing={12} w={[500, 700, 1000]} px={[0, 4, 10]} maxW="95vw">
       {dishColumnData.map((item, key) => {
-        const { date, fullDietDay,dayId } = item
-        const {  kcalCount } = fullDietDay
+        const { date, fullDietDay, dayId } = item
+        const { kcalCount } = fullDietDay
         return (
           <Stack w="100%" key={key} spacing={4}>
             <DishColumnHeader date={date} kcalCount={kcalCount} />
@@ -65,4 +64,3 @@ const DishColumn = ({ dishColumnData, days }: DishColumnProps) => {
 }
 
 export default DishColumn
-
