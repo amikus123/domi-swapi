@@ -7,7 +7,7 @@ interface BMUnordedListProps {
 
 export const BMUnordedList = ({ children, ...props }: BMUnordedListProps) => {
   useEffect(() => {
-    console.log(children)
+    console.log(children,"BMUnordedList")
   }, [children])
   return <p>{children}</p>
 }

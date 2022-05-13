@@ -6,9 +6,12 @@ import {
   PDFDownloadLink,
   Font,
 } from "@react-pdf/renderer"
-import { DishColumnData } from "../../api/types"
 import DayPdf from "./DayPdf"
 import { Button } from "@chakra-ui/react"
+import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
+import { DateRangeNullable } from "../../../../lib/types/dietPage/timeTypes"
+import { formatISO9075 } from "date-fns"
+
 Font.register({
   family: "Roboto-b",
   src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf",
@@ -36,12 +39,18 @@ const styles = StyleSheet.create({
   },
 })
 
-interface MyPdfProps {
+interface MyPdfDocProps {
   dishColumnData: DishColumnData[]
+}
+interface MyPdfProps extends MyPdfDocProps {
+  dates: DateRangeNullable
+  singleDate: Date
+  showRange: boolean
+  dietName: string
 }
 
 // Create Document Component
-const MyDocument = ({ dishColumnData }: MyPdfProps) => (
+const MyDocument = ({ dishColumnData }: MyPdfDocProps) => (
   <Document language="PL">
     <Page size="A4" style={styles.page}>
       {dishColumnData.map((item, index) => {
@@ -51,13 +60,39 @@ const MyDocument = ({ dishColumnData }: MyPdfProps) => (
   </Document>
 )
 
-const PdfButton = ({ dishColumnData }: MyPdfProps) => {
+const createFileName = (
+  dates: DateRangeNullable,
+  singleDate: Date,
+  showRange: boolean,
+  dietName: string
+): string => {
+  let dateString = ""
+  if (showRange && dates.end !== null) {
+    dateString = `${formatISO9075(dates.start, {
+      representation: "date",
+    })}-${formatISO9075(dates.end, { representation: "date" })}`
+  } else if (showRange && dates.end === null) {
+    dateString = `${formatISO9075(dates.start, { representation: "date" })}`
+  } else {
+    dateString = `${formatISO9075(singleDate, { representation: "date" })}`
+  }
+
+  return `dieta-${dietName}-${dateString}.pdf`
+}
+
+const PdfButton = ({
+  dishColumnData,
+  dates,
+  showRange,
+  singleDate,
+  dietName,
+}: MyPdfProps) => {
   return (
     <PDFDownloadLink
       document={<MyDocument dishColumnData={dishColumnData} />}
-      fileName="dietka.pdf"
+      fileName={createFileName(dates, singleDate, showRange, dietName)}
     >
-      {({  loading }) => (
+      {({ loading }) => (
         <>
           <Button isLoading={loading}>Pobierz</Button>
         </>
@@ -66,4 +101,3 @@ const PdfButton = ({ dishColumnData }: MyPdfProps) => {
   )
 }
 export default PdfButton
-

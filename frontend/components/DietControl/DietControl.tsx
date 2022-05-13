@@ -73,7 +73,7 @@ const DietControl = ({
   useEffect(() => {
     setDates({ start: singleDate, end: singleDate })
   }, [singleDate])
-  
+
   // * min and max date
 
   // * if public  we set to hardcoed high values
@@ -185,7 +185,13 @@ const DietControl = ({
       columnData[0].fullDietDay.dishes[0].dish !== undefined ? (
         <>
           <DishColumn dishColumnData={columnData} />
-          <PdfButton dishColumnData={columnData} />
+          {/* <PdfButton
+            dishColumnData={columnData}
+            singleDate={singleDate}
+            showRange={showRange}
+            dates={dates}
+            dietName={diet.name}
+          /> */}
         </>
       ) : (
         <DietLoading />

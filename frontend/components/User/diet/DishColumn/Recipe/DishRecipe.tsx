@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Flex, Text, useDisclosure, Stack } from "@chakra-ui/react"
+import { Button, Flex, useDisclosure, } from "@chakra-ui/react"
 import DishModal from "./DishModal/DishModal"
 import { FullDish } from "../../../../../lib/types/dietPage/dishTypes"
 import BlogMarkdown from "../../../../Markdown/Blog/BlogMarkdown"
@@ -12,7 +12,6 @@ const DishRecipe = ({ dishData }: DishRecpipeProps) => {
   const initialRef = React.useRef()
   const { dish, replacements } = dishData
   const { recipe } = dish
-  // TODO handle markdown
   return (
     <Flex direction="column" align="center">
         <BlogMarkdown text={recipe} spacing={4} />

@@ -1,8 +1,9 @@
 import { formatISO9075, getISODay } from "date-fns"
 import React from "react"
-import { DishColumnData } from "../../api/types"
 import { Text, View, StyleSheet } from "@react-pdf/renderer"
 import { capitalize } from "lodash"
+import { DishColumnData } from "../../../../lib/types/dietPage/dishTypes"
+import MarkdownPdf from "./MarkdownPdf"
 interface GenerateHtmlProps {
   item: DishColumnData
 }
@@ -18,17 +19,20 @@ const daysOfWeek = [
 ]
 
 const styles = StyleSheet.create({
-  dayWrap: { margin: 20, marginBottom: 40 },
+  dayWrap: {
+    margin: 20,
+  },
   dateContainer: {
     fontFamily: "Roboto-b",
-
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-around",
   },
   dishName: {
+    textAlign: "center",
     fontFamily: "Roboto-b",
     marginVertical: 10,
+    fontSize: 22,
   },
   contentContainers: {},
   twoColumns: {
@@ -39,6 +43,7 @@ const styles = StyleSheet.create({
   column: {},
   recipe: {
     marginVertical: 10,
+    marginHorizontal:20
   },
 })
 
@@ -56,9 +61,8 @@ const DayPdf = ({ item }: GenerateHtmlProps) => {
       </View>
       {dishes.map((item, index) => {
         const { ingredients, nutrients, recipe, name } = item.dish
-
         return (
-          <View style={styles.contentContainers} key={index} wrap={false}>
+          <View style={styles.contentContainers} key={index} wrap={true}>
             <Text style={styles.dishName}>{name}</Text>
             <View style={styles.twoColumns}>
               <View style={styles.column}>
@@ -72,7 +76,6 @@ const DayPdf = ({ item }: GenerateHtmlProps) => {
                 })}
               </View>
               <View style={styles.column}>
-                {/* wartosci odz */}
                 {nutrients.map((i, k) => {
                   const { amount, name } = i
                   return (
@@ -84,13 +87,7 @@ const DayPdf = ({ item }: GenerateHtmlProps) => {
               </View>
             </View>
             <View style={styles.recipe}>
-              <Text>
-                {recipe} Lorem ipsum dolor sit, amet consectetur adipisicing
-                elit. Sit soluta facilis officia, recusandae, exercitationem
-                distinctio vero tempore quam aspernatur, quis facere commodi!
-                Reprehenderit libero tempore dolorem laboriosam ratione numquam
-                quae!
-              </Text>
+              <MarkdownPdf text={recipe} />
             </View>
           </View>
         )

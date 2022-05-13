@@ -1,5 +1,4 @@
 import React from "react"
-import NextImage from "next/image"
 import { Flex, Box, Image } from "@chakra-ui/react"
 import { getStrapiMedia } from "../../../../lib/media"
 import { StrapiImage } from "../../../../lib/types/generalTypes"
@@ -28,12 +27,6 @@ const DishLeft = ({ image }: DishLeftProps) => {
     >
       <Box w={w} h={h} overflow="hidden">
         <Image src={getStrapiMedia(url)} alt={alternativeText} />
-        {/* <NextImage
-          width={w}
-          height={h}
-          src={getStrapiMedia(url)}
-          alt={alternativeText}
-        /> */}
       </Box>
     </Flex>
   )
