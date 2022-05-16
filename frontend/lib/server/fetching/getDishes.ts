@@ -5,7 +5,10 @@ import qs from "qs"
 
 export const getAllDishes = async () => {
   const dishQuery = qs.stringify(
-    {
+    {      pagination: {
+      page: 1,
+      pageSize: 40,
+    },
       populate: [
         "image",
         "nutrients",
@@ -34,7 +37,10 @@ export const getDishes = async (user: UserFullData, jwt: string) => {
   const arr = getIds(user)
 
   const dishQuery = qs.stringify(
-    {
+    {      pagination: {
+      page: 1,
+      pageSize: 40,
+    },
       populate: [
         "image",
         "nutrients",

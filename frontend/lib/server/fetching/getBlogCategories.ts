@@ -6,7 +6,10 @@ import { handleBlogCategories } from "../jsonParsers/parseDietCategories"
 
 export const getBlogCategories = async (): Promise<BlogCard[]> => {
   const queryString = qs.stringify(
-    {
+    {      pagination: {
+      page: 1,
+      pageSize: 40,
+    },
       populate: ["image"],
     },
     {
@@ -26,7 +29,10 @@ export const getBlogCardsFromCategory = async (
   category: string
 ): Promise<BlogCardFull[]> => {
   const queryString = qs.stringify(
-    {
+    {      pagination: {
+      page: 1,
+      pageSize: 40,
+    },
       populate: [
         "blogs",
         "blogs.mainImage",

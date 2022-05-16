@@ -12,12 +12,16 @@ import NextLink from "next/link"
 import { StrapiImage } from "../../../lib/types/generalTypes"
 import { MyImage } from "../../general/Images"
 import "react-datepicker/dist/react-datepicker.css"
+import { BlogCategory } from "../../../lib/types/JSON/parsed/parsedBlogs"
+import BlogTags from "../BlogTags"
 
 interface DietCardProps {
   slug: string | null
   name: string
   image: StrapiImage
   description: string
+  blogCategories?: BlogCategory[]
+  isBlogLink?: boolean
 }
 
 export default function DietCard({
@@ -25,6 +29,7 @@ export default function DietCard({
   name,
   slug,
   description,
+  blogCategories = [],
 }: DietCardProps) {
   return (
     <LinkBox py={6} as={Center}>
@@ -52,13 +57,25 @@ export default function DietCard({
             fontFamily={"body"}
           >
             {slug ? (
-              <NextLink href={`/blog/${slug}`} passHref>
+              <NextLink
+                href={
+                  blogCategories.length > 0
+                    ? `/blog/${blogCategories[0].slug}/${slug}`
+                    : `/blog/${slug}`
+                }
+                passHref
+              >
                 <LinkOverlay>{name}</LinkOverlay>
               </NextLink>
             ) : (
               <Text>{name}</Text>
             )}
           </Heading>
+          {blogCategories.length > 0 ? (
+            <Box py={2}>
+              <BlogTags blogCategories={blogCategories} />
+            </Box>
+          ) : null}
           <Text color={"gray.500"}>{description}</Text>
         </Stack>
       </Box>

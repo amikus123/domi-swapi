@@ -7,7 +7,10 @@ interface ParamsWrap {
 
 export const geStaticBlogPaths = async (): Promise<ParamsWrap[]> => {
   const queryString = qs.stringify(
-    {
+    {      pagination: {
+      page: 1,
+      pageSize: 40,
+    },
       populate: ["blogCategories"],
     },
     {
@@ -39,7 +42,10 @@ export const geStaticBlogPaths = async (): Promise<ParamsWrap[]> => {
 
 export const getStaticCategories = async () => {
   const queryString = qs.stringify(
-    {},
+    {      pagination: {
+      page: 1,
+      pageSize: 40,
+    },},
 
     {
       encodeValuesOnly: false,

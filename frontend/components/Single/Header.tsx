@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
   PopoverContent,
   useDisclosure,
+  Image,
 } from "@chakra-ui/react"
 import {
   HamburgerIcon,
@@ -20,8 +21,10 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons"
 import NextLink from "next/link"
-import { destroyCookie } from "nookies"
+import NextImage from "next/image"
 
+import { destroyCookie } from "nookies"
+import Logo from "/logo.png"
 interface HeaderProps {
   navData: any[]
   user: any | null
@@ -65,8 +68,9 @@ export default function WithSubnavigation({ user }: HeaderProps) {
               textAlign={{ base: "center", md: "left" }}
               fontFamily={"heading"}
               color="gray.800"
+              fontWeight={600}
             >
-              Logo
+              Domi Diety
             </Text>
           </Link>
 
@@ -80,6 +84,7 @@ export default function WithSubnavigation({ user }: HeaderProps) {
           justify={"flex-end"}
           direction={"row"}
           spacing={6}
+          visibility="hidden"
         >
           {user ? (
             <>
@@ -302,42 +307,46 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
+  // {
+  //   label: "Inspiration",
+  //   children: [
+  //     {
+  //       label: "Explore Design Work",
+  //       subLabel: "Trending Design to inspire you",
+  //       href: "#",
+  //     },
+  //     {
+  //       label: "New & Noteworthy",
+  //       subLabel: "Up-and-coming Designers",
+  //       href: "#",
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: "Find Work",
+  //   children: [
+  //     {
+  //       label: "Job Board",
+  //       subLabel: "Find your dream design job",
+  //       href: "#",
+  //     },
+  //     {
+  //       label: "Freelance Projects",
+  //       subLabel: "An exclusive list for contract work",
+  //       href: "#",
+  //     },
+  //   ],
+  // },
   {
-    label: "Inspiration",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
+    label: "Blog",
+    href: "/blog",
   },
   {
-    label: "Find Work",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
+    label: "Dieta",
+    href: "/diet",
   },
   {
-    label: "Learn Design",
-    href: "#",
-  },
-  {
-    label: "Hire Designers",
-    href: "#",
+    label: "Kalkulator diety",
+    href: "/kalkulator",
   },
 ]

@@ -27,7 +27,10 @@ const getDiets = async (
     )
   }
   const dishQuery = qs.stringify(
-    {
+    {      pagination: {
+      page: 1,
+      pageSize: 40,
+    },
       populate: populateArr,
     },
     {
