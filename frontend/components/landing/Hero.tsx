@@ -7,6 +7,7 @@ import {
   Stack,
   LinkOverlay,
   Text,
+  Img 
 } from "@chakra-ui/react"
 import NextImage from "next/image"
 import NextLink from "next/link"
@@ -26,6 +27,7 @@ export default function SplitScreen() {
         overflow="hidden"
         align={"center"}
         justify={"center"}
+
       >
         <Stack spacing={6} w={"full"} maxW={"lg"}>
           <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
@@ -84,7 +86,7 @@ export default function SplitScreen() {
         </Stack>
       </Flex>
       <Flex flex={1}>
-        <Image alt={"Kobieta z arbuzem"} objectFit={"cover"} src={"/xd.jpg"} />
+        <Img alt={"Kobieta z arbuzem"}  fallbackSrc='https://via.placeholder.com/150'  objectFit={"cover"} src={"/xd.jpg"}  />
       </Flex>
     </Stack>
   )
