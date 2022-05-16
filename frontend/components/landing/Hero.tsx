@@ -23,7 +23,8 @@ export default function SplitScreen() {
     >
       <Flex
         p={8}
-        flex={1}
+        // flex={1}
+        minW={[0,0,0,400,700]}
         overflow="hidden"
         align={"center"}
         justify={"center"}
