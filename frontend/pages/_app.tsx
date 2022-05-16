@@ -6,8 +6,9 @@ import { parseCookies } from "nookies"
 import { RecoilRoot } from "recoil"
 import { Chakra } from "../style/chakraProvider"
 import Layout from "../components/Single/Layout"
-import { fetchAPI } from "../lib/api"
 import { User } from "../lib/types/global/user"
+import { DefaultSeo } from "next-seo"
+import { defaultSEO } from "../lib/SEO"
 
 export const GlobalContext = createContext({})
 
@@ -18,12 +19,10 @@ interface MyAppProps {
 }
 
 function MyApp({ Component, pageProps, user }: MyAppProps) {
-  const { global } = pageProps
   return (
     <>
-      {/* <DefaultSEO  {...SEO}/> */}
+      <DefaultSeo {...defaultSEO} />
       <Chakra cookies={pageProps.cookies}>
-        {/* value={global.attributes} */}
         <GlobalContext.Provider value={{}}>
           <RecoilRoot>
             <Layout user={user}>
@@ -48,19 +47,19 @@ const redirectUser = (ctx, location) => {
 MyApp.getInitialProps = async (context): Promise<MyAppProps> => {
   const { ctx } = context
   const { jwt } = parseCookies(ctx)
-  let user = null
-  if (!jwt) {
-    // us there is no token, dont allow use to go to the /user pages
-    if (ctx.pathname.startsWith("/user")) {
-      redirectUser(ctx, "/auth/login")
-    }
-  } else {
-    // if there is token, dont allow use to go to the auth pages
-    if (ctx.pathname.startsWith("/auth")) {
-      redirectUser(ctx, "/")
-    }
-    user = await fetchAPI("/users/me", { jwt })
-  }
+  const user = null
+  // if (!jwt) {
+  //   // us there is no token, dont allow use to go to the /user pages
+  //   if (ctx.pathname.startsWith("/user")) {
+  //     redirectUser(ctx, "/auth/login")
+  //   }
+  // } else {
+  //   // if there is token, dont allow use to go to the auth pages
+  //   if (ctx.pathname.startsWith("/auth")) {
+  //     redirectUser(ctx, "/")
+  //   }
+  //   user = await fetchAPI("/users/me", { jwt })
+  // }
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(context)
   // Fetch global site settings from Strapi

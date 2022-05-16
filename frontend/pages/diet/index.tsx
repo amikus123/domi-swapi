@@ -1,8 +1,10 @@
 import { Flex, Heading, Stack, useToast } from "@chakra-ui/react"
+import { NextSeo } from "next-seo"
 import React, { useState } from "react"
 import CategoryBreadcrumbs from "../../components/blog/Categories/CategoryBreadcrumbs"
 import DietControl from "../../components/DietControl/DietControl"
 import DietPicker from "../../components/publicDiet/DietPicker"
+import { publicDietSEO } from "../../lib/SEO"
 import { getFullDiets } from "../../lib/server/fetching/getDiets"
 import { getAllDishes } from "../../lib/server/fetching/getDishes"
 import { Dish } from "../../lib/types/dietPage/dishTypes"
@@ -32,29 +34,36 @@ const index = ({ dishes, diets }: DietPageProps) => {
   }
 
   return (
-    <Stack justify="flex-start" align="center" w="100%" textAlign="left">
-      <Flex w="100%" alignContent="left" pb={4} maxW="100%">
-        <CategoryBreadcrumbs links={[{ href: "/diet", name: "Dieta" }]} />
-      </Flex>
+    <>
+      <NextSeo {...publicDietSEO}  />
+      <Stack justify="flex-start" align="center" w="100%" textAlign="left">
+        <Flex w="100%" alignContent="left" pb={4} maxW="100%">
+          <CategoryBreadcrumbs links={[{ href: "/diet", name: "Dieta" }]} />
+        </Flex>
 
-      <Heading my={8} textAlign={["center", "center", "start"]}>
-        Wybrana dieta: {selectedDiet.name}
-      </Heading>
-      <DietPicker diets={diets} setDiet={setDiet} currentDietName={selectedDiet.name} />
+        <Heading my={8} textAlign={["center", "center", "start"]}>
+          Wybrana dieta: {selectedDiet.name}
+        </Heading>
+        <DietPicker
+          diets={diets}
+          setDiet={setDiet}
+          currentDietName={selectedDiet.name}
+        />
 
-      <DietControl
-        originalDishes={dishes}
-        user={user}
-        isPagePublic={true}
-        diet={selectedDiet}
-      />
-    </Stack>
+        <DietControl
+          originalDishes={dishes}
+          user={user}
+          isPagePublic={true}
+          diet={selectedDiet}
+        />
+      </Stack>
+    </>
   )
 }
 
 export default index
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const diets = await getFullDiets()
   const dishes = await getAllDishes()
 

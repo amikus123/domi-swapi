@@ -1,6 +1,5 @@
-import { Flex } from "@chakra-ui/react"
+import { Flex, Stack } from "@chakra-ui/react"
 import { useRouter } from "next/dist/client/router"
-import { useEffect } from "react"
 import Footer from "./Footer"
 import Header from "./Header"
 
@@ -10,15 +9,14 @@ interface LayoutProps {
 }
 export default function Layout({ children, user }: LayoutProps) {
   const router = useRouter()
-  useEffect(() => {
-    console.log(user, "Asdasdad")
-  }, [user])
+
   const isOnAuthPage = router.pathname.startsWith("/auth/")
   const isOnFrontPage = router.pathname === "/"
   return (
-    <>
+    <Stack minH="100vh ">
       {isOnAuthPage || <Header navData={[]} user={user} />}
       <Flex
+        grow={1}
         direction="column"
         justifyContent="flex-start"
         px={isOnFrontPage || isOnAuthPage ? 0 : [6, 10]}
@@ -28,6 +26,6 @@ export default function Layout({ children, user }: LayoutProps) {
         {children}
       </Flex>
       {isOnAuthPage || <Footer />}
-    </>
+    </Stack>
   )
 }

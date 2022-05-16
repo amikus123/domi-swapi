@@ -1,7 +1,9 @@
 import { Box, Flex } from "@chakra-ui/react"
+import { NextSeo } from "next-seo"
 import React from "react"
 import BlogCategoryBox from "../../components/blog/Categories/BlogCategoryBox"
 import CategoryBreadcrumbs from "../../components/blog/Categories/CategoryBreadcrumbs"
+import { blogCategoriesSEO } from "../../lib/SEO"
 import { getBlogCategories } from "../../lib/server/fetching/getBlogCategories"
 import { BlogCard } from "../../lib/types/JSON/parsed/parsedBlogs"
 
@@ -11,6 +13,7 @@ interface IndexProps {
 const index = ({ categories }: IndexProps) => {
   return (
     <>
+    <NextSeo {...blogCategoriesSEO  } />
       <Box alignSelf="flex-start">
         <CategoryBreadcrumbs
           links={[{ href: "/blog/", name: "Kategorie" }]}
