@@ -14,10 +14,8 @@ import NextLink from "next/link"
 export default function SplitScreen() {
   return (
     <Stack
-      minH={"100vh"}
       direction={{ base: "column", lg: "row" }}
-      minW={[0, 0, 0, 0, 1200]}
-      maxW="100%"
+      w="100%"
       justifyContent="flex-start"
       overflow="hidden"
     >
