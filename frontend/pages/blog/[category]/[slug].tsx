@@ -20,10 +20,10 @@ const article = ({ blogData, category, blogIds }: BlogPostProps) => {
     <>
       <NextSeo
         {...blogSEO}
-        title={blogData.title}
-        description={`${blogData.title} - ${
-          blogData.description
-        } - ${blogData.blogCategories.join("-")}`}
+        title={blogData ? blogData.title : ""}
+        description={`${blogData ? blogData.title : ""} - ${
+          blogData ? blogData.description : ""
+        } - ${blogData ? blogData.blogCategories.join("-") : ""}`}
       />
       {blogData === undefined ? null : (
         <Blog data={blogData} category={category} blogIds={blogIds} />
