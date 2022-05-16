@@ -1,4 +1,4 @@
-import { Flex, Wrap, WrapItem, Text, Heading } from "@chakra-ui/react"
+import { Flex, Wrap, WrapItem, Heading } from "@chakra-ui/react"
 import React from "react"
 import { BlogCardFull } from "../../lib/types/JSON/parsed/parsedBlogs"
 import DietCard from "../blog/DietCard/DietCard"

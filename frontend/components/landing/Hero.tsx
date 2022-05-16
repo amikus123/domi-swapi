@@ -7,12 +7,18 @@ import {
   Stack,
   LinkOverlay,
   Text,
-  Img 
+  Img,
 } from "@chakra-ui/react"
 import NextImage from "next/image"
 import NextLink from "next/link"
+import { StrapiImage } from "../../lib/types/generalTypes"
+import { MyImage } from "../general/Images"
 
-export default function SplitScreen() {
+interface HeroProps {
+  image: StrapiImage
+}
+
+export default function Hero({ image }: HeroProps) {
   return (
     <Stack
       direction={{ base: "column", lg: "row" }}
@@ -23,11 +29,10 @@ export default function SplitScreen() {
       <Flex
         p={8}
         // flex={1}
-        minW={[0,0,0,400,700]}
+        minW={[0, 0, 0, 400, 700]}
         overflow="hidden"
         align={"center"}
         justify={"center"}
-
       >
         <Stack spacing={6} w={"full"} maxW={"lg"}>
           <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
@@ -86,7 +91,13 @@ export default function SplitScreen() {
         </Stack>
       </Flex>
       <Flex flex={1}>
-        <Img alt={"Kobieta z arbuzem"}  fallbackSrc='https://via.placeholder.com/150'  objectFit={"cover"} src={"/xd.jpg"}  />
+        <MyImage variant="fullW" image={image} />
+        {/* <Img
+          alt={"Kobieta z arbuzem"}
+          fallbackSrc="https://via.placeholder.com/150"
+          objectFit={"cover"}
+          src={"/xd.jpg"}
+        /> */}
       </Flex>
     </Stack>
   )

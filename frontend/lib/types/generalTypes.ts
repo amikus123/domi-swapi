@@ -35,7 +35,7 @@ export interface ImageRaw {
 }
 
 export interface GenericMetaData {
-  pagination: {
+  pagination?: {
     page: number
     pageSize: number
     pageCount: number
