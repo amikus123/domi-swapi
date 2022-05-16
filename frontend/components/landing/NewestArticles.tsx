@@ -1,7 +1,6 @@
 import { Flex, Wrap, WrapItem, Text, Heading } from "@chakra-ui/react"
 import React from "react"
 import { BlogCardFull } from "../../lib/types/JSON/parsed/parsedBlogs"
-import BlogCategoryBox from "../blog/Categories/BlogCategoryBox"
 import DietCard from "../blog/DietCard/DietCard"
 
 interface NewestArticlesProps {
@@ -14,7 +13,7 @@ const NewestArticles = ({ cards }: NewestArticlesProps) => {
       <Heading as={"h2"} fontSize={"4xl"} pb={4} textAlign="center">
         Najnowsze artykuły
       </Heading>
-      <Wrap spacing="30px" py="20px" justify="center" height="fit-content">
+      <Wrap spacing="40px" py="20" justify="center" height="fit-content">
         {cards.map((item, index) => {
           const { slug, description, image, title ,blogCategories} = item
           return (

@@ -21,8 +21,8 @@ const LandingPage = ({ cards }: LandingPageProps) => {
   }, [cards])
   const space = 140
   return (
-    <Center>
-      <VStack spacing={space} mb={space}>
+    <Center w="100%">
+      <VStack spacing={space} mb={space} w="100%">
         <Hero />
         <NewestArticles cards={cards} />
         {/* <ThreeItems /> */}

@@ -13,8 +13,21 @@ import NextLink from "next/link"
 
 export default function SplitScreen() {
   return (
-    <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
-      <Flex p={8} flex={1} align={"center"} justify={"center"}>
+    <Stack
+      minH={"100vh"}
+      direction={{ base: "column", lg: "row" }}
+      minW={[0, 0, 0, 0, 1200]}
+      maxW="100%"
+      justifyContent="flex-start"
+      overflow="hidden"
+    >
+      <Flex
+        p={8}
+        flex={1}
+        overflow="hidden"
+        align={"center"}
+        justify={"center"}
+      >
         <Stack spacing={6} w={"full"} maxW={"lg"}>
           <Heading fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
             <Text
@@ -33,7 +46,7 @@ export default function SplitScreen() {
             >
               Zdrowa dieta
             </Text>
-            <br />{" "}
+            <br />
             <Text color={"teal.400"} as={"span"}>
               Na wyciągnięcie ręki
             </Text>
@@ -61,7 +74,7 @@ export default function SplitScreen() {
               </NextLink>
             </LinkBox>
 
-            <LinkBox as="div"  w="min-content" >
+            <LinkBox as="div" w="min-content">
               <NextLink href="/blog" passHref>
                 <LinkOverlay>
                   <Button rounded={"full"}>Czytaj bloga</Button>
