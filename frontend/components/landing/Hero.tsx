@@ -2,14 +2,11 @@ import {
   Button,
   Flex,
   Heading,
-  Image,
   LinkBox,
   Stack,
   LinkOverlay,
   Text,
-  Img,
 } from "@chakra-ui/react"
-import NextImage from "next/image"
 import NextLink from "next/link"
 import { StrapiImage } from "../../lib/types/generalTypes"
 import { MyImage } from "../general/Images"
@@ -46,14 +43,14 @@ export default function Hero({ image }: HeroProps) {
                 position: "absolute",
                 bottom: 1,
                 left: 0,
-                bg: "teal.400",
+                bg: "green.400",
                 zIndex: -1,
               }}
             >
               Zdrowa dieta
             </Text>
             <br />
-            <Text color={"teal.400"} as={"span"}>
+            <Text color={"green.400"} as={"span"}>
               Na wyciągnięcie ręki
             </Text>
           </Heading>
@@ -68,10 +65,10 @@ export default function Hero({ image }: HeroProps) {
                 <LinkOverlay>
                   <Button
                     rounded={"full"}
-                    bg={"teal.400"}
+                    bg={"green.400"}
                     color={"white"}
                     _hover={{
-                      bg: "teal.500",
+                      bg: "green.500",
                     }}
                   >
                     Zobacz diete

@@ -22,15 +22,15 @@ function MyApp({ Component, pageProps, user }: MyAppProps) {
   return (
     <>
       <DefaultSeo {...defaultSEO} />
-      <Chakra cookies={pageProps.cookies}>
-        <GlobalContext.Provider value={{}}>
-          <RecoilRoot>
-            <Layout user={user}>
-              <Component {...pageProps} />
-            </Layout>
-          </RecoilRoot>
-        </GlobalContext.Provider>
-      </Chakra>
+        <Chakra cookies={pageProps.cookies}>
+          <GlobalContext.Provider value={{}}>
+            <RecoilRoot>
+              <Layout user={user}>
+                <Component {...pageProps} />
+              </Layout>
+            </RecoilRoot>
+          </GlobalContext.Provider>
+        </Chakra>
     </>
   )
 }

@@ -71,7 +71,7 @@ export default function DatePicker({
         onClick={() => {
           setShowRange(!showRange)
         }}
-        colorScheme="teal"
+        colorScheme="green"
         variant={showRange ? "outline" : "solid"}
       >
         {showRange ? "Zakres dat" : "Pojedyńczy dzień"}

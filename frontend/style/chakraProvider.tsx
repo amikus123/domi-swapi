@@ -2,17 +2,18 @@ import {
     ChakraProvider,
     cookieStorageManager,
     localStorageManager,
-  } from '@chakra-ui/react'
+  } from "@chakra-ui/react"
+import { theme } from "./theme"
   
   export function Chakra({ cookies, children }) {
     // b) Pass `colorModeManager` prop
     const colorModeManager =
-      typeof cookies === 'string'
+      typeof cookies === "string"
         ? cookieStorageManager(cookies)
         : localStorageManager
   
     return (
-      <ChakraProvider colorModeManager={colorModeManager}>
+      <ChakraProvider colorModeManager={colorModeManager} theme={theme}>
         {children}
       </ChakraProvider>
     )
@@ -24,7 +25,7 @@ import {
       props: {
         // first time users will not have any cookies and you may not return
         // undefined here, hence ?? is necessary
-        cookies: req.headers.cookie ?? '',
+        cookies: req.headers.cookie ?? "",
       },
     }
   }

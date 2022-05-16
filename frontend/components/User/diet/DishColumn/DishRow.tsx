@@ -34,7 +34,7 @@ const DishRow = ({ dishData }: DishRowProps) => {
     timeCategory,
   } = dish
   return (
-    <AccordionItem>
+    <AccordionItem >   
       <AccordionButton>
         <Box flex="1" textAlign="left">
           <Text py={2} fontSize={20} fontWeight={600}>

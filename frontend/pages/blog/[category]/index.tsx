@@ -54,7 +54,7 @@ const blog = ({ relatedBlogs, category }: BlogCategoryPostsProps) => {
         </Stack>
         <Button
           w="60"
-          colorScheme="teal"
+          colorScheme="green"
           size="lg"
           justifySelf="center"
           alignSelf="center"

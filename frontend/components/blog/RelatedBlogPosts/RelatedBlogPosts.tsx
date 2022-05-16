@@ -57,13 +57,13 @@ const RelatedBlogPosts = ({
       <Flex py={12} w="100%" direction="column" align="center">
         <CardStack cards={fetchedBlogs} />
         {Object.keys(availableIds).length === 0 ? (
-          <Button colorScheme="teal" w="60" size="lg" as="div">
+          <Button colorScheme="green" w="60" size="lg" as="div">
             <NextLink href="/blog/">Sprawdź inne kategorie</NextLink>
           </Button>
         ) : (
           <Button
             w="60"
-            colorScheme="teal"
+            colorScheme="green"
             size="lg"
             isLoading={isFetching}
             onClick={getMoreBlogs}
